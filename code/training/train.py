@@ -1,17 +1,147 @@
+# Training loop for baseline and multitask models
+
+import os
 import torch
-from torch.utils.data import DataLoader
-from torch.optim import AdamW
-from torch.optim.lr_scheduler import CosineAnnealingLR
-import torchvision.transforms as T
 
-from config import config
-from data.dataset import SphereDataset
-from models.multi_task_model import MaterialAwareLightingNet
-from training.losses import MultiTaskLoss
-from training.train import Trainer
 
-def main():
-    # Set device
-    config.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    
-    # Transforms
+class Trainer:
+    def __init__(self, model, criterion, optimizer, scheduler, config,
+                 is_multitask=True):
+        self.model = model
+        self.criterion = criterion
+        self.optimizer = optimizer
+        self.scheduler = scheduler
+        self.config = config
+        self.is_multitask = is_multitask
+        self.device = config.device
+        self.best_val_loss = float('inf')
+
+    def train_epoch(self, dataloader):
+        self.model.train()
+        total_loss = 0.0
+        total_light = 0.0
+        total_mat = 0.0
+        n_batches = 0
+
+        for i, batch in enumerate(dataloader):
+            images = batch['image'].to(self.device)
+            target_sh = batch['lighting'].to(self.device)
+            target_mat = batch['material'].to(self.device)
+
+            self.optimizer.zero_grad()
+
+            if self.is_multitask:
+                pred_light, pred_mat = self.model(images)
+                loss, loss_light, loss_mat = self.criterion(
+                    pred_light, pred_mat, target_sh, target_mat
+                )
+            else:
+                pred_light = self.model(images)
+                loss_light = torch.nn.functional.mse_loss(pred_light, target_sh)
+                loss_mat = torch.tensor(0.0)
+                loss = loss_light
+
+            loss.backward()
+            self.optimizer.step()
+
+            total_loss += loss.item()
+            total_light += loss_light.item()
+            total_mat += loss_mat.item()
+            n_batches += 1
+
+            if (i + 1) % self.config.log_interval == 0:
+                print(f"  batch {i+1}/{len(dataloader)} | "
+                      f"loss={loss.item():.4f} light={loss_light.item():.4f} "
+                      f"mat={loss_mat.item():.4f}")
+
+        return {
+            'loss': total_loss / n_batches,
+            'loss_lighting': total_light / n_batches,
+            'loss_material': total_mat / n_batches,
+        }
+
+    @torch.no_grad()
+    def validate(self, dataloader):
+        self.model.eval()
+        total_loss = 0.0
+        total_light = 0.0
+        total_mat = 0.0
+        correct = 0
+        total_samples = 0
+        n_batches = 0
+
+        for batch in dataloader:
+            images = batch['image'].to(self.device)
+            target_sh = batch['lighting'].to(self.device)
+            target_mat = batch['material'].to(self.device)
+
+            if self.is_multitask:
+                pred_light, pred_mat = self.model(images)
+                loss, loss_light, loss_mat = self.criterion(
+                    pred_light, pred_mat, target_sh, target_mat
+                )
+                correct += (pred_mat.argmax(1) == target_mat).sum().item()
+            else:
+                pred_light = self.model(images)
+                loss_light = torch.nn.functional.mse_loss(pred_light, target_sh)
+                loss_mat = torch.tensor(0.0)
+                loss = loss_light
+
+            total_loss += loss.item()
+            total_light += loss_light.item()
+            total_mat += loss_mat.item()
+            total_samples += images.size(0)
+            n_batches += 1
+
+        metrics = {
+            'loss': total_loss / n_batches,
+            'loss_lighting': total_light / n_batches,
+            'loss_material': total_mat / n_batches,
+        }
+        if self.is_multitask and total_samples > 0:
+            metrics['material_accuracy'] = correct / total_samples
+
+        return metrics
+
+    def fit(self, train_loader, val_loader):
+        for epoch in range(1, self.config.num_epochs + 1):
+            print(f"Epoch {epoch}/{self.config.num_epochs}")
+
+            train_metrics = self.train_epoch(train_loader)
+            val_metrics = self.validate(val_loader)
+
+            if self.scheduler is not None:
+                self.scheduler.step()
+
+            # Print epoch summary
+            print(f"  train | loss={train_metrics['loss']:.4f} "
+                  f"light={train_metrics['loss_lighting']:.4f} "
+                  f"mat={train_metrics['loss_material']:.4f}")
+            val_line = (f"  val   | loss={val_metrics['loss']:.4f} "
+                        f"light={val_metrics['loss_lighting']:.4f} "
+                        f"mat={val_metrics['loss_material']:.4f}")
+            if 'material_accuracy' in val_metrics:
+                val_line += f" acc={val_metrics['material_accuracy']:.4f}"
+            print(val_line)
+
+            # Save best model
+            if val_metrics['loss'] < self.best_val_loss:
+                self.best_val_loss = val_metrics['loss']
+                self._save_checkpoint(epoch, is_best=True)
+                print(f"  -> new best model (val_loss={self.best_val_loss:.4f})")
+
+            print()
+
+    def _save_checkpoint(self, epoch, is_best=False):
+        os.makedirs(self.config.save_dir, exist_ok=True)
+        tag = "multitask" if self.is_multitask else "baseline"
+        filename = f"{self.config.experiment_name}_{tag}_best.pt" if is_best \
+            else f"{self.config.experiment_name}_{tag}_epoch{epoch}.pt"
+        path = os.path.join(self.config.save_dir, filename)
+
+        torch.save({
+            'epoch': epoch,
+            'model_state_dict': self.model.state_dict(),
+            'optimizer_state_dict': self.optimizer.state_dict(),
+            'val_loss': self.best_val_loss,
+        }, path)
