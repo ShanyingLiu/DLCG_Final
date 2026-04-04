@@ -1,5 +1,5 @@
 """
-data_gen.py  --  Synthetic dataset generator for Material-Aware Lighting Prediction
+Synthetic dataset generator 
 ===================================================================================
 Renders spheres with distinct Principled BSDF material categories (diffuse, glossy,
 metallic, rough_metallic, dielectric) lit by HDRI environment maps.  Outputs images
@@ -19,7 +19,7 @@ Options
     --hdri_dir    PATH  Root HDRI folder              (default dataset/hdris)
     --samples     INT   Cycles samples per pixel      (default 128)
 
-Example (quick test)
+Example
 --------------------
     blender --background --python code/data_gen.py -- --num_images 20 --resolution 128 --samples 32
 """
@@ -60,9 +60,7 @@ OUTPUT_DIR = Path(args.output_dir) if args.output_dir else _PROJECT_DIR / "datas
 HDRI_DIR = Path(args.hdri_dir) if args.hdri_dir else _PROJECT_DIR / "dataset" / "hdris"
 IMAGE_DIR = OUTPUT_DIR / "images"
 
-# ---------------------------------------------------------------------------
 # Material definitions
-# ---------------------------------------------------------------------------
 # Ranges given as (min, max) are sampled uniformly; scalars are fixed.
 MATERIAL_DEFS = {
     "diffuse": {
@@ -144,8 +142,7 @@ COLOR_NAMES = list(NAMED_COLORS.keys())
 # Spherical-harmonics utilities
 # =========================================================================
 
-def compute_sh_coefficients(blender_image):
-    """Compute order-2 real SH coefficients from an equirectangular HDR image.
+"""Compute order-2 real SH coefficients from an equirectangular HDR image.
 
     Uses the standard real SH basis (band 0-2, 9 functions) integrated over
     the sphere via discrete summation.
@@ -161,7 +158,9 @@ def compute_sh_coefficients(blender_image):
         SH coefficients per basis function (rows) per RGB channel (cols).
         Row order: Y_0^0, Y_1^{-1}, Y_1^0, Y_1^1,
                    Y_2^{-2}, Y_2^{-1}, Y_2^0, Y_2^1, Y_2^2.
-    """
+"""
+def compute_sh_coefficients(blender_image):
+    
     w, h = blender_image.size
     pixels = np.array(blender_image.pixels[:], dtype=np.float32).reshape(h, w, 4)
     rgb = pixels[:, :, :3]
@@ -205,8 +204,7 @@ def compute_sh_coefficients(blender_image):
     return coeffs
 
 
-def rotate_sh_z(coeffs, angle):
-    """Z-axis rotation of SH coefficients.
+"""Z-axis rotation of SH coefficients.
 
     Applies the analytic rotation that matches Blender's Mapping-node
     rotation_euler.z = *angle* on the environment texture.
@@ -223,6 +221,7 @@ def rotate_sh_z(coeffs, angle):
     -------
     np.ndarray, shape (9, 3)
     """
+def rotate_sh_z(coeffs, angle):
     out = coeffs.copy()
     ca, sa = np.cos(angle), np.sin(angle)
     c2a, s2a = np.cos(2 * angle), np.sin(2 * angle)
@@ -281,16 +280,15 @@ def hdri_short_name(filename):
 # Blender scene helpers
 # =========================================================================
 
-def clear_scene():
     """Remove every object and material from the scene."""
+def clear_scene():
     for obj in list(bpy.data.objects):
         bpy.data.objects.remove(obj, do_unlink=True)
     for mat in list(bpy.data.materials):
         bpy.data.materials.remove(mat)
 
-
-def setup_render(resolution, samples):
     """Configure Cycles renderer, colour management, and GPU if available."""
+def setup_render(resolution, samples):
     sc = bpy.context.scene
 
     sc.render.engine = "CYCLES"
@@ -307,7 +305,7 @@ def setup_render(resolution, samples):
 
     sc.view_settings.view_transform = "Filmic"
 
-    # Try to enable GPU rendering (NVIDIA first, then AMD / Apple / Intel)
+    # Try to enable GPU rendering if available (NVIDIA first, then AMD / Apple / Intel)
     addon = bpy.context.preferences.addons.get("cycles")
     if addon is not None:
         cp = addon.preferences
@@ -328,9 +326,8 @@ def setup_render(resolution, samples):
     sc.cycles.device = "CPU"
     print("Render device: CPU")
 
-
+"""Place a camera at (0, -4, 0) looking at the origin, framing a unit sphere."""
 def create_camera():
-    """Place a camera at (0, -4, 0) looking at the origin, framing a unit sphere."""
     cam_data = bpy.data.cameras.new("Camera")
     cam_data.lens = 50
     cam_data.sensor_width = 36
@@ -342,8 +339,8 @@ def create_camera():
     return cam_obj
 
 
+"""Create a smooth-shaded UV sphere (radius 1) at the origin."""
 def create_sphere():
-    """Create a smooth-shaded UV sphere (radius 1) at the origin."""
     mesh = bpy.data.meshes.new("SphereMesh")
     obj = bpy.data.objects.new("Sphere", mesh)
     bpy.context.collection.objects.link(obj)
@@ -359,9 +356,7 @@ def create_sphere():
 
     return obj
 
-
-def build_world_shader():
-    """Build the world node tree: HDRI for lighting, neutral gray for camera.
+"""Build the world node tree: HDRI for lighting, neutral gray for camera.
 
     Uses the Light-Path "Is Camera Ray" trick so the HDRI lights the sphere
     via diffuse/glossy/transmission rays, but the camera sees a neutral 18 %
@@ -371,6 +366,8 @@ def build_world_shader():
     -------
     (env_node, mapping_node, bg_hdri_node) for later per-frame updates.
     """
+def build_world_shader():
+    
     world = bpy.context.scene.world
     if world is None:
         world = bpy.data.worlds.new("World")
@@ -384,20 +381,20 @@ def build_world_shader():
     n_map = tree.nodes.new("ShaderNodeMapping")
     n_env = tree.nodes.new("ShaderNodeTexEnvironment")
     n_bg_hdri = tree.nodes.new("ShaderNodeBackground")
-    n_bg_gray = tree.nodes.new("ShaderNodeBackground")
+    n_bg_black = tree.nodes.new("ShaderNodeBackground")
     n_lpath = tree.nodes.new("ShaderNodeLightPath")
     n_mix = tree.nodes.new("ShaderNodeMixShader")
     n_out = tree.nodes.new("ShaderNodeOutputWorld")
 
-    n_bg_gray.inputs["Color"].default_value = (0.18, 0.18, 0.18, 1.0)
-    n_bg_gray.inputs["Strength"].default_value = 1.0
+    n_bg_black.inputs["Color"].default_value = (0.0, 0.0, 0.0, 1.0)
+    n_bg_black.inputs["Strength"].default_value = 1.0
 
     link(n_coord.outputs["Generated"], n_map.inputs["Vector"])
     link(n_map.outputs["Vector"], n_env.inputs["Vector"])
     link(n_env.outputs["Color"], n_bg_hdri.inputs["Color"])
     link(n_lpath.outputs["Is Camera Ray"], n_mix.inputs["Fac"])
     link(n_bg_hdri.outputs["Background"], n_mix.inputs[1])   # fac=0 → HDRI
-    link(n_bg_gray.outputs["Background"], n_mix.inputs[2])   # fac=1 → gray
+    link(n_bg_black.outputs["Background"], n_mix.inputs[2])   # fac=1 → gray
     link(n_mix.outputs["Shader"], n_out.inputs["Surface"])
 
     return n_env, n_map, n_bg_hdri
