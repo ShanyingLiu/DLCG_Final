@@ -1,0 +1,1 @@
+"""Visualize predicted vs ground truth lighting by rendering a sphere"""

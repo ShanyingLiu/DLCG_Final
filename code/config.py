@@ -1,0 +1,37 @@
+# all config stuff with gpu usage
+
+
+# All hyperparameters in one place
+class Config:
+    # Data
+    images_root = "./dataset/renders/images"
+    metadata_root = "./dataset/renders/" # metadata.json
+    num_material_classes = 5
+    sh_dim = 27
+    image_size = 128
+    
+    # Training
+    batch_size = 32
+    learning_rate = 1e-4
+    num_epochs = 50
+    weight_decay = 1e-4
+    
+    # Loss weights
+    lighting_loss_weight = 1.0
+    material_loss_weight = 0.3
+    
+    # Model
+    backbone = "resnet50" # "resnet18"/"efficientnet"
+    pretrained = True
+    
+    # System
+    device = "cuda"
+    num_workers = 4
+    seed = 42
+    
+    # Logging
+    log_interval = 10  # print every N batches
+    save_dir = "./models"
+    experiment_name = "material_aware_lighting"
+
+config = Config()

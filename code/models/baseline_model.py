@@ -1,0 +1,1 @@
+# baseline: predict lighting with only visuals
