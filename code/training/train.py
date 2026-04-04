@@ -104,6 +104,15 @@ class Trainer:
         return metrics
 
     def fit(self, train_loader, val_loader):
+        history = {
+            "train_loss": [],
+            "val_loss": [],
+            "train_loss_lighting": [],
+            "val_loss_lighting": [],
+            "train_loss_material": [],
+            "val_loss_material": [],
+        }
+
         for epoch in range(1, self.config.num_epochs + 1):
             print(f"Epoch {epoch}/{self.config.num_epochs}")
 
@@ -112,6 +121,14 @@ class Trainer:
 
             if self.scheduler is not None:
                 self.scheduler.step()
+
+            # Record history
+            history["train_loss"].append(train_metrics['loss'])
+            history["val_loss"].append(val_metrics['loss'])
+            history["train_loss_lighting"].append(train_metrics['loss_lighting'])
+            history["val_loss_lighting"].append(val_metrics['loss_lighting'])
+            history["train_loss_material"].append(train_metrics['loss_material'])
+            history["val_loss_material"].append(val_metrics['loss_material'])
 
             # Print epoch summary
             print(f"  train | loss={train_metrics['loss']:.4f} "
@@ -131,6 +148,8 @@ class Trainer:
                 print(f"  -> new best model (val_loss={self.best_val_loss:.4f})")
 
             print()
+
+        return history
 
     def _save_checkpoint(self, epoch, is_best=False):
         os.makedirs(self.config.save_dir, exist_ok=True)

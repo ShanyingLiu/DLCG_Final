@@ -16,6 +16,10 @@ from models.multitask_model import MaterialAwareLightingNet
 from training.losses import MultiTaskLoss
 from training.train import Trainer
 from evaluation.evaluator import evaluate_model, compute_all_metrics, compare_models
+from utils.visualizer import (
+    render_sphere_comparison, plot_sh_coefficients,
+    plot_per_material_comparison, plot_training_curves,
+)
 
 
 def make_dataloaders(config, transform):
@@ -61,7 +65,13 @@ def train_model(config, is_multitask, train_loader, val_loader):
 
     trainer = Trainer(model, criterion, optimizer, scheduler, config,
                       is_multitask=is_multitask)
-    trainer.fit(train_loader, val_loader)
+    history = trainer.fit(train_loader, val_loader)
+
+    # Save training curves
+    curves_path = os.path.join(config.save_dir,
+                               f"{config.experiment_name}_{tag}_curves.png")
+    plot_training_curves(history, curves_path, title=f"{tag.title()} Training Curves")
+    print(f"  Training curves saved to {curves_path}")
 
     return model
 
@@ -122,10 +132,13 @@ def main():
     baseline_metrics = None
     multitask_metrics = None
 
+    baseline_results = None
+    multitask_results = None
+
     if baseline_model is not None:
-        results = evaluate_model(baseline_model, test_loader, config.device,
-                                 is_multitask=False)
-        baseline_metrics = compute_all_metrics(results)
+        baseline_results = evaluate_model(baseline_model, test_loader, config.device,
+                                          is_multitask=False)
+        baseline_metrics = compute_all_metrics(baseline_results)
         print("Baseline test metrics:")
         agg = baseline_metrics["aggregate"]
         print(f"  angular_error_mean:  {agg['angular_error_mean']:.2f} deg")
@@ -135,9 +148,9 @@ def main():
         print()
 
     if multitask_model is not None:
-        results = evaluate_model(multitask_model, test_loader, config.device,
-                                 is_multitask=True)
-        multitask_metrics = compute_all_metrics(results)
+        multitask_results = evaluate_model(multitask_model, test_loader, config.device,
+                                           is_multitask=True)
+        multitask_metrics = compute_all_metrics(multitask_results)
         print("Multitask test metrics:")
         agg = multitask_metrics["aggregate"]
         print(f"  angular_error_mean:  {agg['angular_error_mean']:.2f} deg")
@@ -151,6 +164,33 @@ def main():
     # Side-by-side comparison (only when both were trained)
     if baseline_metrics is not None and multitask_metrics is not None:
         compare_models(baseline_metrics, multitask_metrics)
+
+    # --- Visualizations ---
+    vis_dir = os.path.join("result", config.experiment_name)
+
+    # Per-material comparison chart
+    if baseline_metrics is not None and multitask_metrics is not None:
+        chart_path = os.path.join(vis_dir, "per_material_comparison.png")
+        plot_per_material_comparison(baseline_metrics, multitask_metrics, chart_path)
+        print(f"Per-material chart saved to {chart_path}")
+
+    # Sphere renders + SH bar charts for a few test samples
+    for tag, raw_results in [("baseline", baseline_results),
+                              ("multitask", multitask_results)]:
+        if raw_results is None:
+            continue
+        n_vis = min(5, len(raw_results["pred_sh"]))
+        for i in range(n_vis):
+            pred = raw_results["pred_sh"][i]
+            target = raw_results["target_sh"][i]
+
+            sphere_path = os.path.join(vis_dir, f"{tag}_sphere_{i}.png")
+            render_sphere_comparison(pred, target, sphere_path,
+                                     title=f"{tag.title()} Sample {i}")
+
+            sh_path = os.path.join(vis_dir, f"{tag}_sh_{i}.png")
+            plot_sh_coefficients(pred, target, sh_path,
+                                  title=f"{tag.title()} SH Coefficients - Sample {i}")
 
     # Save metrics to JSON
     os.makedirs(config.save_dir, exist_ok=True)
