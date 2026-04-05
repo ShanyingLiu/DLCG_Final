@@ -1,23 +1,23 @@
 {
   "baseline": {
     "aggregate": {
-      "angular_error_mean": 84.52111609009188,
-      "angular_error_median": 79.01109329778478,
-      "intensity_error_mean": 0.6789495689851824,
-      "sh_mse_mean": 6.559431977982225,
+      "angular_error_mean": 74.8563626697145,
+      "angular_error_median": 71.99454287363179,
+      "intensity_error_mean": 0.4782949119153957,
+      "sh_mse_mean": 5.91623097312799,
       "n_samples": 3
     },
     "per_material": {
       "diffuse": {
-        "angular_error": 79.01109329778478,
-        "intensity_error": 0.7807904241376292,
-        "sh_mse": 3.884050498014002,
+        "angular_error": 71.99454287363179,
+        "intensity_error": 0.47371948300863703,
+        "sh_mse": 2.8631051503118354,
         "count": 1
       },
       "glossy": {
-        "angular_error": 36.15779252110885,
-        "intensity_error": 0.4222996983997942,
-        "sh_mse": 0.889346794348006,
+        "angular_error": 30.44702026599116,
+        "intensity_error": 0.21336967131687423,
+        "sh_mse": 0.816060088466437,
         "count": 1
       },
       "metallic": {
@@ -33,32 +33,32 @@
         "count": 0
       },
       "dielectric": {
-        "angular_error": 138.394462451382,
-        "intensity_error": 0.8337585844181242,
-        "sh_mse": 14.904898641584667,
+        "angular_error": 122.12752486952054,
+        "intensity_error": 0.7477955814206758,
+        "sh_mse": 14.069527680605699,
         "count": 1
       }
     }
   },
   "multitask": {
     "aggregate": {
-      "angular_error_mean": 82.76954161531937,
-      "angular_error_median": 75.85752774122702,
-      "intensity_error_mean": 0.8878008689414957,
-      "sh_mse_mean": 6.81622395965753,
+      "angular_error_mean": 56.15613309975408,
+      "angular_error_median": 48.61160421458489,
+      "intensity_error_mean": 0.4883088754019515,
+      "sh_mse_mean": 5.753465119851971,
       "n_samples": 3
     },
     "per_material": {
       "diffuse": {
-        "angular_error": 75.85752774122702,
-        "intensity_error": 0.9404552949998339,
-        "sh_mse": 4.378742247098289,
+        "angular_error": 46.792235444436365,
+        "intensity_error": 0.5121111127908856,
+        "sh_mse": 2.8342680538621616,
         "count": 1
       },
       "glossy": {
-        "angular_error": 38.44322968189669,
-        "intensity_error": 0.7964007040181788,
-        "sh_mse": 0.9293511346473601,
+        "angular_error": 73.064559640241,
+        "intensity_error": 0.17885286073456352,
+        "sh_mse": 0.8453574915559761,
         "count": 1
       },
       "metallic": {
@@ -74,9 +74,9 @@
         "count": 0
       },
       "dielectric": {
-        "angular_error": 134.0078674228344,
-        "intensity_error": 0.9265466078064744,
-        "sh_mse": 15.140578497226938,
+        "angular_error": 48.61160421458489,
+        "intensity_error": 0.7739626526804052,
+        "sh_mse": 13.580769814137776,
         "count": 1
       }
     },
