@@ -1,5 +1,15 @@
 # all config stuff with gpu usage
 
+import torch
+
+
+def _best_device():
+    if torch.cuda.is_available():
+        return "cuda"
+    if torch.backends.mps.is_available():
+        return "mps"
+    return "cpu"
+
 
 # All hyperparameters in one place
 class Config:
@@ -25,7 +35,7 @@ class Config:
     pretrained = True
     
     # System
-    device = "cuda"
+    device = _best_device()
     num_workers = 0
     seed = 42
     
