@@ -95,13 +95,13 @@ MATERIAL_DEFS = {
         "transmission": 0.0,
         "ior": 1.45,
     },
-    "dielectric": {
+    "dielectric": {  # temporarily using diffuse params
         "label": 4,
         "metallic": 0.0,
-        "roughness": (0.0, 0.1),
-        "specular": 0.5,
-        "transmission": (0.5, 1.0),
-        "ior": (1.3, 1.7),
+        "roughness": (0.7, 1.0),
+        "specular": 0.0,
+        "transmission": 0.0,
+        "ior": 1.45,
     },
 }
 MAT_NAMES = list(MATERIAL_DEFS.keys())
