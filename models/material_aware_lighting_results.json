@@ -1,85 +1,85 @@
 {
   "baseline": {
     "aggregate": {
-      "angular_error_mean": 74.11308754644912,
-      "angular_error_median": 71.31779225849951,
-      "intensity_error_mean": 0.4754304186889751,
-      "sh_mse_mean": 5.892138928552408,
-      "n_samples": 3
+      "angular_error_mean": 26.854083621010012,
+      "angular_error_median": 16.922605619461187,
+      "intensity_error_mean": 0.28701853361279606,
+      "sh_mse_mean": 1.529820989989175,
+      "n_samples": 150
     },
     "per_material": {
       "diffuse": {
-        "angular_error": 71.31779225849951,
-        "intensity_error": 0.4691838948379095,
-        "sh_mse": 2.8407865049179355,
-        "count": 1
+        "angular_error": 26.125513586124395,
+        "intensity_error": 0.22751487927892594,
+        "sh_mse": 1.3813652095633222,
+        "count": 30
       },
       "glossy": {
-        "angular_error": 26.934791660721636,
-        "intensity_error": 0.21331811171359907,
-        "sh_mse": 0.8064592484230699,
-        "count": 1
+        "angular_error": 32.16696531382303,
+        "intensity_error": 0.31232540095530525,
+        "sh_mse": 1.27521013029747,
+        "count": 32
       },
       "metallic": {
-        "angular_error": null,
-        "intensity_error": null,
-        "sh_mse": null,
-        "count": 0
+        "angular_error": 26.24661019633593,
+        "intensity_error": 0.251645309081123,
+        "sh_mse": 0.7607314612110858,
+        "count": 25
       },
       "rough_metallic": {
-        "angular_error": null,
-        "intensity_error": null,
-        "sh_mse": null,
-        "count": 0
+        "angular_error": 18.882019607215728,
+        "intensity_error": 0.3212112915394528,
+        "sh_mse": 0.9810386760562805,
+        "count": 31
       },
       "dielectric": {
-        "angular_error": 124.08667872012622,
-        "intensity_error": 0.7437892495154168,
-        "sh_mse": 14.029171032316217,
-        "count": 1
+        "angular_error": 30.421761962292084,
+        "intensity_error": 0.31200743963221084,
+        "sh_mse": 3.0560932048104905,
+        "count": 32
       }
     }
   },
   "multitask": {
     "aggregate": {
-      "angular_error_mean": 55.89819078493591,
-      "angular_error_median": 50.017913349908405,
-      "intensity_error_mean": 0.48999482756965945,
-      "sh_mse_mean": 5.75948990124149,
-      "n_samples": 3
+      "angular_error_mean": 29.10609806858051,
+      "angular_error_median": 15.514198321843796,
+      "intensity_error_mean": 0.2850743840974189,
+      "sh_mse_mean": 1.5872618102239353,
+      "n_samples": 150
     },
     "per_material": {
       "diffuse": {
-        "angular_error": 44.32311376747957,
-        "intensity_error": 0.5082221559375022,
-        "sh_mse": 2.820627983224693,
-        "count": 1
+        "angular_error": 26.767460849825298,
+        "intensity_error": 0.22495965633413045,
+        "sh_mse": 1.3494880373034086,
+        "count": 30
       },
       "glossy": {
-        "angular_error": 73.35354523741975,
-        "intensity_error": 0.18851274422504738,
-        "sh_mse": 0.8392370375722615,
-        "count": 1
+        "angular_error": 33.24251567692744,
+        "intensity_error": 0.3280113373205125,
+        "sh_mse": 1.3610796073289857,
+        "count": 32
       },
       "metallic": {
-        "angular_error": null,
-        "intensity_error": null,
-        "sh_mse": null,
-        "count": 0
+        "angular_error": 27.307562018571875,
+        "intensity_error": 0.23491927490674214,
+        "sh_mse": 0.7999295355086278,
+        "count": 25
       },
       "rough_metallic": {
-        "angular_error": null,
-        "intensity_error": null,
-        "sh_mse": null,
-        "count": 0
+        "angular_error": 22.409579117547565,
+        "intensity_error": 0.3142198106062014,
+        "sh_mse": 1.0816478629107784,
+        "count": 31
       },
       "dielectric": {
-        "angular_error": 50.017913349908405,
-        "intensity_error": 0.7732495825464286,
-        "sh_mse": 13.618604682927515,
-        "count": 1
+        "angular_error": 35.05451187569899,
+        "intensity_error": 0.3094440352772414,
+        "sh_mse": 3.141273776312836,
+        "count": 32
       }
     },
-    "material_accuracy": 0.6666666666666666
+    "material_accuracy": 0.9466666666666667
   }
 }
