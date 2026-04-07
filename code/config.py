@@ -12,7 +12,7 @@ class Config:
     
     # Training
     batch_size = 32
-    learning_rate = 1e-4
+    learning_rate = 5e-4
     num_epochs = 50
     weight_decay = 1e-4
     
@@ -26,7 +26,7 @@ class Config:
     
     # System
     device = "cuda"
-    num_workers = 4
+    num_workers = 0
     seed = 42
     
     # Logging

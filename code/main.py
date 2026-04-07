@@ -1,5 +1,8 @@
 # Entry point for training baseline and multitask models
 
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
+
 import argparse
 import json
 import os
@@ -58,7 +61,8 @@ def train_model(config, is_multitask, train_loader, val_loader):
         criterion = None  # baseline uses plain MSE in Trainer
 
     optimizer = AdamW(
-        model.parameters(), lr=config.learning_rate,
+        filter(lambda p: p.requires_grad, model.parameters()),
+        lr=config.learning_rate,
         weight_decay=config.weight_decay,
     )
     scheduler = CosineAnnealingLR(optimizer, T_max=config.num_epochs)

@@ -37,15 +37,19 @@ def _eval_sh_basis(normals):
     return basis
 
 
-def _sh_to_color(sh_coeffs, normals):
+def _sh_to_color(sh_coeffs, normals, normalize_max=None):
     """Compute Lambertian-shaded RGB from SH coefficients and surface normals.
 
     Args:
         sh_coeffs: (27,) flattened as [R0..R8, G0..G8, B0..B8].
         normals: (N, 3) unit normals.
+        normalize_max: if provided, use this value to normalize RGB instead of
+                       the per-image max. Pass the same value for GT and
+                       predicted to keep them on a consistent color scale.
 
     Returns:
         (N, 3) RGB values, clipped to [0, 1].
+        float, the raw max value before normalization.
     """
     sh = np.asarray(sh_coeffs, dtype=np.float64).reshape(3, 9)  # (3, 9)
     basis = _eval_sh_basis(normals)  # (N, 9)
@@ -69,18 +73,19 @@ def _sh_to_color(sh_coeffs, normals):
     for c in range(3):
         rgb[:, c] = weighted_basis @ sh[c]
 
-    # Normalize to [0, 1] range for display
-    max_val = rgb.max()
+    raw_max = rgb.max()
+    max_val = normalize_max if normalize_max is not None else raw_max
     if max_val > 0:
         rgb = rgb / max_val
-    return np.clip(rgb, 0.0, 1.0)
+    return np.clip(rgb, 0.0, 1.0), raw_max
 
 
-def _make_sphere_image(sh_coeffs, resolution=128):
+def _make_sphere_image(sh_coeffs, resolution=128, normalize_max=None):
     """Render a Lambertian sphere lit by given SH coefficients.
 
     Returns:
         (resolution, resolution, 3) RGB image as uint8, black background.
+        float, the raw max value before normalization.
     """
     y_coords = np.linspace(1, -1, resolution)
     x_coords = np.linspace(-1, 1, resolution)
@@ -92,11 +97,11 @@ def _make_sphere_image(sh_coeffs, resolution=128):
     zz = np.sqrt(np.maximum(1.0 - r2, 0.0))
     normals = np.stack([xx[mask], yy[mask], zz[mask]], axis=-1)
 
-    colors = _sh_to_color(sh_coeffs, normals)
+    colors, raw_max = _sh_to_color(sh_coeffs, normals, normalize_max)
 
     image = np.zeros((resolution, resolution, 3))
     image[mask] = colors
-    return (image * 255).astype(np.uint8), mask
+    return (image * 255).astype(np.uint8), mask, raw_max
 
 
 # ---------------------------------------------------------------------------
@@ -111,8 +116,14 @@ def render_sphere_comparison(pred_sh, target_sh, save_path, title=None):
         target_sh: (27,) ground-truth SH coefficients.
         save_path: path to save the output image.
     """
-    pred_img, _ = _make_sphere_image(pred_sh)
-    gt_img, _ = _make_sphere_image(target_sh)
+    # First pass: compute raw max for both so they share the same scale
+    _, _, gt_max = _make_sphere_image(target_sh)
+    _, _, pred_max = _make_sphere_image(pred_sh)
+    shared_max = max(gt_max, pred_max)
+
+    # Second pass: render with shared normalization
+    gt_img, _, _ = _make_sphere_image(target_sh, normalize_max=shared_max)
+    pred_img, _, _ = _make_sphere_image(pred_sh, normalize_max=shared_max)
 
     fig, axes = plt.subplots(1, 2, figsize=(6, 3))
     axes[0].imshow(gt_img)

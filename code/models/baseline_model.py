@@ -26,6 +26,12 @@ class BaselineLightingNet(nn.Module):
         backbone = backbone_fn(weights=weights)
         self.features = nn.Sequential(*list(backbone.children())[:-1])  # up to avgpool
 
+        # Freeze backbone except the last block (layer4)
+        if config.pretrained:
+            for name, param in self.features.named_parameters():
+                if not name.startswith('7'):  # layer4 is child index 7
+                    param.requires_grad = False
+
         # Lighting head: 27-dim SH coefficient regression
         self.lighting_head = nn.Sequential(
             nn.Linear(feat_dim, 256),
