@@ -36,7 +36,7 @@ class Config:
     
     # System
     device = _best_device()
-    num_workers = 0
+    num_workers = 2
     seed = 42
     
     # Logging

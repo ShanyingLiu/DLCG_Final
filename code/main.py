@@ -32,15 +32,15 @@ def make_dataloaders(config, transform):
 
     train_loader = DataLoader(
         train_ds, batch_size=config.batch_size, shuffle=True,
-        num_workers=config.num_workers, pin_memory=(config.device == "cuda"),
+        num_workers=config.num_workers, pin_memory=(str(config.device) == "cuda"),
     )
     val_loader = DataLoader(
         val_ds, batch_size=config.batch_size, shuffle=False,
-        num_workers=config.num_workers, pin_memory=(config.device == "cuda"),
+        num_workers=config.num_workers, pin_memory=(str(config.device) == "cuda"),
     )
     test_loader = DataLoader(
         test_ds, batch_size=config.batch_size, shuffle=False,
-        num_workers=config.num_workers, pin_memory=(config.device == "cuda"),
+        num_workers=config.num_workers, pin_memory=(str(config.device) == "cuda"),
     )
     print(f"Dataset splits: train={len(train_ds)}, val={len(val_ds)}, "
           f"test={len(test_ds)}")

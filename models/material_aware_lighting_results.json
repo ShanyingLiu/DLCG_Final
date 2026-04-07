@@ -1,85 +1,85 @@
 {
   "baseline": {
     "aggregate": {
-      "angular_error_mean": 26.854083621010012,
-      "angular_error_median": 16.922605619461187,
-      "intensity_error_mean": 0.28701853361279606,
-      "sh_mse_mean": 1.529820989989175,
+      "angular_error_mean": 27.918526684702847,
+      "angular_error_median": 16.701011783418394,
+      "intensity_error_mean": 0.29662299689368676,
+      "sh_mse_mean": 1.5613415242931783,
       "n_samples": 150
     },
     "per_material": {
       "diffuse": {
-        "angular_error": 26.125513586124395,
-        "intensity_error": 0.22751487927892594,
-        "sh_mse": 1.3813652095633222,
+        "angular_error": 25.59100042559358,
+        "intensity_error": 0.22898635154142793,
+        "sh_mse": 1.3272734297012951,
         "count": 30
       },
       "glossy": {
-        "angular_error": 32.16696531382303,
-        "intensity_error": 0.31232540095530525,
-        "sh_mse": 1.27521013029747,
+        "angular_error": 34.31312012976333,
+        "intensity_error": 0.32660321608544834,
+        "sh_mse": 1.3531248912952694,
         "count": 32
       },
       "metallic": {
-        "angular_error": 26.24661019633593,
-        "intensity_error": 0.251645309081123,
-        "sh_mse": 0.7607314612110858,
+        "angular_error": 27.382371695065995,
+        "intensity_error": 0.22328098039774388,
+        "sh_mse": 0.7347099393319877,
         "count": 25
       },
       "rough_metallic": {
-        "angular_error": 18.882019607215728,
-        "intensity_error": 0.3212112915394528,
-        "sh_mse": 0.9810386760562805,
+        "angular_error": 21.84593169365211,
+        "intensity_error": 0.3231420978379075,
+        "sh_mse": 1.0537479307741862,
         "count": 31
       },
       "dielectric": {
-        "angular_error": 30.421761962292084,
-        "intensity_error": 0.31200743963221084,
-        "sh_mse": 3.0560932048104905,
+        "angular_error": 30.0076865907915,
+        "intensity_error": 0.3616602040674093,
+        "sh_mse": 3.1265342154434324,
         "count": 32
       }
     }
   },
   "multitask": {
     "aggregate": {
-      "angular_error_mean": 29.10609806858051,
-      "angular_error_median": 15.514198321843796,
-      "intensity_error_mean": 0.2850743840974189,
-      "sh_mse_mean": 1.5872618102239353,
+      "angular_error_mean": 27.679160468949327,
+      "angular_error_median": 16.390121341780286,
+      "intensity_error_mean": 0.30160087579759726,
+      "sh_mse_mean": 1.5420680826169102,
       "n_samples": 150
     },
     "per_material": {
       "diffuse": {
-        "angular_error": 26.767460849825298,
-        "intensity_error": 0.22495965633413045,
-        "sh_mse": 1.3494880373034086,
+        "angular_error": 26.764293507292063,
+        "intensity_error": 0.2541790243694553,
+        "sh_mse": 1.3514696697429693,
         "count": 30
       },
       "glossy": {
-        "angular_error": 33.24251567692744,
-        "intensity_error": 0.3280113373205125,
-        "sh_mse": 1.3610796073289857,
+        "angular_error": 34.243340256669406,
+        "intensity_error": 0.353698182937888,
+        "sh_mse": 1.3682938639896318,
         "count": 32
       },
       "metallic": {
-        "angular_error": 27.307562018571875,
-        "intensity_error": 0.23491927490674214,
-        "sh_mse": 0.7999295355086278,
+        "angular_error": 24.845533990641457,
+        "intensity_error": 0.22582039600483675,
+        "sh_mse": 0.7442726070489933,
         "count": 25
       },
       "rough_metallic": {
-        "angular_error": 22.409579117547565,
-        "intensity_error": 0.3142198106062014,
-        "sh_mse": 1.0816478629107784,
+        "angular_error": 21.05039382604407,
+        "intensity_error": 0.3039669675726617,
+        "sh_mse": 1.024515320478157,
         "count": 31
       },
       "dielectric": {
-        "angular_error": 35.05451187569899,
-        "intensity_error": 0.3094440352772414,
-        "sh_mse": 3.141273776312836,
+        "angular_error": 30.608056829275483,
+        "intensity_error": 0.3508729028021901,
+        "sh_mse": 3.01918526692286,
         "count": 32
       }
     },
-    "material_accuracy": 0.9466666666666667
+    "material_accuracy": 0.9533333333333334
   }
 }
