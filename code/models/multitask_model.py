@@ -32,25 +32,32 @@ class MaterialAwareLightingNet(nn.Module):
                 if not name.startswith('7'):  # layer4 is child index 7
                     param.requires_grad = False
 
-        # Lighting head: 27-dim SH coefficient regression
+        # Material branch: hidden features used for both classification and conditioning
+        self.material_encoder = nn.Sequential(
+            nn.Linear(feat_dim, 128),
+            nn.ReLU(inplace=True),
+        )
+        self.material_dropout = nn.Dropout(0.3)
+        self.material_classifier = nn.Linear(128, config.num_material_classes)
+
+        # Lighting head: conditioned on material features
         self.lighting_head = nn.Sequential(
-            nn.Linear(feat_dim, 256),
+            nn.Linear(feat_dim + 128, 256),
             nn.ReLU(inplace=True),
             nn.Dropout(0.3),
             nn.Linear(256, config.sh_dim),
         )
 
-        # Material head: 5-class classification
-        self.material_head = nn.Sequential(
-            nn.Linear(feat_dim, 128),
-            nn.ReLU(inplace=True),
-            nn.Dropout(0.3),
-            nn.Linear(128, config.num_material_classes),
-        )
-
     def forward(self, x):
         feat = self.features(x)          # (B, feat_dim, 1, 1)
         feat = torch.flatten(feat, 1)    # (B, feat_dim)
-        lighting = self.lighting_head(feat)
-        material = self.material_head(feat)
+
+        # Material branch
+        mat_features = self.material_encoder(feat)          # (B, 128)
+        material = self.material_classifier(self.material_dropout(mat_features))
+
+        # Lighting branch conditioned on material features
+        lighting_input = torch.cat([feat, mat_features], dim=1)
+        lighting = self.lighting_head(lighting_input)
+
         return lighting, material
