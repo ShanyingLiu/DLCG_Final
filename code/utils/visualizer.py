@@ -212,6 +212,93 @@ def plot_per_material_comparison(baseline_metrics, multitask_metrics, save_path)
     plt.close(fig)
 
 
+def render_combined_comparison(input_image_path, pred_sh_baseline, pred_sh_multitask,
+                               target_sh, save_path, title=None):
+    """4-panel image: original input, GT sphere, baseline sphere, multitask sphere.
+
+    Args:
+        input_image_path: path to the original input image.
+        pred_sh_baseline: (27,) baseline predicted SH coefficients.
+        pred_sh_multitask: (27,) multitask predicted SH coefficients.
+        target_sh: (27,) ground-truth SH coefficients.
+        save_path: path to save the output image.
+    """
+    from PIL import Image
+
+    # Shared normalization across all three spheres
+    _, _, gt_max = _make_sphere_image(target_sh)
+    _, _, bl_max = _make_sphere_image(pred_sh_baseline)
+    _, _, mt_max = _make_sphere_image(pred_sh_multitask)
+    shared_max = max(gt_max, bl_max, mt_max)
+
+    gt_img, _, _ = _make_sphere_image(target_sh, normalize_max=shared_max)
+    bl_img, _, _ = _make_sphere_image(pred_sh_baseline, normalize_max=shared_max)
+    mt_img, _, _ = _make_sphere_image(pred_sh_multitask, normalize_max=shared_max)
+
+    input_img = Image.open(input_image_path).convert('RGB')
+
+    fig, axes = plt.subplots(1, 4, figsize=(12, 3))
+    axes[0].imshow(input_img)
+    axes[0].set_title("Input Image")
+    axes[1].imshow(gt_img)
+    axes[1].set_title("Ground Truth")
+    axes[2].imshow(bl_img)
+    axes[2].set_title("Baseline")
+    axes[3].imshow(mt_img)
+    axes[3].set_title("Multitask")
+    for ax in axes:
+        ax.axis("off")
+
+    if title:
+        fig.suptitle(title, fontsize=11)
+    fig.tight_layout()
+    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+    fig.savefig(save_path, dpi=150, bbox_inches="tight")
+    plt.close(fig)
+
+
+def plot_combined_sh(pred_sh_baseline, pred_sh_multitask, target_sh,
+                     save_path, title=None):
+    """Bar chart comparing GT, baseline, and multitask SH coefficients per channel.
+
+    Args:
+        pred_sh_baseline: (27,) baseline predicted SH coefficients.
+        pred_sh_multitask: (27,) multitask predicted SH coefficients.
+        target_sh: (27,) ground-truth SH coefficients.
+        save_path: path to save the output image.
+    """
+    gt = np.asarray(target_sh).reshape(3, 9)
+    bl = np.asarray(pred_sh_baseline).reshape(3, 9)
+    mt = np.asarray(pred_sh_multitask).reshape(3, 9)
+
+    channels = ["Red", "Green", "Blue"]
+    colors_gt = ["#cc4444", "#44aa44", "#4444cc"]
+    colors_bl = ["#ff8888", "#88dd88", "#8888ff"]
+    colors_mt = ["#ffbb88", "#88ddbb", "#bb88ff"]
+
+    fig, axes = plt.subplots(3, 1, figsize=(10, 8), sharex=True)
+    x = np.arange(9)
+    w = 0.25
+    labels = [f"L{l}M{m}" for l in range(3) for m in range(-l, l + 1)]
+
+    for c, ax in enumerate(axes):
+        ax.bar(x - w, gt[c], w, label="GT", color=colors_gt[c])
+        ax.bar(x,     bl[c], w, label="Baseline", color=colors_bl[c])
+        ax.bar(x + w, mt[c], w, label="Multitask", color=colors_mt[c])
+        ax.set_ylabel(channels[c])
+        ax.legend(fontsize=8)
+        ax.set_xticks(x)
+
+    axes[-1].set_xticklabels(labels, fontsize=8)
+    axes[-1].set_xlabel("SH Basis Function")
+    suptitle = title or "SH Coefficient Comparison"
+    fig.suptitle(suptitle, fontsize=11)
+    fig.tight_layout()
+    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+    fig.savefig(save_path, dpi=150, bbox_inches="tight")
+    plt.close(fig)
+
+
 def plot_training_curves(history, save_path, title=None):
     """Plot training and validation loss curves over epochs.
 

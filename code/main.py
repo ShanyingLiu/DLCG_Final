@@ -22,6 +22,7 @@ from evaluation.evaluator import evaluate_model, compute_all_metrics, compare_mo
 from utils.visualizer import (
     render_sphere_comparison, plot_sh_coefficients,
     plot_per_material_comparison, plot_training_curves,
+    render_combined_comparison, plot_combined_sh,
 )
 
 
@@ -72,8 +73,8 @@ def train_model(config, is_multitask, train_loader, val_loader):
     history = trainer.fit(train_loader, val_loader)
 
     # Save training curves
-    curves_path = os.path.join(config.save_dir,
-                               f"{config.experiment_name}_{tag}_curves.png")
+    curves_path = os.path.join("result", config.experiment_name,
+                               f"{tag}_curves.png")
     plot_training_curves(history, curves_path, title=f"{tag.title()} Training Curves")
     print(f"  Training curves saved to {curves_path}")
 
@@ -195,6 +196,34 @@ def main():
             sh_path = os.path.join(vis_dir, f"{tag}_sh_{i}.png")
             plot_sh_coefficients(pred, target, sh_path,
                                   title=f"{tag.title()} SH Coefficients - Sample {i}")
+
+    # Combined comparison visualizations (when both models were trained)
+    if baseline_results is not None and multitask_results is not None:
+        test_ds = SphereDataset('test', config)
+        n_vis = min(5, len(baseline_results["pred_sh"]))
+        for i in range(n_vis):
+            real_idx = test_ds.indices[i]
+            img_path = test_ds.image_paths[real_idx]
+
+            combo_path = os.path.join(vis_dir, f"combined_sphere_{i}.png")
+            render_combined_comparison(
+                img_path,
+                baseline_results["pred_sh"][i],
+                multitask_results["pred_sh"][i],
+                baseline_results["target_sh"][i],
+                combo_path,
+                title=f"Sample {i}",
+            )
+
+            sh_combo_path = os.path.join(vis_dir, f"combined_sh_{i}.png")
+            plot_combined_sh(
+                baseline_results["pred_sh"][i],
+                multitask_results["pred_sh"][i],
+                baseline_results["target_sh"][i],
+                sh_combo_path,
+                title=f"SH Coefficients - Sample {i}",
+            )
+        print(f"Combined comparison images saved to {vis_dir}")
 
     # Save metrics to JSON
     os.makedirs(config.save_dir, exist_ok=True)
