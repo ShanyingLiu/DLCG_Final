@@ -26,15 +26,11 @@ from utils.visualizer import (
 )
 
 
-def make_dataloaders(config, transform):
+def make_datasets_and_loaders(config, transform):
     train_ds = SphereDataset('train', config, transform=transform)
     val_ds = SphereDataset('val', config, transform=transform)
     test_ds = SphereDataset('test', config, transform=transform)
 
-    train_loader = DataLoader(
-        train_ds, batch_size=config.batch_size, shuffle=True,
-        num_workers=config.num_workers, pin_memory=(str(config.device) == "cuda"),
-    )
     val_loader = DataLoader(
         val_ds, batch_size=config.batch_size, shuffle=False,
         num_workers=config.num_workers, pin_memory=(str(config.device) == "cuda"),
@@ -45,10 +41,10 @@ def make_dataloaders(config, transform):
     )
     print(f"Dataset splits: train={len(train_ds)}, val={len(val_ds)}, "
           f"test={len(test_ds)}")
-    return train_loader, val_loader, test_loader
+    return train_ds, val_loader, test_loader
 
 
-def train_model(config, is_multitask, train_loader, val_loader):
+def train_model(config, is_multitask, train_ds, val_loader):
     tag = "multitask" if is_multitask else "baseline"
     print(f"\n{'='*60}")
     print(f"Training {tag} model ({config.backbone})")
@@ -70,7 +66,7 @@ def train_model(config, is_multitask, train_loader, val_loader):
 
     trainer = Trainer(model, criterion, optimizer, scheduler, config,
                       is_multitask=is_multitask)
-    history = trainer.fit(train_loader, val_loader)
+    history = trainer.fit(train_ds, val_loader)
 
     # Save training curves
     curves_path = os.path.join("result", config.experiment_name,
@@ -116,18 +112,18 @@ def main():
                      std=[0.229, 0.224, 0.225]),
     ])
 
-    train_loader, val_loader, test_loader = make_dataloaders(config, transform)
+    train_ds, val_loader, test_loader = make_datasets_and_loaders(config, transform)
 
     baseline_model = None
     multitask_model = None
 
     if args.mode in ('baseline', 'both'):
         baseline_model = train_model(config, is_multitask=False,
-                                     train_loader=train_loader, val_loader=val_loader)
+                                     train_ds=train_ds, val_loader=val_loader)
 
     if args.mode in ('multitask', 'both'):
         multitask_model = train_model(config, is_multitask=True,
-                                      train_loader=train_loader, val_loader=val_loader)
+                                      train_ds=train_ds, val_loader=val_loader)
 
     # --- Evaluation on test set ---
     print(f"\n{'='*60}")

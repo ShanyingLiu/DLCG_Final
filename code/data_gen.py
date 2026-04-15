@@ -22,6 +22,7 @@ Options
 Example
 --------------------
     blender --background --python code/data_gen.py -- --num_images 20 --resolution 128 --samples 32
+    /Applications/Blender.app/Contents/MacOS/Blender --background --python code/data_gen.py -- --num_images 100 --resolution 256  --samples 32 --show_hdri_bg
 """
 
 import bpy

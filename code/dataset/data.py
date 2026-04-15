@@ -20,24 +20,26 @@ class SphereDataset(Dataset):
         self.transform = transform
 
         # Load and merge metadata from all data roots
-        all_entries_with_paths = []
-        for images_root, metadata_root in config.data_roots:
+        all_image_paths = []
+        all_entries = []
+        all_source_tags = []
+        for images_root, metadata_root, source_tag in config.data_roots:
             metadata_path = os.path.join(metadata_root, "metadata.json")
             with open(metadata_path, 'r') as f:
                 entries = json.load(f)
             for entry in entries:
-                all_entries_with_paths.append((
-                    os.path.join(images_root, entry["filename"]),
-                    entry,
-                ))
+                all_image_paths.append(os.path.join(images_root, entry["filename"]))
+                all_entries.append(entry)
+                all_source_tags.append(source_tag)
 
         # Build parallel lists
-        self.image_paths = [p for p, _ in all_entries_with_paths]
+        self.image_paths = all_image_paths
+        self.source_tags = np.array(all_source_tags)
         self.sh_coeffs = np.array(
-            [e["sh_coefficients"] for _, e in all_entries_with_paths], dtype=np.float32
+            [e["sh_coefficients"] for e in all_entries], dtype=np.float32
         )
         self.material_labels = np.array(
-            [e["material_label"] for _, e in all_entries_with_paths], dtype=np.int64
+            [e["material_label"] for e in all_entries], dtype=np.int64
         )
 
         # Train / val / test split (70 / 15 / 15)

@@ -13,10 +13,19 @@ def _best_device():
 
 # All hyperparameters in one place
 class Config:
-    # Data — list of (images_root, metadata_root) pairs to pool together
+    # Data — list of (images_root, metadata_root, source_tag) tuples
     data_roots = [
-        ("./dataset/renders_bg/images", "./dataset/renders_bg/"),
-        ("./dataset/renders/images",    "./dataset/renders/"),
+        ("./dataset/renders/images",    "./dataset/renders/",    "black"),
+        ("./dataset/renders_bg/images", "./dataset/renders_bg/", "hdri"),
+    ]
+
+    # Curriculum learning — list of (last_epoch, {source_tag: weight})
+    # Weights are relative mix proportions (don't need to sum to 1)
+    curriculum = [
+        (15, {"black": 1.0, "hdri": 0.0}),   # Phase 1: black bg only
+        (25, {"black": 0.7, "hdri": 0.3}),   # Phase 2: mostly black
+        (35, {"black": 0.5, "hdri": 0.5}),   # Phase 3: equal mix
+        (50, {"black": 0.0, "hdri": 1.0}),   # Phase 4: hdri only
     ]
     num_material_classes = 5
     sh_dim = 27
@@ -30,7 +39,7 @@ class Config:
     
     # Loss weights
     lighting_loss_weight = 1.0
-    material_loss_weight = 0.3
+    material_loss_weight = 0.5
     
     # Model
     backbone = "resnet50" # "resnet18"/"efficientnet"
@@ -38,7 +47,7 @@ class Config:
     
     # System
     device = _best_device()
-    num_workers = 2
+    num_workers = 1
     seed = 42
     
     # Logging

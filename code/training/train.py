@@ -1,7 +1,9 @@
 # Training loop for baseline and multitask models
 
 import os
+import numpy as np
 import torch
+from torch.utils.data import DataLoader, WeightedRandomSampler
 
 
 class Trainer:
@@ -103,7 +105,47 @@ class Trainer:
 
         return metrics
 
-    def fit(self, train_loader, val_loader):
+    def _get_curriculum_phase(self, epoch):
+        """Return the mix dict for the given epoch, or None if no curriculum."""
+        curriculum = getattr(self.config, 'curriculum', None)
+        if not curriculum:
+            return None
+        for last_epoch, mix in curriculum:
+            if epoch <= last_epoch:
+                return mix
+        # Past the last defined phase — use the final one
+        return curriculum[-1][1]
+
+    def _build_train_loader(self, train_ds, mix):
+        """Build a DataLoader with a WeightedRandomSampler for the given mix."""
+        # Compute per-sample weights based on source tag and desired mix
+        source_tags = train_ds.source_tags[train_ds.indices]
+        weights = np.zeros(len(train_ds), dtype=np.float64)
+        for tag, w in mix.items():
+            mask = source_tags == tag
+            n_tag = mask.sum()
+            if n_tag > 0 and w > 0:
+                weights[mask] = w / n_tag
+
+        sampler = WeightedRandomSampler(
+            weights=torch.from_numpy(weights),
+            num_samples=int((weights > 0).sum()),
+            replacement=True,
+        )
+        return DataLoader(
+            train_ds, batch_size=self.config.batch_size, sampler=sampler,
+            num_workers=self.config.num_workers,
+            pin_memory=(str(self.device) == "cuda"),
+        )
+
+    def fit(self, train_ds_or_loader, val_loader):
+        """Train the model.
+
+        Args:
+            train_ds_or_loader: either a DataLoader (no curriculum) or a
+                SphereDataset (curriculum phases will rebuild the loader).
+            val_loader: validation DataLoader (always uses the full mix).
+        """
         history = {
             "train_loss": [],
             "val_loss": [],
@@ -113,7 +155,27 @@ class Trainer:
             "val_loss_material": [],
         }
 
+        # Determine if we're using curriculum learning
+        use_curriculum = (hasattr(train_ds_or_loader, 'source_tags')
+                          and getattr(self.config, 'curriculum', None))
+        if use_curriculum:
+            train_ds = train_ds_or_loader
+        else:
+            train_loader = train_ds_or_loader
+
+        current_mix = None
+
         for epoch in range(1, self.config.num_epochs + 1):
+            # Rebuild train loader when curriculum phase changes
+            if use_curriculum:
+                mix = self._get_curriculum_phase(epoch)
+                if mix != current_mix:
+                    current_mix = mix
+                    train_loader = self._build_train_loader(train_ds, mix)
+                    active = {k: v for k, v in mix.items() if v > 0}
+                    print(f"  [curriculum] phase mix: {active}")
+                    print(f"  [curriculum] loader size: {len(train_loader)} batches")
+
             print(f"Epoch {epoch}/{self.config.num_epochs}")
 
             train_metrics = self.train_epoch(train_loader)
