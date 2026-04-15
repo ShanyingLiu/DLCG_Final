@@ -47,6 +47,8 @@ _p.add_argument("--seed", type=int, default=42)
 _p.add_argument("--output_dir", type=str, default=None)
 _p.add_argument("--hdri_dir", type=str, default=None)
 _p.add_argument("--samples", type=int, default=128)
+_p.add_argument("--show_hdri_bg", action="store_true",
+                help="Show HDRI environment as the camera background instead of black")
 args = _p.parse_args(_argv)
 
 # Paths (resolve relative to project root = parent of code/)
@@ -56,7 +58,7 @@ except NameError:
     _SCRIPT_DIR = Path(os.getcwd())
 _PROJECT_DIR = _SCRIPT_DIR.parent
 
-OUTPUT_DIR = Path(args.output_dir) if args.output_dir else _PROJECT_DIR / "dataset" / "renders"
+OUTPUT_DIR = Path(args.output_dir) if args.output_dir else _PROJECT_DIR / "dataset" / "renders_bg"
 HDRI_DIR = Path(args.hdri_dir) if args.hdri_dir else _PROJECT_DIR / "dataset" / "hdris"
 IMAGE_DIR = OUTPUT_DIR / "images"
 
@@ -165,7 +167,7 @@ def compute_sh_coefficients(blender_image):
     pixels = np.array(blender_image.pixels[:], dtype=np.float32).reshape(h, w, 4)
     rgb = pixels[:, :, :3]
 
-    # Pixel grid → spherical coordinates
+    # Pixel grid -> spherical coordinates
     j_arr = np.arange(w, dtype=np.float32)
     i_arr = np.arange(h, dtype=np.float32)
     jj, ii = np.meshgrid(j_arr, i_arr)
@@ -366,8 +368,8 @@ def create_sphere():
     -------
     (env_node, mapping_node, bg_hdri_node) for later per-frame updates.
     """
-def build_world_shader():
-    
+def build_world_shader(show_hdri_bg=False):
+
     world = bpy.context.scene.world
     if world is None:
         world = bpy.data.worlds.new("World")
@@ -381,21 +383,28 @@ def build_world_shader():
     n_map = tree.nodes.new("ShaderNodeMapping")
     n_env = tree.nodes.new("ShaderNodeTexEnvironment")
     n_bg_hdri = tree.nodes.new("ShaderNodeBackground")
-    n_bg_black = tree.nodes.new("ShaderNodeBackground")
-    n_lpath = tree.nodes.new("ShaderNodeLightPath")
-    n_mix = tree.nodes.new("ShaderNodeMixShader")
     n_out = tree.nodes.new("ShaderNodeOutputWorld")
-
-    n_bg_black.inputs["Color"].default_value = (0.0, 0.0, 0.0, 1.0)
-    n_bg_black.inputs["Strength"].default_value = 1.0
 
     link(n_coord.outputs["Generated"], n_map.inputs["Vector"])
     link(n_map.outputs["Vector"], n_env.inputs["Vector"])
     link(n_env.outputs["Color"], n_bg_hdri.inputs["Color"])
-    link(n_lpath.outputs["Is Camera Ray"], n_mix.inputs["Fac"])
-    link(n_bg_hdri.outputs["Background"], n_mix.inputs[1])   # fac=0 → HDRI
-    link(n_bg_black.outputs["Background"], n_mix.inputs[2])   # fac=1 → gray
-    link(n_mix.outputs["Shader"], n_out.inputs["Surface"])
+
+    if show_hdri_bg:
+        # HDRI visible to all rays including camera
+        link(n_bg_hdri.outputs["Background"], n_out.inputs["Surface"])
+    else:
+        # Light-Path trick: HDRI for lighting, black for camera
+        n_bg_black = tree.nodes.new("ShaderNodeBackground")
+        n_lpath = tree.nodes.new("ShaderNodeLightPath")
+        n_mix = tree.nodes.new("ShaderNodeMixShader")
+
+        n_bg_black.inputs["Color"].default_value = (0.0, 0.0, 0.0, 1.0)
+        n_bg_black.inputs["Strength"].default_value = 1.0
+
+        link(n_lpath.outputs["Is Camera Ray"], n_mix.inputs["Fac"])
+        link(n_bg_hdri.outputs["Background"], n_mix.inputs[1])   # fac=0 → HDRI
+        link(n_bg_black.outputs["Background"], n_mix.inputs[2])   # fac=1 → black
+        link(n_mix.outputs["Shader"], n_out.inputs["Surface"])
 
     return n_env, n_map, n_bg_hdri
 
@@ -482,7 +491,7 @@ def main():
     setup_render(args.resolution, args.samples)
     create_camera()
     sphere = create_sphere()
-    env_node, map_node, bg_node = build_world_shader()
+    env_node, map_node, bg_node = build_world_shader(show_hdri_bg=args.show_hdri_bg)
 
     # ---- Pre-load HDRIs and compute SH coefficients ----
     print("Pre-computing SH coefficients for all HDRIs ...")

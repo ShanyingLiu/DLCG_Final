@@ -19,25 +19,29 @@ class SphereDataset(Dataset):
         self.config = config
         self.transform = transform
 
-        # Load metadata (list of per-image dicts from data_gen.py)
-        metadata_path = os.path.join(config.metadata_root, "metadata.json")
-        with open(metadata_path, 'r') as f:
-            all_entries = json.load(f)
+        # Load and merge metadata from all data roots
+        all_entries_with_paths = []
+        for images_root, metadata_root in config.data_roots:
+            metadata_path = os.path.join(metadata_root, "metadata.json")
+            with open(metadata_path, 'r') as f:
+                entries = json.load(f)
+            for entry in entries:
+                all_entries_with_paths.append((
+                    os.path.join(images_root, entry["filename"]),
+                    entry,
+                ))
 
-        # Build parallel lists from the metadata entries
-        self.image_paths = [
-            os.path.join(config.images_root, entry["filename"])
-            for entry in all_entries
-        ]
+        # Build parallel lists
+        self.image_paths = [p for p, _ in all_entries_with_paths]
         self.sh_coeffs = np.array(
-            [entry["sh_coefficients"] for entry in all_entries], dtype=np.float32
+            [e["sh_coefficients"] for _, e in all_entries_with_paths], dtype=np.float32
         )
         self.material_labels = np.array(
-            [entry["material_label"] for entry in all_entries], dtype=np.int64
+            [e["material_label"] for _, e in all_entries_with_paths], dtype=np.int64
         )
 
         # Train / val / test split (70 / 15 / 15)
-        n = len(all_entries)
+        n = len(self.image_paths)
         rng = np.random.RandomState(config.seed)
         indices = rng.permutation(n)
 

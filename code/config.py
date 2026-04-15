@@ -13,9 +13,11 @@ def _best_device():
 
 # All hyperparameters in one place
 class Config:
-    # Data
-    images_root = "./dataset/renders/images"
-    metadata_root = "./dataset/renders/" # metadata.json
+    # Data — list of (images_root, metadata_root) pairs to pool together
+    data_roots = [
+        ("./dataset/renders_bg/images", "./dataset/renders_bg/"),
+        ("./dataset/renders/images",    "./dataset/renders/"),
+    ]
     num_material_classes = 5
     sh_dim = 27
     image_size = 128
