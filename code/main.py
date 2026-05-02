@@ -171,10 +171,14 @@ def main():
         )
         print("Baseline test metrics:")
         agg = baseline_metrics["aggregate"]
-        print(f"  angular_error_mean:  {agg['angular_error_mean']:.2f} deg")
-        print(f"  angular_error_median: {agg['angular_error_median']:.2f} deg")
-        print(f"  intensity_error:     {agg['intensity_error_mean']:.4f}")
-        print(f"  sh_mse:              {agg['sh_mse_mean']:.4f}")
+        print(f"  angular_error:       {agg['angular_error_mean']:.2f} "
+              f"± {agg['angular_error_ci95_half']:.2f} deg "
+              f"(std={agg['angular_error_std']:.2f}, "
+              f"median={agg['angular_error_median']:.2f})")
+        print(f"  intensity_error:     {agg['intensity_error_mean']:.4f} "
+              f"± {agg['intensity_error_ci95_half']:.4f}")
+        print(f"  sh_mse:              {agg['sh_mse_mean']:.4f} "
+              f"± {agg['sh_mse_ci95_half']:.4f}")
         print()
 
     if multitask_model is not None:
@@ -186,10 +190,14 @@ def main():
         )
         print("Multitask test metrics:")
         agg = multitask_metrics["aggregate"]
-        print(f"  angular_error_mean:  {agg['angular_error_mean']:.2f} deg")
-        print(f"  angular_error_median: {agg['angular_error_median']:.2f} deg")
-        print(f"  intensity_error:     {agg['intensity_error_mean']:.4f}")
-        print(f"  sh_mse:              {agg['sh_mse_mean']:.4f}")
+        print(f"  angular_error:       {agg['angular_error_mean']:.2f} "
+              f"± {agg['angular_error_ci95_half']:.2f} deg "
+              f"(std={agg['angular_error_std']:.2f}, "
+              f"median={agg['angular_error_median']:.2f})")
+        print(f"  intensity_error:     {agg['intensity_error_mean']:.4f} "
+              f"± {agg['intensity_error_ci95_half']:.4f}")
+        print(f"  sh_mse:              {agg['sh_mse_mean']:.4f} "
+              f"± {agg['sh_mse_ci95_half']:.4f}")
         if "material_param_mae" in multitask_metrics:
             mae = multitask_metrics["material_param_mae"]
             print(f"  material_param_mae (mean): {mae['mean']:.4f}")
@@ -229,15 +237,32 @@ def main():
             plot_sh_coefficients(pred, target, sh_path,
                                   title=f"{tag.title()} SH Coefficients - Sample {i}")
 
-    # Save metrics to JSON
+    # Save metrics to JSON. Drop per-sample arrays (they're large and only
+    # needed in-memory for the paired t-test, which we persist separately).
     os.makedirs(config.save_dir, exist_ok=True)
     results_path = os.path.join(config.save_dir,
                                 f"{config.experiment_name}_results.json")
+
+    def _strip_per_sample(m):
+        if m is None:
+            return None
+        out = {k: v for k, v in m.items() if k != "per_sample"}
+        return out
+
     saved = {}
     if baseline_metrics is not None:
-        saved["baseline"] = baseline_metrics
+        saved["baseline"] = _strip_per_sample(baseline_metrics)
     if multitask_metrics is not None:
-        saved["multitask"] = multitask_metrics
+        saved["multitask"] = _strip_per_sample(multitask_metrics)
+
+    # Persist the paired t-test on per-sample angular errors
+    if baseline_metrics is not None and multitask_metrics is not None:
+        from evaluation.metrics import paired_ttest
+        b_ang = baseline_metrics.get("per_sample", {}).get("angular_error")
+        m_ang = multitask_metrics.get("per_sample", {}).get("angular_error")
+        if b_ang is not None and m_ang is not None and len(b_ang) == len(m_ang):
+            saved["paired_ttest_angular_error"] = paired_ttest(b_ang, m_ang)
+
     with open(results_path, 'w') as f:
         json.dump(saved, f, indent=2)
     print(f"\nResults saved to {results_path}")

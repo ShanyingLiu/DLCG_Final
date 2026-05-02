@@ -1,6 +1,88 @@
 # Evaluation metrics for lighting estimation and material classification
 
+import math
 import numpy as np
+
+
+# ---------------------------------------------------------------------------
+# Statistical helpers
+# ---------------------------------------------------------------------------
+
+# Normal approximation: with our test sets (N ~ 1500) the t-distribution is
+# indistinguishable from normal, so we avoid a scipy dependency by using the
+# standard-normal critical value 1.96 for 95% CIs and the erf-based normal
+# CDF for two-sided p-values.
+_Z_95 = 1.959964
+
+
+def _normal_cdf(x):
+    return 0.5 * (1.0 + math.erf(x / math.sqrt(2.0)))
+
+
+def mean_std_ci(values):
+    """Return mean, sample std (ddof=1), and 95% CI half-width on the mean.
+
+    Args:
+        values: 1-D iterable of floats.
+
+    Returns:
+        dict with keys: mean, std, ci95_half, n. Half-width is `1.96 * sem`,
+        so the 95% CI is `[mean - ci95_half, mean + ci95_half]`. For n <= 1
+        the std and CI are reported as 0.0 (point estimate only).
+    """
+    arr = np.asarray(list(values), dtype=np.float64)
+    n = int(arr.size)
+    if n == 0:
+        return {"mean": float("nan"), "std": 0.0, "ci95_half": 0.0, "n": 0}
+    m = float(arr.mean())
+    if n < 2:
+        return {"mean": m, "std": 0.0, "ci95_half": 0.0, "n": n}
+    s = float(arr.std(ddof=1))
+    sem = s / math.sqrt(n)
+    return {"mean": m, "std": s, "ci95_half": _Z_95 * sem, "n": n}
+
+
+def paired_ttest(values_a, values_b):
+    """Two-sided paired t-test on per-sample arrays a and b.
+
+    Tests whether the mean of (a - b) differs from zero. Uses the normal
+    approximation for the p-value, which is essentially exact for n > ~50.
+
+    Args:
+        values_a, values_b: equal-length iterables of per-sample scores
+            (must be paired by sample index).
+
+    Returns:
+        dict with: n, mean_diff, std_diff, sem, t_stat, p_value, ci95_half_diff.
+        Convention: mean_diff = mean(a) - mean(b). For angular error, passing
+        baseline as `a` and multitask as `b` yields a positive mean_diff when
+        the multitask model is more accurate.
+    """
+    a = np.asarray(list(values_a), dtype=np.float64)
+    b = np.asarray(list(values_b), dtype=np.float64)
+    if a.shape != b.shape:
+        raise ValueError(f"paired arrays must have the same shape, "
+                         f"got {a.shape} vs {b.shape}")
+    diff = a - b
+    n = int(diff.size)
+    if n < 2:
+        return {"n": n, "mean_diff": float(diff.mean()) if n else 0.0,
+                "std_diff": 0.0, "sem": 0.0,
+                "t_stat": 0.0, "p_value": 1.0, "ci95_half_diff": 0.0}
+    md = float(diff.mean())
+    sd = float(diff.std(ddof=1))
+    sem = sd / math.sqrt(n)
+    t = md / sem if sem > 0 else 0.0
+    p = float(2.0 * (1.0 - _normal_cdf(abs(t))))
+    return {
+        "n": n,
+        "mean_diff": md,
+        "std_diff": sd,
+        "sem": sem,
+        "t_stat": float(t),
+        "p_value": p,
+        "ci95_half_diff": _Z_95 * sem,
+    }
 
 
 def dominant_light_direction(sh_coeffs):
@@ -124,7 +206,9 @@ def lighting_metrics_by_bucket(pred_sh_all, target_sh_all, buckets):
                              f"does not match N={n_total}")
         count = int(mask.sum())
         if count == 0:
-            results[name] = {"angular_error": None, "intensity_error": None,
+            results[name] = {"angular_error": None, "angular_error_std": None,
+                             "angular_error_ci95_half": None,
+                             "intensity_error": None,
                              "sh_mse": None, "count": 0}
             continue
         idxs = np.where(mask)[0]
@@ -132,8 +216,11 @@ def lighting_metrics_by_bucket(pred_sh_all, target_sh_all, buckets):
         inten = [relative_intensity_error(pred_sh_all[i], target_sh_all[i])
                  for i in idxs]
         mses = [sh_mse(pred_sh_all[i], target_sh_all[i]) for i in idxs]
+        ang_stats = mean_std_ci(ang)
         results[name] = {
-            "angular_error": float(np.mean(ang)),
+            "angular_error": ang_stats["mean"],
+            "angular_error_std": ang_stats["std"],
+            "angular_error_ci95_half": ang_stats["ci95_half"],
             "intensity_error": float(np.mean(inten)),
             "sh_mse": float(np.mean(mses)),
             "count": count,
@@ -189,6 +276,8 @@ def per_material_metrics(pred_sh_all, target_sh_all, material_labels, num_classe
         if count == 0:
             results[material_names[label]] = {
                 "angular_error": None,
+                "angular_error_std": None,
+                "angular_error_ci95_half": None,
                 "intensity_error": None,
                 "sh_mse": None,
                 "count": 0,
@@ -207,9 +296,12 @@ def per_material_metrics(pred_sh_all, target_sh_all, material_labels, num_classe
             sh_mse(pred_sh_all[i], target_sh_all[i])
             for i in range(len(mask)) if mask[i]
         ]
+        ang_stats = mean_std_ci(ang_errors)
 
         results[material_names[label]] = {
-            "angular_error": float(np.mean(ang_errors)),
+            "angular_error": ang_stats["mean"],
+            "angular_error_std": ang_stats["std"],
+            "angular_error_ci95_half": ang_stats["ci95_half"],
             "intensity_error": float(np.mean(int_errors)),
             "sh_mse": float(np.mean(mses)),
             "count": count,
