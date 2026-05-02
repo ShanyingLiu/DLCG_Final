@@ -46,7 +46,7 @@ _p.add_argument("--num_images", type=int, default=10000)
 _p.add_argument("--seed", type=int, default=42)
 _p.add_argument("--output_dir", type=str, default=None)
 _p.add_argument("--hdri_dir", type=str, default=None)
-_p.add_argument("--samples", type=int, default=128)
+_p.add_argument("--samples", type=int, default=64)
 args = _p.parse_args(_argv)
 
 # Paths (resolve relative to project root = parent of code/)
@@ -298,10 +298,32 @@ def setup_render(resolution, samples):
     sc.render.image_settings.file_format = "PNG"
     sc.render.image_settings.color_mode = "RGB"
     sc.render.image_settings.color_depth = "8"
+    # PNG compression in [0, 100]; 15 is Blender's default. 0 writes faster
+    # at the cost of larger files — skip the I/O cost on a 10k-image dataset.
+    sc.render.image_settings.compression = 0
     sc.render.film_transparent = False
+
+    # Persist scene/BVH/shader state across renders. Single biggest win when
+    # the scene topology is fixed (one sphere + HDRI) and only parameters
+    # change between frames.
+    sc.render.use_persistent_data = True
 
     sc.cycles.samples = samples
     sc.cycles.use_denoising = True
+    # Adaptive sampling lets noise-free pixels stop early. Spheres + HDRI
+    # converge fast outside the highlight, so this is essentially free quality.
+    sc.cycles.use_adaptive_sampling = True
+    sc.cycles.adaptive_threshold = 0.01
+    sc.cycles.adaptive_min_samples = max(8, samples // 8)
+
+    # Cap light-path bounces. Default 12 is overkill for one matte/glossy/
+    # dielectric sphere lit purely by an environment.
+    sc.cycles.max_bounces = 6
+    sc.cycles.diffuse_bounces = 2
+    sc.cycles.glossy_bounces = 4
+    sc.cycles.transmission_bounces = 8     # dielectric needs these
+    sc.cycles.transparent_max_bounces = 4
+    sc.cycles.volume_bounces = 0
 
     sc.view_settings.view_transform = "Filmic"
 
@@ -318,6 +340,13 @@ def setup_render(resolution, samples):
                     for d in cp.devices:
                         d.use = True
                     sc.cycles.device = "GPU"
+                    # OPTIX has a hardware-accelerated denoiser on NVIDIA
+                    # (much faster than OpenImageDenoise on CPU).
+                    if device_type == "OPTIX":
+                        try:
+                            sc.cycles.denoiser = "OPTIX"
+                        except Exception:
+                            pass
                     print(f"Render device: {device_type} "
                           f"({', '.join(d.name for d in gpu_devs)})")
                     return

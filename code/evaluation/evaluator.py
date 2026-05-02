@@ -10,6 +10,8 @@ from evaluation.metrics import (
     sh_mse,
     material_param_mae,
     per_material_metrics,
+    lighting_metrics_by_bucket,
+    default_param_buckets,
 )
 
 
@@ -104,6 +106,15 @@ def compute_all_metrics(results, num_classes=5,
         ),
     }
 
+    # Continuous-parameter buckets (always available — uses ground-truth
+    # target_material_params, which are present even for the baseline since
+    # they come from metadata).
+    if material_param_names is not None and target_params is not None:
+        buckets = default_param_buckets(target_params, material_param_names)
+        metrics["per_param_bucket"] = lighting_metrics_by_bucket(
+            pred_sh, target_sh, buckets
+        )
+
     # Material parameter regression metrics (multitask only)
     if pred_params is not None:
         metrics["material_param_mae"] = material_param_mae(
@@ -158,6 +169,29 @@ def compare_models(baseline_metrics, multitask_metrics,
             d_str = "—"
 
         print(f"  {mat_name:<20} {b_str:>15} {m_str:>15} {d_str:>15}")
+
+    # Per-parameter-bucket breakdown (continuous-property buckets)
+    if ("per_param_bucket" in baseline_metrics
+            and "per_param_bucket" in multitask_metrics):
+        print()
+        print("Per-parameter-bucket angular error:")
+        print(f"  {'Bucket':<20} {'Baseline':>15} {'Multitask':>15} {'Delta':>15}")
+        print("  " + "-" * 65)
+        bucket_order = ["metallic_yes", "metallic_no", "transmissive", "opaque",
+                        "rough_low", "rough_mid", "rough_high"]
+        for name in bucket_order:
+            b = baseline_metrics["per_param_bucket"].get(name, {})
+            m = multitask_metrics["per_param_bucket"].get(name, {})
+            b_val = b.get("angular_error")
+            m_val = m.get("angular_error")
+            b_str = f"{b_val:.2f}" if b_val is not None else "N/A"
+            m_str = f"{m_val:.2f}" if m_val is not None else "N/A"
+            if b_val is not None and m_val is not None:
+                d_str = f"{m_val - b_val:+.2f}"
+            else:
+                d_str = "—"
+            count = b.get("count", 0)
+            print(f"  {name:<20} {b_str:>15} {m_str:>15} {d_str:>15}  (n={count})")
 
     # Per-parameter MAE breakdown for the multitask model
     if "material_param_mae" in multitask_metrics:

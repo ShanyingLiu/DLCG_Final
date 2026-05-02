@@ -80,6 +80,18 @@ def train_model(config, is_multitask, train_loader, val_loader):
     return model
 
 
+def _load_checkpoint(model, config, tag):
+    """Load <experiment>_<tag>_best.pt into `model` and move it to device."""
+    path = os.path.join(config.save_dir,
+                        f"{config.experiment_name}_{tag}_best.pt")
+    print(f"Loading {tag} checkpoint from {path}")
+    ckpt = torch.load(path, map_location=config.device)
+    model.load_state_dict(ckpt['model_state_dict'])
+    model.to(config.device)
+    model.eval()
+    return model
+
+
 def main():
     parser = argparse.ArgumentParser(description="Train lighting estimation models")
     parser.add_argument('--mode', choices=['baseline', 'multitask', 'both'],
@@ -90,6 +102,9 @@ def main():
                         help='Override batch_size from config')
     parser.add_argument('--backbone', type=str, default=None,
                         help='Override backbone from config')
+    parser.add_argument('--eval-only', action='store_true',
+                        help='Skip training; load saved checkpoints and run '
+                             'evaluation + visualizations only.')
     args = parser.parse_args()
 
     # Apply overrides
@@ -120,13 +135,21 @@ def main():
     baseline_model = None
     multitask_model = None
 
-    if args.mode in ('baseline', 'both'):
-        baseline_model = train_model(config, is_multitask=False,
-                                     train_loader=train_loader, val_loader=val_loader)
+    if args.eval_only:
+        if args.mode in ('baseline', 'both'):
+            baseline_model = _load_checkpoint(BaselineLightingNet(config), config,
+                                              tag='baseline')
+        if args.mode in ('multitask', 'both'):
+            multitask_model = _load_checkpoint(MaterialAwareLightingNet(config),
+                                               config, tag='multitask')
+    else:
+        if args.mode in ('baseline', 'both'):
+            baseline_model = train_model(config, is_multitask=False,
+                                         train_loader=train_loader, val_loader=val_loader)
 
-    if args.mode in ('multitask', 'both'):
-        multitask_model = train_model(config, is_multitask=True,
-                                      train_loader=train_loader, val_loader=val_loader)
+        if args.mode in ('multitask', 'both'):
+            multitask_model = train_model(config, is_multitask=True,
+                                          train_loader=train_loader, val_loader=val_loader)
 
     # --- Evaluation on test set ---
     print(f"\n{'='*60}")
