@@ -8,7 +8,7 @@ from evaluation.metrics import (
     angular_error,
     relative_intensity_error,
     sh_mse,
-    material_accuracy,
+    material_param_mae,
     per_material_metrics,
 )
 
@@ -18,61 +18,71 @@ def evaluate_model(model, dataloader, device, is_multitask=True):
 
     Args:
         model: trained nn.Module. Should return (pred_lighting,) for baseline
-               or (pred_lighting, pred_material) for multitask.
-        dataloader: DataLoader yielding dicts with 'image', 'lighting', 'material'.
+               or (pred_lighting, pred_material_params) for multitask.
+        dataloader: DataLoader yielding dicts with 'image', 'lighting',
+                    'material_params', 'material_label'.
         device: torch device.
-        is_multitask: if True, model returns (lighting, material); else just lighting.
+        is_multitask: if True, model returns (lighting, material params);
+                      else just lighting.
 
     Returns:
-        Dict with arrays: pred_sh, target_sh, pred_material (or None), target_material.
+        Dict with arrays: pred_sh, target_sh, target_material_label,
+                          pred_material_params (or None), target_material_params.
     """
     model.eval()
 
     all_pred_sh = []
     all_target_sh = []
-    all_pred_mat = []
-    all_target_mat = []
+    all_pred_params = []
+    all_target_params = []
+    all_target_labels = []
 
     with torch.no_grad():
         for batch in dataloader:
             images = batch['image'].to(device)
             target_sh = batch['lighting'].numpy()
-            target_mat = batch['material'].numpy()
+            target_params = batch['material_params'].numpy()
+            target_label = batch['material_label'].numpy()
 
             if is_multitask:
-                pred_lighting, pred_material = model(images)
-                pred_mat = pred_material.argmax(dim=1).cpu().numpy()
-                all_pred_mat.append(pred_mat)
+                pred_lighting, pred_params = model(images)
+                all_pred_params.append(pred_params.cpu().numpy())
             else:
                 pred_lighting = model(images)
 
             all_pred_sh.append(pred_lighting.cpu().numpy())
             all_target_sh.append(target_sh)
-            all_target_mat.append(target_mat)
+            all_target_params.append(target_params)
+            all_target_labels.append(target_label)
 
     results = {
         "pred_sh": np.concatenate(all_pred_sh),
         "target_sh": np.concatenate(all_target_sh),
-        "target_material": np.concatenate(all_target_mat),
-        "pred_material": np.concatenate(all_pred_mat) if all_pred_mat else None,
+        "target_material_params": np.concatenate(all_target_params),
+        "target_material_label": np.concatenate(all_target_labels),
+        "pred_material_params": (np.concatenate(all_pred_params)
+                                 if all_pred_params else None),
     }
     return results
 
 
-def compute_all_metrics(results, num_classes=5):
+def compute_all_metrics(results, num_classes=5,
+                        material_param_names=None):
     """Compute full evaluation metrics from evaluate_model output.
 
     Args:
         results: dict from evaluate_model.
-        num_classes: number of material categories.
+        num_classes: number of material categories (for per-material grouping).
+        material_param_names: list of param names for per-param MAE reporting.
 
     Returns:
         Dict of aggregate and per-material metrics.
     """
     pred_sh = results["pred_sh"]
     target_sh = results["target_sh"]
-    target_mat = results["target_material"]
-    pred_mat = results["pred_material"]
+    target_label = results["target_material_label"]
+    pred_params = results["pred_material_params"]
+    target_params = results["target_material_params"]
 
     n = len(pred_sh)
 
@@ -90,23 +100,28 @@ def compute_all_metrics(results, num_classes=5):
             "n_samples": n,
         },
         "per_material": per_material_metrics(
-            pred_sh, target_sh, target_mat, num_classes
+            pred_sh, target_sh, target_label, num_classes
         ),
     }
 
-    # Material classification accuracy (multitask only)
-    if pred_mat is not None:
-        metrics["material_accuracy"] = material_accuracy(pred_mat, target_mat)
+    # Material parameter regression metrics (multitask only)
+    if pred_params is not None:
+        metrics["material_param_mae"] = material_param_mae(
+            pred_params, target_params, material_param_names
+        )
 
     return metrics
 
 
-def compare_models(baseline_metrics, multitask_metrics):
+def compare_models(baseline_metrics, multitask_metrics,
+                   material_param_names=None):
     """Print a side-by-side comparison of baseline vs multitask results.
 
     Args:
         baseline_metrics: dict from compute_all_metrics for the baseline.
         multitask_metrics: dict from compute_all_metrics for the multitask model.
+        material_param_names: list of material parameter names for the
+                              per-parameter MAE table.
     """
     print("=" * 70)
     print(f"{'Metric':<35} {'Baseline':>15} {'Multitask':>15}")
@@ -119,9 +134,10 @@ def compare_models(baseline_metrics, multitask_metrics):
                 "intensity_error_mean", "sh_mse_mean"]:
         print(f"  {key:<33} {ba[key]:>15.4f} {ma[key]:>15.4f}")
 
-    if "material_accuracy" in multitask_metrics:
-        print(f"  {'material_accuracy':<33} {'N/A':>15} "
-              f"{multitask_metrics['material_accuracy']:>15.4f}")
+    if "material_param_mae" in multitask_metrics:
+        mae = multitask_metrics["material_param_mae"]
+        print(f"  {'material_param_mae (mean)':<33} {'N/A':>15} "
+              f"{mae['mean']:>15.4f}")
 
     print()
     print("Per-material angular error:")
@@ -142,5 +158,16 @@ def compare_models(baseline_metrics, multitask_metrics):
             d_str = "—"
 
         print(f"  {mat_name:<20} {b_str:>15} {m_str:>15} {d_str:>15}")
+
+    # Per-parameter MAE breakdown for the multitask model
+    if "material_param_mae" in multitask_metrics:
+        mae = multitask_metrics["material_param_mae"]
+        names = material_param_names or list(mae["per_param"].keys())
+        print()
+        print("Multitask per-parameter MAE:")
+        for name in names:
+            v = mae["per_param"].get(name)
+            if v is not None:
+                print(f"  {name:<20} {v:.4f}")
 
     print("=" * 70)

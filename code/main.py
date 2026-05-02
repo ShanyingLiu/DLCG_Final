@@ -142,7 +142,10 @@ def main():
     if baseline_model is not None:
         baseline_results = evaluate_model(baseline_model, test_loader, config.device,
                                           is_multitask=False)
-        baseline_metrics = compute_all_metrics(baseline_results)
+        baseline_metrics = compute_all_metrics(
+            baseline_results,
+            material_param_names=config.material_param_names,
+        )
         print("Baseline test metrics:")
         agg = baseline_metrics["aggregate"]
         print(f"  angular_error_mean:  {agg['angular_error_mean']:.2f} deg")
@@ -154,20 +157,27 @@ def main():
     if multitask_model is not None:
         multitask_results = evaluate_model(multitask_model, test_loader, config.device,
                                            is_multitask=True)
-        multitask_metrics = compute_all_metrics(multitask_results)
+        multitask_metrics = compute_all_metrics(
+            multitask_results,
+            material_param_names=config.material_param_names,
+        )
         print("Multitask test metrics:")
         agg = multitask_metrics["aggregate"]
         print(f"  angular_error_mean:  {agg['angular_error_mean']:.2f} deg")
         print(f"  angular_error_median: {agg['angular_error_median']:.2f} deg")
         print(f"  intensity_error:     {agg['intensity_error_mean']:.4f}")
         print(f"  sh_mse:              {agg['sh_mse_mean']:.4f}")
-        if "material_accuracy" in multitask_metrics:
-            print(f"  material_accuracy:   {multitask_metrics['material_accuracy']:.4f}")
+        if "material_param_mae" in multitask_metrics:
+            mae = multitask_metrics["material_param_mae"]
+            print(f"  material_param_mae (mean): {mae['mean']:.4f}")
+            for name, v in mae["per_param"].items():
+                print(f"    {name:<14} {v:.4f}")
         print()
 
     # Side-by-side comparison (only when both were trained)
     if baseline_metrics is not None and multitask_metrics is not None:
-        compare_models(baseline_metrics, multitask_metrics)
+        compare_models(baseline_metrics, multitask_metrics,
+                       material_param_names=config.material_param_names)
 
     # --- Visualizations ---
     vis_dir = os.path.join("result", config.experiment_name)

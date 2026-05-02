@@ -26,7 +26,7 @@ class Trainer:
         for i, batch in enumerate(dataloader):
             images = batch['image'].to(self.device)
             target_sh = batch['lighting'].to(self.device)
-            target_mat = batch['material'].to(self.device)
+            target_mat = batch['material_params'].to(self.device)
 
             self.optimizer.zero_grad()
 
@@ -66,21 +66,21 @@ class Trainer:
         total_loss = 0.0
         total_light = 0.0
         total_mat = 0.0
-        correct = 0
+        sum_abs_err = 0.0
         total_samples = 0
         n_batches = 0
 
         for batch in dataloader:
             images = batch['image'].to(self.device)
             target_sh = batch['lighting'].to(self.device)
-            target_mat = batch['material'].to(self.device)
+            target_mat = batch['material_params'].to(self.device)
 
             if self.is_multitask:
                 pred_light, pred_mat = self.model(images)
                 loss, loss_light, loss_mat = self.criterion(
                     pred_light, pred_mat, target_sh, target_mat
                 )
-                correct += (pred_mat.argmax(1) == target_mat).sum().item()
+                sum_abs_err += (pred_mat - target_mat).abs().sum().item()
             else:
                 pred_light = self.model(images)
                 loss_light = torch.nn.functional.mse_loss(pred_light, target_sh)
@@ -99,7 +99,8 @@ class Trainer:
             'loss_material': total_mat / n_batches,
         }
         if self.is_multitask and total_samples > 0:
-            metrics['material_accuracy'] = correct / total_samples
+            n_params = self.config.num_material_params
+            metrics['material_mae'] = sum_abs_err / (total_samples * n_params)
 
         return metrics
 
@@ -137,8 +138,8 @@ class Trainer:
             val_line = (f"  val   | loss={val_metrics['loss']:.4f} "
                         f"light={val_metrics['loss_lighting']:.4f} "
                         f"mat={val_metrics['loss_material']:.4f}")
-            if 'material_accuracy' in val_metrics:
-                val_line += f" acc={val_metrics['material_accuracy']:.4f}"
+            if 'material_mae' in val_metrics:
+                val_line += f" mat_mae={val_metrics['material_mae']:.4f}"
             print(val_line)
 
             # Save best model

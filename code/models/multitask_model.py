@@ -1,4 +1,4 @@
-# 2-head model predicting material and lighting
+# 2-head model predicting material parameters (regression) and lighting
 
 import torch
 import torch.nn as nn
@@ -13,7 +13,10 @@ BACKBONE_FEATURES = {
 
 
 class MaterialAwareLightingNet(nn.Module):
-    """Multi-task model: shared ResNet backbone → lighting head + material head."""
+    """Multi-task model: shared ResNet backbone → lighting head + material
+    parameter regression head. The material head outputs continuous BSDF
+    parameters in [0, 1] (sigmoid), and its hidden features condition the
+    lighting head."""
 
     def __init__(self, config):
         super().__init__()
@@ -32,13 +35,13 @@ class MaterialAwareLightingNet(nn.Module):
                 if not name.startswith('7'):  # layer4 is child index 7
                     param.requires_grad = False
 
-        # Material branch: hidden features used for both classification and conditioning
+        # Material branch: hidden features used for both regression and conditioning
         self.material_encoder = nn.Sequential(
             nn.Linear(feat_dim, 128),
             nn.ReLU(inplace=True),
         )
         self.material_dropout = nn.Dropout(0.3)
-        self.material_classifier = nn.Linear(128, config.num_material_classes)
+        self.material_regressor = nn.Linear(128, config.num_material_params)
 
         # Lighting head: conditioned on material features
         self.lighting_head = nn.Sequential(
@@ -52,9 +55,11 @@ class MaterialAwareLightingNet(nn.Module):
         feat = self.features(x)          # (B, feat_dim, 1, 1)
         feat = torch.flatten(feat, 1)    # (B, feat_dim)
 
-        # Material branch
+        # Material branch (continuous params squashed to [0,1])
         mat_features = self.material_encoder(feat)          # (B, 128)
-        material = self.material_classifier(self.material_dropout(mat_features))
+        material = torch.sigmoid(
+            self.material_regressor(self.material_dropout(mat_features))
+        )
 
         # Lighting branch conditioned on material features
         lighting_input = torch.cat([feat, mat_features], dim=1)

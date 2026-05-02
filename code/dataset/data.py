@@ -32,9 +32,25 @@ class SphereDataset(Dataset):
         self.sh_coeffs = np.array(
             [entry["sh_coefficients"] for entry in all_entries], dtype=np.float32
         )
+        # Material class label kept only for per-material grouping at eval time;
+        # the model itself now regresses continuous parameters below.
         self.material_labels = np.array(
             [entry["material_label"] for entry in all_entries], dtype=np.int64
         )
+
+        # Continuous material parameters (regression targets), ordered to
+        # match config.material_param_names. ior is normalized to [0,1].
+        ior_range = config.ior_max - config.ior_min
+        self.material_params = np.array([
+            [
+                entry["metallic"],
+                entry["roughness"],
+                entry["specular"],
+                entry["transmission"],
+                (entry["ior"] - config.ior_min) / ior_range,
+            ]
+            for entry in all_entries
+        ], dtype=np.float32)
 
         # Train / val / test split (70 / 15 / 15)
         n = len(all_entries)
@@ -68,6 +84,7 @@ class SphereDataset(Dataset):
         return {
             'image': image,
             'lighting': torch.FloatTensor(self.sh_coeffs[real_idx]),
-            'material': torch.LongTensor([self.material_labels[real_idx]])[0],
+            'material_params': torch.FloatTensor(self.material_params[real_idx]),
+            'material_label': torch.LongTensor([self.material_labels[real_idx]])[0],
             'index': real_idx,
         }

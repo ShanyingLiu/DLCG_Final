@@ -16,7 +16,15 @@ class Config:
     # Data
     images_root = "./dataset/renders/images"
     metadata_root = "./dataset/renders/" # metadata.json
-    num_material_classes = 5
+    # Material parameter regression: predict the 5 Principled BSDF params
+    # in the same order everywhere (dataset / model / metrics).
+    material_param_names = ["metallic", "roughness", "specular",
+                            "transmission", "ior"]
+    num_material_params = 5
+    # ior is normalized to [0,1] via (ior - ior_min) / (ior_max - ior_min);
+    # the other four params are already in [0,1].
+    ior_min = 1.3
+    ior_max = 1.7
     sh_dim = 27
     image_size = 128
     

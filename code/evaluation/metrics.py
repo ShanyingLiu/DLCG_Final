@@ -72,19 +72,36 @@ def sh_mse(pred_sh, target_sh):
     return float(np.mean((pred - target) ** 2))
 
 
-def material_accuracy(pred_labels, target_labels):
-    """Classification accuracy for material predictions.
+def material_param_mae(pred_params, target_params, param_names=None):
+    """Mean absolute error for material parameter regression.
+
+    Both inputs are expected to be in the same normalized space the model
+    was trained in (params already in [0,1], with ior pre-normalized).
 
     Args:
-        pred_labels: array of predicted class indices.
-        target_labels: array of ground-truth class indices.
+        pred_params: (N, P) predicted material parameters.
+        target_params: (N, P) ground-truth material parameters.
+        param_names: optional list of length P naming each parameter; used
+                     for the per-parameter breakdown.
 
     Returns:
-        Accuracy as a float in [0, 1].
+        Dict with keys:
+            'mean': float, MAE averaged over all params and samples.
+            'per_param': dict mapping param_name -> mean absolute error.
     """
-    pred = np.asarray(pred_labels)
-    target = np.asarray(target_labels)
-    return float(np.mean(pred == target))
+    pred = np.asarray(pred_params, dtype=np.float64)
+    target = np.asarray(target_params, dtype=np.float64)
+    abs_err = np.abs(pred - target)              # (N, P)
+
+    per_param_mae = abs_err.mean(axis=0)         # (P,)
+    if param_names is None:
+        param_names = [f"param_{i}" for i in range(per_param_mae.shape[0])]
+
+    return {
+        "mean": float(abs_err.mean()),
+        "per_param": {name: float(v)
+                      for name, v in zip(param_names, per_param_mae)},
+    }
 
 
 def per_material_metrics(pred_sh_all, target_sh_all, material_labels, num_classes=5):
