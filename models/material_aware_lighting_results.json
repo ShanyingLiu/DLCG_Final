@@ -1,85 +1,182 @@
 {
   "baseline": {
     "aggregate": {
-      "angular_error_mean": 27.918526684702847,
-      "angular_error_median": 16.701011783418394,
-      "intensity_error_mean": 0.29662299689368676,
-      "sh_mse_mean": 1.5613415242931783,
+      "angular_error_mean": 28.16312554397094,
+      "angular_error_median": 17.194769372490804,
+      "intensity_error_mean": 0.2910937132598866,
+      "sh_mse_mean": 1.5681336207634187,
       "n_samples": 150
     },
     "per_material": {
       "diffuse": {
-        "angular_error": 25.59100042559358,
-        "intensity_error": 0.22898635154142793,
-        "sh_mse": 1.3272734297012951,
+        "angular_error": 26.559022565739998,
+        "intensity_error": 0.21590263231708381,
+        "sh_mse": 1.3418264017285255,
         "count": 30
       },
       "glossy": {
-        "angular_error": 34.31312012976333,
-        "intensity_error": 0.32660321608544834,
-        "sh_mse": 1.3531248912952694,
+        "angular_error": 32.15274341870604,
+        "intensity_error": 0.3290237512125364,
+        "sh_mse": 1.2797482652960963,
         "count": 32
       },
       "metallic": {
-        "angular_error": 27.382371695065995,
-        "intensity_error": 0.22328098039774388,
-        "sh_mse": 0.7347099393319877,
+        "angular_error": 29.174772853387662,
+        "intensity_error": 0.2051219159153858,
+        "sh_mse": 0.7038169416834988,
         "count": 25
       },
       "rough_metallic": {
-        "angular_error": 21.84593169365211,
-        "intensity_error": 0.3231420978379075,
-        "sh_mse": 1.0537479307741862,
+        "angular_error": 20.932522319247973,
+        "intensity_error": 0.35075642762991344,
+        "sh_mse": 1.052518964709839,
         "count": 31
       },
       "dielectric": {
-        "angular_error": 30.0076865907915,
-        "intensity_error": 0.3616602040674093,
-        "sh_mse": 3.1265342154434324,
+        "angular_error": 31.891651624795898,
+        "intensity_error": 0.33302252582054215,
+        "sh_mse": 3.2434310976590464,
         "count": 32
+      }
+    },
+    "per_param_bucket": {
+      "metallic_yes": {
+        "angular_error": 24.61209845056033,
+        "intensity_error": 0.2857410206144993,
+        "sh_mse": 0.896848418715937,
+        "count": 56
+      },
+      "metallic_no": {
+        "angular_error": 30.278631046428316,
+        "intensity_error": 0.2942825514316067,
+        "sh_mse": 1.9680482092172376,
+        "count": 94
+      },
+      "transmissive": {
+        "angular_error": 31.891651624795898,
+        "intensity_error": 0.33302252582054215,
+        "sh_mse": 3.2434310976590464,
+        "count": 32
+      },
+      "opaque": {
+        "angular_error": 27.151999827137043,
+        "intensity_error": 0.2797231878197088,
+        "sh_mse": 1.1138156609273162,
+        "count": 118
+      },
+      "rough_low": {
+        "angular_error": 31.222359131761273,
+        "intensity_error": 0.2956576265499231,
+        "sh_mse": 1.8240130691758654,
+        "count": 89
+      },
+      "rough_mid": {
+        "angular_error": 19.512018757029594,
+        "intensity_error": 0.35754121063531813,
+        "sh_mse": 1.1549578912596756,
+        "count": 19
+      },
+      "rough_high": {
+        "angular_error": 25.594059821079153,
+        "intensity_error": 0.2513629815230663,
+        "sh_mse": 1.2128257148554036,
+        "count": 42
       }
     }
   },
   "multitask": {
     "aggregate": {
-      "angular_error_mean": 28.056077209968105,
-      "angular_error_median": 16.75139032112805,
-      "intensity_error_mean": 0.2883979999485282,
-      "sh_mse_mean": 1.5615823055823186,
+      "angular_error_mean": 27.84067150818235,
+      "angular_error_median": 16.835097983948707,
+      "intensity_error_mean": 0.2856388959899774,
+      "sh_mse_mean": 1.5223883594550067,
       "n_samples": 150
     },
     "per_material": {
       "diffuse": {
-        "angular_error": 28.845629848017488,
-        "intensity_error": 0.2344809999475602,
-        "sh_mse": 1.4294716246200136,
+        "angular_error": 26.78829301119487,
+        "intensity_error": 0.21371525304657474,
+        "sh_mse": 1.3125023980714623,
         "count": 30
       },
       "glossy": {
-        "angular_error": 31.96534918782084,
-        "intensity_error": 0.3482911618027892,
-        "sh_mse": 1.2943004744922972,
+        "angular_error": 34.11456375267694,
+        "intensity_error": 0.34441773136024667,
+        "sh_mse": 1.3025772322318827,
         "count": 32
       },
       "metallic": {
-        "angular_error": 25.993457974811587,
-        "intensity_error": 0.20441042282951286,
-        "sh_mse": 0.7180175100766764,
+        "angular_error": 25.829763720367968,
+        "intensity_error": 0.2008405036325207,
+        "sh_mse": 0.7347700792730467,
         "count": 25
       },
       "rough_metallic": {
-        "angular_error": 20.638853751352514,
-        "intensity_error": 0.33154897898587593,
-        "sh_mse": 1.087976027216926,
+        "angular_error": 20.05284913430004,
+        "intensity_error": 0.35062279673239916,
+        "sh_mse": 1.1198877218153833,
         "count": 31
       },
       "dielectric": {
-        "angular_error": 32.20345613694398,
-        "intensity_error": 0.30286480927697484,
-        "sh_mse": 3.070558978729756,
+        "angular_error": 31.66885873854199,
+        "intensity_error": 0.29758406606418997,
+        "sh_mse": 2.9442168495807453,
         "count": 32
       }
     },
-    "material_accuracy": 0.96
+    "per_param_bucket": {
+      "metallic_yes": {
+        "angular_error": 22.63182886022322,
+        "intensity_error": 0.28375570159852487,
+        "sh_mse": 0.9479602028232688,
+        "count": 56
+      },
+      "metallic_no": {
+        "angular_error": 30.943811809094164,
+        "intensity_error": 0.2867607990316938,
+        "sh_mse": 1.8646008782994463,
+        "count": 94
+      },
+      "transmissive": {
+        "angular_error": 31.66885873854199,
+        "intensity_error": 0.29758406606418997,
+        "sh_mse": 2.9442168495807453,
+        "count": 32
+      },
+      "opaque": {
+        "angular_error": 26.802519038932274,
+        "intensity_error": 0.2823995278342587,
+        "sh_mse": 1.1368077519632809,
+        "count": 118
+      },
+      "rough_low": {
+        "angular_error": 30.908018120541634,
+        "intensity_error": 0.28724797874601116,
+        "sh_mse": 1.7333332876385426,
+        "count": 89
+      },
+      "rough_mid": {
+        "angular_error": 20.07430502086486,
+        "intensity_error": 0.3611899807833896,
+        "sh_mse": 1.290875393022871,
+        "count": 19
+      },
+      "rough_high": {
+        "angular_error": 24.85417424054083,
+        "intensity_error": 0.2480513013146956,
+        "sh_mse": 1.180118067880624,
+        "count": 42
+      }
+    },
+    "material_param_mae": {
+      "mean": 0.1888411827827804,
+      "per_param": {
+        "metallic": 0.37330860510468483,
+        "roughness": 0.13424205558141694,
+        "specular": 0.1488321795562903,
+        "transmission": 0.209923349202921,
+        "ior": 0.07789972446858882
+      }
+    }
   }
 }
