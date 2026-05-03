@@ -29,6 +29,7 @@ from utils.visualizer import (
     plot_log_mse_distribution,
     plot_training_curves,
 )
+from utils.teapot_compare import run_teapot_comparisons
 
 
 def make_dataloaders(config, transform):
@@ -318,6 +319,20 @@ def run_evaluation(config, test_loader, baseline_model, multitask_model):
     with open(results_path, 'w') as f:
         json.dump(saved, f, indent=2)
     print(f"\nResults saved to {results_path}")
+
+    # --- Utah-teapot insertion comparison renders (Blender) ---
+    print(f"\n{'='*60}")
+    print("Teapot insertion comparison renders")
+    print(f"{'='*60}\n")
+    run_teapot_comparisons(
+        config,
+        baseline_results=baseline_results,
+        multitask_results=multitask_results,
+        vis_dir=vis_dir,
+        n_samples=getattr(config, "teapot_n_samples", 3),
+        render_resolution=getattr(config, "teapot_resolution", 256),
+        render_samples=getattr(config, "teapot_samples", 32),
+    )
 
 
 if __name__ == "__main__":

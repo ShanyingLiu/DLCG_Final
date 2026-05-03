@@ -31,6 +31,7 @@ def evaluate_model(model, dataloader, device, is_multitask=True):
     all_pred_params = []
     all_target_params = []
     all_target_labels = []
+    all_target_indices = []
 
     with torch.no_grad():
         for batch in dataloader:
@@ -38,6 +39,7 @@ def evaluate_model(model, dataloader, device, is_multitask=True):
             target_env = batch['lighting'].numpy()
             target_params = batch['material_params'].numpy()
             target_label = batch['material_label'].numpy()
+            target_index = batch['index'].numpy()
 
             if is_multitask:
                 pred_env, pred_params = model(images)
@@ -49,12 +51,18 @@ def evaluate_model(model, dataloader, device, is_multitask=True):
             all_target_env.append(target_env)
             all_target_params.append(target_params)
             all_target_labels.append(target_label)
+            all_target_indices.append(target_index)
 
     results = {
         "pred_env": np.concatenate(all_pred_env),
         "target_env": np.concatenate(all_target_env),
         "target_material_params": np.concatenate(all_target_params),
         "target_material_label": np.concatenate(all_target_labels),
+        # Original metadata.json index for each test sample (in dataloader
+        # order). Lets downstream tooling re-look-up source HDRI, rotation,
+        # strength, etc. Requires the test loader to use shuffle=False
+        # so order is reproducible.
+        "target_indices": np.concatenate(all_target_indices),
         "pred_material_params": (np.concatenate(all_pred_params)
                                  if all_pred_params else None),
     }
