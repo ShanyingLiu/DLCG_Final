@@ -3,7 +3,7 @@
 import os
 import torch
 
-from training.losses import log_hdr_mse
+from training.losses import lighting_loss
 
 
 class Trainer:
@@ -39,8 +39,13 @@ class Trainer:
                 )
             else:
                 pred_light = self.model(images)
-                loss_light = log_hdr_mse(pred_light, target_light,
-                                         eps=self.config.log_eps)
+                loss_light = lighting_loss(
+                    pred_light, target_light,
+                    eps=self.config.log_eps,
+                    mse_weight=getattr(self.config, "lighting_mse_weight", 1.0),
+                    l1_weight=getattr(self.config, "lighting_l1_weight", 0.5),
+                    ssim_weight=getattr(self.config, "lighting_ssim_weight", 0.2),
+                )
                 loss_mat = torch.tensor(0.0)
                 loss = loss_light
 
@@ -86,8 +91,13 @@ class Trainer:
                 sum_abs_err += (pred_mat - target_mat).abs().sum().item()
             else:
                 pred_light = self.model(images)
-                loss_light = log_hdr_mse(pred_light, target_light,
-                                         eps=self.config.log_eps)
+                loss_light = lighting_loss(
+                    pred_light, target_light,
+                    eps=self.config.log_eps,
+                    mse_weight=getattr(self.config, "lighting_mse_weight", 1.0),
+                    l1_weight=getattr(self.config, "lighting_l1_weight", 0.5),
+                    ssim_weight=getattr(self.config, "lighting_ssim_weight", 0.2),
+                )
                 loss_mat = torch.tensor(0.0)
                 loss = loss_light
 

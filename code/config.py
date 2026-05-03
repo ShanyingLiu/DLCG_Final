@@ -42,6 +42,12 @@ class Config:
     # Loss weights
     lighting_loss_weight = 1.0
     material_loss_weight = 0.3
+    # Per-term weights inside the lighting loss (log-HDR space):
+    #   MSE keeps the global radiometry, L1 reduces blur from bright outliers,
+    #   SSIM preserves local contrast / sun-disk structure.
+    lighting_mse_weight = 1.0
+    lighting_l1_weight = 0.5
+    lighting_ssim_weight = 0.2
     
     # Model
     backbone = "resnet50" # "resnet18"/"efficientnet"
