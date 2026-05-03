@@ -55,6 +55,29 @@ def save_envmap_as_hdr(arr: np.ndarray, path: str) -> None:
         raise RuntimeError(f"cv2.imwrite failed writing {path}")
 
 
+def copy_sample_inputs(images_root: str, metadata, target_indices,
+                       out_dir: str, n_samples: int) -> None:
+    """Copy each sample's source sphere render to <out_dir>/sample_<i>_input.png.
+
+    Lets viewers see, alongside the envmap-comparison and teapot-render
+    figures, the actual photo the model received as input. Skips silently
+    if the source PNG is missing.
+    """
+    import shutil
+    os.makedirs(out_dir, exist_ok=True)
+    n = min(int(n_samples), len(target_indices))
+    for i in range(n):
+        idx = int(target_indices[i])
+        if idx >= len(metadata):
+            continue
+        src = os.path.join(images_root, metadata[idx]["filename"])
+        if not os.path.exists(src):
+            print(f"[input-copy] sample {i}: {src} missing; skip")
+            continue
+        dst = os.path.join(out_dir, f"sample_{i}_input.png")
+        shutil.copy2(src, dst)
+
+
 def _find_hdri_on_disk(hdri_root: str, filename: str) -> Optional[str]:
     """Mirror data_gen.discover_hdris layout: dataset/hdris/{puresky,scene}/."""
     for sub in ("puresky", "scene", ""):
@@ -157,6 +180,10 @@ def run_teapot_comparisons(config,
     print(f"[teapot] Rendering {n} test sample(s) at "
           f"{render_resolution}px × {render_samples}spp via {blender_bin}")
     print(f"[teapot] Output dir: {out_dir}")
+
+    # Drop the source sphere image into teapot_renders/ so each sample's
+    # inputs and renders sit next to each other.
+    copy_sample_inputs(config.images_root, metadata, indices, out_dir, n)
 
     for i in range(n):
         idx = int(indices[i])
