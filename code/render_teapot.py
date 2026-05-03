@@ -145,7 +145,13 @@ def normalize_object(obj, target_size=2.0, sit_on_ground=True):
         bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
 
 
-def apply_neutral_material(obj):
+def apply_ceramic_material(obj):
+    """Slightly glossy off-white ceramic-style Principled BSDF.
+
+    Tuned to read like glazed porcelain under HDRI lighting: bright nearly-
+    white diffuse, low (but not mirror) roughness so highlights are sharp
+    and clearly carry environment color, IOR ~1.5 like glass/glaze.
+    """
     mat = bpy.data.materials.new("TeapotMat")
     mat.use_nodes = True
     pr = mat.node_tree.nodes.get("Principled BSDF")
@@ -154,12 +160,27 @@ def apply_neutral_material(obj):
         pr = mat.node_tree.nodes.new("ShaderNodeBsdfPrincipled")
         out = mat.node_tree.nodes.new("ShaderNodeOutputMaterial")
         mat.node_tree.links.new(pr.outputs["BSDF"], out.inputs["Surface"])
-    pr.inputs["Base Color"].default_value = (0.6, 0.6, 0.6, 1.0)
+
+    pr.inputs["Base Color"].default_value = (0.92, 0.92, 0.90, 1.0)
     pr.inputs["Metallic"].default_value = 0.0
-    pr.inputs["Roughness"].default_value = 0.35
+    pr.inputs["Roughness"].default_value = 0.18
+    pr.inputs["IOR"].default_value = 1.5
+
+    # Specular control input renamed across Blender 3.x / 4.x.
     spec_key = ("Specular IOR Level" if "Specular IOR Level" in pr.inputs
                 else "Specular")
-    pr.inputs[spec_key].default_value = 0.5
+    pr.inputs[spec_key].default_value = 0.6
+
+    # Optional clearcoat for a subtle glaze pop where the input exists.
+    for coat_key, coat_val in [("Coat Weight", 0.3), ("Clearcoat", 0.3)]:
+        if coat_key in pr.inputs:
+            pr.inputs[coat_key].default_value = coat_val
+            break
+    for coat_r_key in ("Coat Roughness", "Clearcoat Roughness"):
+        if coat_r_key in pr.inputs:
+            pr.inputs[coat_r_key].default_value = 0.05
+            break
+
     obj.data.materials.clear()
     obj.data.materials.append(mat)
     for poly in obj.data.polygons:
@@ -228,7 +249,7 @@ def main():
 
     teapot = import_teapot(args.teapot)
     normalize_object(teapot, target_size=2.0, sit_on_ground=True)
-    apply_neutral_material(teapot)
+    apply_ceramic_material(teapot)
 
     add_ground_plane()
     setup_world_hdri(args.hdri, args.rotation_z_deg, args.strength)

@@ -29,7 +29,7 @@ from utils.visualizer import (
     plot_log_mse_distribution,
     plot_training_curves,
 )
-from utils.teapot_compare import run_teapot_comparisons
+from utils.teapot_compare import run_teapot_comparisons, copy_sample_inputs
 
 
 def make_dataloaders(config, transform):
@@ -289,6 +289,18 @@ def run_evaluation(config, test_loader, baseline_model, multitask_model):
             env_path = os.path.join(vis_dir, f"{tag}_envmap_{i}.png")
             plot_envmap_comparison(pred, target, env_path,
                                    title=f"{tag.title()} Sample {i}")
+
+    # Drop the source sphere image alongside the envmap comparison figures.
+    sample_source = multitask_results or baseline_results
+    if sample_source is not None and "target_indices" in sample_source:
+        n_vis = min(5, len(sample_source["pred_env"]))
+        metadata_path = os.path.join(config.metadata_root, "metadata.json")
+        if os.path.exists(metadata_path):
+            with open(metadata_path) as f:
+                _metadata = json.load(f)
+            copy_sample_inputs(config.images_root, _metadata,
+                               sample_source["target_indices"],
+                               vis_dir, n_vis)
 
     # Save metrics to JSON. Drop per-sample arrays (they're large and only
     # needed in-memory for the paired t-test, which we persist separately).
