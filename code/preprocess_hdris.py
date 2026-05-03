@@ -3,22 +3,33 @@
 Walks dataset/hdris/{puresky,scene}/, loads each .hdr/.exr (skipping
 duplicate downloads like 'name (1).hdr'), downsamples to (64, 128, 3)
 float32 via area-averaging, and saves under dataset/envmaps/<stem>.npy.
+
+Loading uses cv2.imread with IMREAD_ANYDEPTH | IMREAD_ANYCOLOR so the
+real HDR float32 values are preserved (imageio's default plugin path
+silently quantizes .hdr to LDR ~[0, 255], which destroys sun/sky
+intensities and forces predicted envmaps toward grayscale).
 """
 
-import os
+import argparse
 import re
 import sys
 from pathlib import Path
 
 import numpy as np
-import imageio.v3 as iio
 
 try:
     import cv2
     _RESIZE_BACKEND = "cv2"
 except ImportError:
+    cv2 = None
     from skimage.transform import resize as _sk_resize
     _RESIZE_BACKEND = "skimage"
+
+# imageio is the fallback HDR reader when cv2 is unavailable.
+try:
+    import imageio.v3 as iio
+except ImportError:
+    iio = None
 
 
 HDRI_ROOT = Path("dataset/hdris")
@@ -43,6 +54,29 @@ def discover_hdris(root: Path):
     return found
 
 
+def load_hdr(path: Path) -> np.ndarray:
+    """Load .hdr/.exr as float32 RGB preserving full HDR dynamic range.
+
+    Returns array shape (H, W, 3), float32, RGB order.
+    """
+    if cv2 is not None:
+        flags = cv2.IMREAD_UNCHANGED | cv2.IMREAD_ANYDEPTH | cv2.IMREAD_ANYCOLOR
+        img = cv2.imread(str(path), flags)
+        if img is None:
+            raise IOError(f"cv2 failed to read {path}")
+        # cv2 returns BGR; envmap convention is RGB.
+        if img.ndim == 3 and img.shape[2] >= 3:
+            img = img[..., :3][..., ::-1]
+        return np.ascontiguousarray(img.astype(np.float32))
+
+    if iio is not None:
+        # The "HDR-FI" plugin in imageio returns true float32 HDR.
+        img = iio.imread(str(path), plugin="HDR-FI")
+        return np.ascontiguousarray(img.astype(np.float32))
+
+    raise RuntimeError("Neither cv2 nor imageio is available for HDR loading.")
+
+
 def downsample(envmap: np.ndarray) -> np.ndarray:
     """Area-averaged downsample to TARGET_H x TARGET_W. Preserves HDR energy."""
     if _RESIZE_BACKEND == "cv2":
@@ -57,6 +91,12 @@ def downsample(envmap: np.ndarray) -> np.ndarray:
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--force", action="store_true",
+                        help="Overwrite existing .npy files (use this after "
+                             "fixing the HDR loader to regenerate stale caches)")
+    args = parser.parse_args()
+
     OUT_ROOT.mkdir(parents=True, exist_ok=True)
     files = discover_hdris(HDRI_ROOT)
     if not files:
@@ -65,25 +105,34 @@ def main():
         sys.exit(1)
 
     print(f"[preprocess_hdris] backend={_RESIZE_BACKEND}, "
-          f"found {len(files)} HDRI files")
+          f"found {len(files)} HDRI files, force={args.force}")
 
+    suspicious = 0
     for i, src in enumerate(files):
         out_path = OUT_ROOT / f"{src.stem}.npy"
-        if out_path.exists():
+        if out_path.exists() and not args.force:
             continue
-        env = iio.imread(src).astype(np.float32)
+        env = load_hdr(src)
         if env.ndim != 3 or env.shape[2] < 3:
             print(f"[preprocess_hdris] SKIP {src.name}: shape {env.shape}",
                   file=sys.stderr)
             continue
         env = env[..., :3]  # drop alpha if present
         small = downsample(env)
+        # Sanity check: real HDR sky should have a long tail above 1.0; a hard
+        # ceiling at exactly 255 is a strong sign the loader quantized to LDR.
+        if small.max() <= 255.0 + 1e-6 and (small == small.max()).mean() > 1e-3:
+            suspicious += 1
         np.save(out_path, small)
         if (i + 1) % 25 == 0 or i == len(files) - 1:
             print(f"  [{i+1}/{len(files)}] {src.name} -> {out_path.name} "
                   f"shape={small.shape} min={small.min():.4f} max={small.max():.2f}")
 
     print(f"[preprocess_hdris] done. Wrote envmaps to {OUT_ROOT}")
+    if suspicious:
+        print(f"[preprocess_hdris] WARNING: {suspicious} file(s) look LDR-clipped "
+              f"(max <= 255 with a saturation plateau). Verify the loader.",
+              file=sys.stderr)
 
 
 if __name__ == "__main__":
