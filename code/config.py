@@ -43,17 +43,17 @@ class Config:
     
     # Loss weights
     lighting_loss_weight = 1.0
-    material_loss_weight = 0.3
+    material_loss_weight = 0.1
     # Per-term weights inside the lighting loss (log-HDR space):
     #   MSE keeps the global radiometry, L1 reduces blur from bright outliers,
     #   SSIM preserves local contrast / sun-disk structure.
     lighting_mse_weight = 1.0
     lighting_l1_weight = 0.1
-    lighting_ssim_weight = 0.05
+    lighting_ssim_weight = 0.2
     # Per-pixel weight applied to MSE/L1 terms: w = 1 + lambda * log1p(target).
     # Boosts gradient on bright (sun) pixels which are <1% of the image but
-    # carry the structure we care about. lambda=1 gives sun pixels ~9x weight.
-    lighting_peak_weight_lambda = 1.0
+    # carry the structure we care about. lambda=0.5 gives sun pixels ~5x weight.
+    lighting_peak_weight_lambda = 0.5
     
     # Model
     backbone = "resnet50" # "resnet18"/"efficientnet"

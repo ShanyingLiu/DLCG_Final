@@ -4,62 +4,62 @@ Evaluating on test set
 ============================================================
 
 Baseline test metrics:
-  log_mse:    0.1337 ± 0.0226
-  linear_mse: 1692487.6665 ± 551347.0379
-  psnr_log:   10.59 ± 0.65 dB
+  log_mse:    0.1361 ± 0.0230
+  linear_mse: 1692493.5509 ± 551348.3557
+  psnr_log:   10.54 ± 0.66 dB
 
 Multitask test metrics:
-  log_mse:    0.1433 ± 0.0215
-  linear_mse: 1692240.4837 ± 551241.0940
-  psnr_log:   9.95 ± 0.58 dB
-  material_param_mae (mean): 0.0537
-    metallic       0.0535
-    roughness      0.0616
-    specular       0.0409
-    transmission   0.0482
-    ior            0.0644
+  log_mse:    0.1343 ± 0.0210
+  linear_mse: 1692358.7377 ± 551296.6554
+  psnr_log:   10.37 ± 0.61 dB
+  material_param_mae (mean): 0.0584
+    metallic       0.0644
+    roughness      0.0621
+    specular       0.0510
+    transmission   0.0479
+    ior            0.0669
 
 ==============================================================================
 Metric                                          Baseline            Multitask
 ------------------------------------------------------------------------------
-  log_mse (mean ± 95% CI)                0.1337 ± 0.0226      0.1433 ± 0.0215
-  linear_mse (mean ± 95% CI)        1692487.6665 ± 551347.0379 1692240.4837 ± 551241.0940
-  psnr_log dB (mean ± 95% CI)           10.5914 ± 0.6491      9.9452 ± 0.5767
-  material_param_mae (mean)                          N/A               0.0537
+  log_mse (mean ± 95% CI)                0.1361 ± 0.0230      0.1343 ± 0.0210
+  linear_mse (mean ± 95% CI)        1692493.5509 ± 551348.3557 1692358.7377 ± 551296.6554
+  psnr_log dB (mean ± 95% CI)           10.5372 ± 0.6559     10.3681 ± 0.6059
+  material_param_mae (mean)                          N/A               0.0584
 
 Paired t-test (baseline - multitask) on per-sample log_mse:
   n              = 150
-  mean diff      = -0.0096 (95% CI ± 0.0062) — baseline better
-  std of diffs   = 0.0385
-  t-statistic    = -3.0391
-  p-value (two-sided, normal approx) = 0.002373
+  mean diff      = +0.0018 (95% CI ± 0.0056) — multitask better
+  std of diffs   = 0.0349
+  t-statistic    = +0.6330
+  p-value (two-sided, normal approx) = 0.5267
 
 Per-material log_mse (mean ± 95% CI):
   Material                         Baseline            Multitask      Delta
   ---------------------------------------------------------------------------
-  diffuse                   0.1482 ± 0.0511      0.1654 ± 0.0527    +0.0172
-  glossy                    0.1368 ± 0.0643      0.1512 ± 0.0569    +0.0145
-  metallic                  0.1513 ± 0.0618      0.1646 ± 0.0669    +0.0133
-  rough_metallic            0.1098 ± 0.0343      0.1140 ± 0.0280    +0.0042
-  dielectric                0.1266 ± 0.0398      0.1264 ± 0.0331    -0.0003
+  diffuse                   0.1503 ± 0.0522      0.1563 ± 0.0526    +0.0060
+  glossy                    0.1414 ± 0.0654      0.1386 ± 0.0562    -0.0028
+  metallic                  0.1530 ± 0.0626      0.1491 ± 0.0610    -0.0039
+  rough_metallic            0.1097 ± 0.0355      0.1118 ± 0.0291    +0.0021
+  dielectric                0.1299 ± 0.0400      0.1197 ± 0.0344    -0.0103
 
 Per-parameter-bucket log_mse (mean ± 95% CI):
   Bucket                           Baseline            Multitask      Delta
   ---------------------------------------------------------------------------
-  metallic_yes              0.1283 ± 0.0336      0.1366 ± 0.0339    +0.0083  (n=56)
-  metallic_no               0.1370 ± 0.0302      0.1473 ± 0.0279    +0.0103  (n=94)
-  transmissive              0.1266 ± 0.0398      0.1264 ± 0.0331    -0.0003  (n=32)
-  opaque                    0.1357 ± 0.0267      0.1479 ± 0.0259    +0.0122  (n=118)
-  rough_low                 0.1372 ± 0.0319      0.1460 ± 0.0300    +0.0088  (n=89)
-  rough_mid                 0.0870 ± 0.0290      0.0922 ± 0.0238    +0.0051  (n=19)
-  rough_high                0.1476 ± 0.0416      0.1606 ± 0.0408    +0.0131  (n=42)
+  metallic_yes              0.1290 ± 0.0343      0.1284 ± 0.0317    -0.0006  (n=56)
+  metallic_no               0.1403 ± 0.0307      0.1378 ± 0.0279    -0.0025  (n=94)
+  transmissive              0.1299 ± 0.0400      0.1197 ± 0.0344    -0.0103  (n=32)
+  opaque                    0.1378 ± 0.0273      0.1383 ± 0.0251    +0.0005  (n=118)
+  rough_low                 0.1405 ± 0.0324      0.1347 ± 0.0290    -0.0058  (n=89)
+  rough_mid                 0.0853 ± 0.0260      0.0922 ± 0.0275    +0.0069  (n=19)
+  rough_high                0.1497 ± 0.0431      0.1524 ± 0.0408    +0.0027  (n=42)
 
 Multitask per-parameter MAE:
-  metallic             0.0535
-  roughness            0.0616
-  specular             0.0409
-  transmission         0.0482
-  ior                  0.0644
+  metallic             0.0644
+  roughness            0.0621
+  specular             0.0510
+  transmission         0.0479
+  ior                  0.0669
 ======================================================================
 Per-material chart saved to result\material_aware_lighting\per_material_comparison.png
 Per-attribute bucket chart saved to result\material_aware_lighting\per_param_bucket_comparison.png

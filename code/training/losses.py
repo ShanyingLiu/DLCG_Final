@@ -100,9 +100,10 @@ def log_hdr_ssim_loss(pred, target, eps: float = 1.0,
     """
     log_pred = torch.log(pred + eps)
     log_target = torch.log(target.clamp_min(0) + eps)
-    # Empirical data_range for envmaps in log1p space (~log(1+10k) ~ 9.2);
-    # using a fixed value keeps the SSIM constants stable across batches.
-    data_range = math.log(1e4 + eps)
+    # Empirical data_range for envmaps in log1p space. Max-pooled targets
+    # reach log(~148k) ~ 12, so log(1e6+eps) ~ 13.8 keeps SSIM constants
+    # accurate without saturating on sun-disk structure.
+    data_range = math.log(1e6 + eps)
     return 1.0 - ssim(log_pred, log_target, window_size=window_size,
                       sigma=sigma, data_range=data_range)
 
