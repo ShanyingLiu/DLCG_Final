@@ -25,8 +25,13 @@ class Config:
     # the other four params are already in [0,1].
     ior_min = 1.3
     ior_max = 1.7
-    sh_dim = 27
     image_size = 128
+
+    # Envmap (replaces SH lighting target)
+    envmap_height = 64
+    envmap_width = 128
+    envmaps_root = "./dataset/envmaps"
+    log_eps = 1.0  # log(eps + x) — log1p style for HDR loss
     
     # Training
     batch_size = 32
