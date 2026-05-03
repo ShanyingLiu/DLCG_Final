@@ -3,6 +3,67 @@
 import math
 import numpy as np
 
+# Cached LPIPS network (loaded lazily on first use; pip install lpips).
+_LPIPS_NET = None
+
+
+def _get_lpips_net(device):
+    global _LPIPS_NET
+    if _LPIPS_NET is None:
+        import lpips  # noqa: F401  (local import keeps lpips optional)
+        import torch
+        net = lpips.LPIPS(net="alex", verbose=False).to(device).eval()
+        for p in net.parameters():
+            p.requires_grad_(False)
+        _LPIPS_NET = (net, torch)
+    return _LPIPS_NET
+
+
+def _tonemap_for_lpips(env_pred, env_target):
+    """Map HDR (3,H,W) pred/target into [-1, 1] using a shared per-sample
+    log-tonemap normalized by the target's 99th percentile. The same scale
+    is applied to pred so that absolute brightness differences are preserved.
+    """
+    p = np.log1p(np.maximum(np.asarray(env_pred,   dtype=np.float32), 0.0))
+    t = np.log1p(np.maximum(np.asarray(env_target, dtype=np.float32), 0.0))
+    norm = float(np.percentile(t, 99.0))
+    if norm <= 1e-6:
+        norm = 1.0
+    p = np.clip(p / norm, 0.0, 1.0) * 2.0 - 1.0
+    t = np.clip(t / norm, 0.0, 1.0) * 2.0 - 1.0
+    return p, t
+
+
+def lpips_per_sample(pred_env_all, target_env_all, device="cpu",
+                     batch_size=16):
+    """Per-sample LPIPS (AlexNet) over all envmaps.
+
+    pred/target arrays have shape (N, 3, H, W) in linear HDR. Returns a list
+    of N floats. Returns None if the lpips package is unavailable.
+    """
+    try:
+        net, torch = _get_lpips_net(device)
+    except ImportError:
+        return None
+
+    n = len(pred_env_all)
+    out = np.empty(n, dtype=np.float32)
+    pairs_p = np.empty_like(np.asarray(pred_env_all, dtype=np.float32))
+    pairs_t = np.empty_like(pairs_p)
+    for i in range(n):
+        pp, tt = _tonemap_for_lpips(pred_env_all[i], target_env_all[i])
+        pairs_p[i] = pp
+        pairs_t[i] = tt
+
+    with torch.no_grad():
+        for s in range(0, n, batch_size):
+            e = min(s + batch_size, n)
+            p_t = torch.from_numpy(pairs_p[s:e]).to(device)
+            t_t = torch.from_numpy(pairs_t[s:e]).to(device)
+            d = net(p_t, t_t).view(-1).detach().cpu().numpy()
+            out[s:e] = d
+    return [float(v) for v in out]
+
 
 # ---------------------------------------------------------------------------
 # Statistical helpers
@@ -31,6 +92,69 @@ def mean_std_ci(values):
     s = float(arr.std(ddof=1))
     sem = s / math.sqrt(n)
     return {"mean": m, "std": s, "ci95_half": _Z_95 * sem, "n": n}
+
+
+def weighted_mean_ci(values, weights):
+    """Weighted mean with a 95% CI on the weighted mean.
+
+    Uses the standard weighted-variance estimator
+        var = sum(w_i * (x_i - x_bar)^2) / sum(w_i)
+    and an effective sample size n_eff = (sum w)^2 / sum(w^2) for the SE,
+    giving SE = sqrt(var / n_eff). Robust to weights summing to anything;
+    only requires sum(w) > 0.
+    """
+    x = np.asarray(list(values), dtype=np.float64)
+    w = np.asarray(list(weights), dtype=np.float64)
+    n = int(x.size)
+    if n == 0 or w.sum() <= 0:
+        return {"mean": float("nan"), "std": 0.0, "ci95_half": 0.0, "n": 0,
+                "n_eff": 0.0}
+    sw = float(w.sum())
+    m = float((w * x).sum() / sw)
+    var = float((w * (x - m) ** 2).sum() / sw)
+    s = math.sqrt(var)
+    n_eff = float(sw * sw / (w * w).sum()) if (w * w).sum() > 0 else 0.0
+    sem = s / math.sqrt(n_eff) if n_eff > 0 else 0.0
+    return {"mean": m, "std": s, "ci95_half": _Z_95 * sem, "n": n,
+            "n_eff": n_eff}
+
+
+def weighted_paired_ttest(values_a, values_b, weights):
+    """Weighted two-sided paired t-test on per-sample arrays a and b.
+
+    Convention matches `paired_ttest`: mean_diff = weighted_mean(a) -
+    weighted_mean(b). Uses effective sample size for the SE.
+    """
+    a = np.asarray(list(values_a), dtype=np.float64)
+    b = np.asarray(list(values_b), dtype=np.float64)
+    w = np.asarray(list(weights), dtype=np.float64)
+    if a.shape != b.shape or a.shape != w.shape:
+        raise ValueError(f"weighted paired arrays must share shape, got "
+                         f"{a.shape}, {b.shape}, {w.shape}")
+    diff = a - b
+    n = int(diff.size)
+    if n < 2 or w.sum() <= 0:
+        return {"n": n, "mean_diff": 0.0, "std_diff": 0.0, "sem": 0.0,
+                "t_stat": 0.0, "p_value": 1.0, "ci95_half_diff": 0.0,
+                "n_eff": 0.0}
+    sw = float(w.sum())
+    md = float((w * diff).sum() / sw)
+    var = float((w * (diff - md) ** 2).sum() / sw)
+    sd = math.sqrt(var)
+    n_eff = float(sw * sw / (w * w).sum()) if (w * w).sum() > 0 else 0.0
+    sem = sd / math.sqrt(n_eff) if n_eff > 0 else 0.0
+    t = md / sem if sem > 0 else 0.0
+    p = float(2.0 * (1.0 - _normal_cdf(abs(t))))
+    return {
+        "n": n,
+        "n_eff": n_eff,
+        "mean_diff": md,
+        "std_diff": sd,
+        "sem": sem,
+        "t_stat": float(t),
+        "p_value": p,
+        "ci95_half_diff": _Z_95 * sem,
+    }
 
 
 def paired_ttest(values_a, values_b):

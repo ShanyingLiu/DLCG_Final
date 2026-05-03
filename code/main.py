@@ -218,6 +218,7 @@ def run_evaluation(config, test_loader, baseline_model, multitask_model):
         baseline_metrics = compute_all_metrics(
             baseline_results,
             material_param_names=config.material_param_names,
+            lpips_device=config.device,
         )
         print("Baseline test metrics:")
         agg = baseline_metrics["aggregate"]
@@ -232,6 +233,7 @@ def run_evaluation(config, test_loader, baseline_model, multitask_model):
         multitask_metrics = compute_all_metrics(
             multitask_results,
             material_param_names=config.material_param_names,
+            lpips_device=config.device,
         )
         print("Multitask test metrics:")
         agg = multitask_metrics["aggregate"]
@@ -332,7 +334,7 @@ def run_evaluation(config, test_loader, baseline_model, multitask_model):
         json.dump(saved, f, indent=2)
     print(f"\nResults saved to {results_path}")
 
-    # --- Utah-teapot insertion comparison renders (Blender) ---
+    # Utah teapot insertion comparison renders on Blender
     print(f"\n{'='*60}")
     print("Teapot insertion comparison renders")
     print(f"{'='*60}\n")
@@ -341,9 +343,9 @@ def run_evaluation(config, test_loader, baseline_model, multitask_model):
         baseline_results=baseline_results,
         multitask_results=multitask_results,
         vis_dir=vis_dir,
-        n_samples=getattr(config, "teapot_n_samples", 3),
-        render_resolution=getattr(config, "teapot_resolution", 256),
-        render_samples=getattr(config, "teapot_samples", 32),
+        n_samples=getattr(config, "teapot_n_samples", 5),
+        render_resolution=getattr(config, "teapot_resolution", 512),
+        render_samples=getattr(config, "teapot_samples", 64),
     )
 
 

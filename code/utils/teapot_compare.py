@@ -132,15 +132,15 @@ def _compose_strip(out_dir, sample_idx, panels, suptitle):
 
 
 def run_teapot_comparisons(config,
-                           baseline_results,
-                           multitask_results,
-                           vis_dir,
-                           n_samples: int = 3,
-                           render_resolution: int = 256,
-                           render_samples: int = 32,
-                           teapot_path: str = "dataset/renders/utah_teapot.obj",
-                           hdri_root: str = "dataset/hdris",
-                           blender_script: str = "code/render_teapot.py"):
+        baseline_results,
+        multitask_results,
+        vis_dir,
+        n_samples: int = 3,
+        render_resolution: int = 512,
+        render_samples: int = 32,
+        teapot_path: str = "dataset/renders/utah_teapot.obj",
+        hdri_root: str = "dataset/hdris",
+        blender_script: str = "code/render_teapot.py"):
     """For up to n_samples test images, render: GT lit by original HDRI, and
     one prediction render per available model. Save individual PNGs and a
     side-by-side comparison.

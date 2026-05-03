@@ -34,7 +34,7 @@ _p.add_argument("--hdri", required=True)
 _p.add_argument("--output", required=True)
 _p.add_argument("--rotation_z_deg", type=float, default=0.0)
 _p.add_argument("--strength", type=float, default=1.0)
-_p.add_argument("--resolution", type=int, default=256)
+_p.add_argument("--resolution", type=int, default=512)
 _p.add_argument("--samples", type=int, default=32)
 args = _p.parse_args(_argv)
 
@@ -163,10 +163,10 @@ def apply_ceramic_material(obj):
 
     pr.inputs["Base Color"].default_value = (0.92, 0.92, 0.90, 1.0)
     pr.inputs["Metallic"].default_value = 0.0
-    pr.inputs["Roughness"].default_value = 0.18
-    pr.inputs["IOR"].default_value = 1.5
+    pr.inputs["Roughness"].default_value = 0.15
+    pr.inputs["IOR"].default_value = 1.55
 
-    # Specular control input renamed across Blender 3.x / 4.x.
+    #  Blender 3.x / 4.x saftey just in case
     spec_key = ("Specular IOR Level" if "Specular IOR Level" in pr.inputs
                 else "Specular")
     pr.inputs[spec_key].default_value = 0.6
@@ -205,7 +205,7 @@ def add_ground_plane():
     mat.use_nodes = True
     pr = mat.node_tree.nodes.get("Principled BSDF")
     pr.inputs["Base Color"].default_value = (0.32, 0.32, 0.32, 1.0)
-    pr.inputs["Roughness"].default_value = 0.85
+    pr.inputs["Roughness"].default_value = 0.75
     plane.data.materials.append(mat)
 
 

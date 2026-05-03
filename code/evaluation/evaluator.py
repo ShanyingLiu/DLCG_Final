@@ -12,7 +12,10 @@ from evaluation.metrics import (
     lighting_metrics_by_bucket,
     default_param_buckets,
     mean_std_ci,
+    weighted_mean_ci,
     paired_ttest,
+    weighted_paired_ttest,
+    lpips_per_sample,
 )
 
 
@@ -70,7 +73,8 @@ def evaluate_model(model, dataloader, device, is_multitask=True):
 
 
 def compute_all_metrics(results, num_classes=5,
-                        material_param_names=None):
+                        material_param_names=None,
+                        compute_lpips=True, lpips_device="cpu"):
     """Compute aggregate, per-sample, per-material, and per-bucket metrics."""
     pred_env = results["pred_env"]
     target_env = results["target_env"]
@@ -89,6 +93,15 @@ def compute_all_metrics(results, num_classes=5,
     lin_stats = mean_std_ci(lin_mses)
     psnr_stats = mean_std_ci(psnrs)
 
+    # Roughness-weighted log_mse: weight = 1 - roughness, emphasizing smooth
+    # materials where envmap accuracy is most perceptually relevant.
+    weights = None
+    if (material_param_names is not None and target_params is not None
+            and "roughness" in material_param_names):
+        rough_idx = material_param_names.index("roughness")
+        roughness = np.asarray(target_params, dtype=np.float64)[:, rough_idx]
+        weights = np.clip(1.0 - roughness, 0.0, 1.0)
+
     metrics = {
         "aggregate": {
             "log_mse_mean": log_stats["mean"],
@@ -104,11 +117,40 @@ def compute_all_metrics(results, num_classes=5,
         },
         "per_sample": {
             "log_mse": [float(v) for v in log_mses],
+            "weight_inv_roughness": (
+                [float(v) for v in weights] if weights is not None else None
+            ),
         },
         "per_material": per_material_metrics(
             pred_env, target_env, target_label, num_classes
         ),
     }
+
+    if compute_lpips:
+        lp = lpips_per_sample(pred_env, target_env, device=lpips_device)
+        if lp is not None:
+            lp_stats = mean_std_ci(lp)
+            metrics["aggregate"].update({
+                "lpips_mean": lp_stats["mean"],
+                "lpips_std": lp_stats["std"],
+                "lpips_ci95_half": lp_stats["ci95_half"],
+            })
+            metrics["per_sample"]["lpips"] = lp
+            if weights is not None:
+                lpw = weighted_mean_ci(lp, weights)
+                metrics["aggregate"].update({
+                    "weighted_lpips_mean": lpw["mean"],
+                    "weighted_lpips_ci95_half": lpw["ci95_half"],
+                })
+
+    if weights is not None:
+        wstats = weighted_mean_ci(log_mses, weights)
+        metrics["aggregate"].update({
+            "weighted_log_mse_mean": wstats["mean"],
+            "weighted_log_mse_std": wstats["std"],
+            "weighted_log_mse_ci95_half": wstats["ci95_half"],
+            "weighted_log_mse_n_eff": wstats["n_eff"],
+        })
 
     if material_param_names is not None and target_params is not None:
         buckets = default_param_buckets(target_params, material_param_names)
@@ -146,10 +188,16 @@ def compare_models(baseline_metrics, multitask_metrics,
     for label, mean_key, ci_key in [
         ("log_mse (mean ± 95% CI)",
          "log_mse_mean", "log_mse_ci95_half"),
+        ("weighted log_mse (1-rough)",
+         "weighted_log_mse_mean", "weighted_log_mse_ci95_half"),
         ("linear_mse (mean ± 95% CI)",
          "linear_mse_mean", "linear_mse_ci95_half"),
         ("psnr_log dB (mean ± 95% CI)",
          "psnr_log_mean", "psnr_log_ci95_half"),
+        ("LPIPS (mean ± 95% CI)",
+         "lpips_mean", "lpips_ci95_half"),
+        ("weighted LPIPS (1-rough)",
+         "weighted_lpips_mean", "weighted_lpips_ci95_half"),
     ]:
         b_str = _fmt_with_ci(ba, mean_key, ci_key)
         m_str = _fmt_with_ci(ma, mean_key, ci_key)
@@ -179,6 +227,60 @@ def compare_models(baseline_metrics, multitask_metrics,
         else:
             print("\n[paired t-test skipped: per-sample arrays have different "
                   f"lengths {len(b_log)} vs {len(m_log)}]")
+
+        # Paired t-test on LPIPS (lower = better)
+        b_lp = baseline_metrics["per_sample"].get("lpips")
+        m_lp = multitask_metrics["per_sample"].get("lpips")
+        if (b_lp is not None and m_lp is not None
+                and len(b_lp) == len(m_lp)):
+            tt = paired_ttest(b_lp, m_lp)
+            sign = ("multitask better" if tt["mean_diff"] > 0
+                    else "baseline better")
+            print()
+            print("Paired t-test (baseline - multitask) on per-sample LPIPS:")
+            print(f"  n              = {tt['n']}")
+            print(f"  mean diff      = {tt['mean_diff']:+.4f} "
+                  f"(95% CI ± {tt['ci95_half_diff']:.4f}) — {sign}")
+            print(f"  t-statistic    = {tt['t_stat']:+.4f}")
+            print(f"  p-value (two-sided, normal approx) = {tt['p_value']:.4g}")
+
+        # Weighted (1 - roughness) paired t-test
+        b_w = baseline_metrics["per_sample"].get("weight_inv_roughness")
+        m_w = multitask_metrics["per_sample"].get("weight_inv_roughness")
+        weights = b_w if b_w is not None else m_w
+        if (weights is not None and len(weights) == len(b_log)
+                and len(b_log) == len(m_log)):
+            wt = weighted_paired_ttest(b_log, m_log, weights)
+            sign = ("multitask better" if wt["mean_diff"] > 0
+                    else "baseline better")
+            print()
+            print("Weighted paired t-test (weight = 1 - roughness) on "
+                  "per-sample log_mse:")
+            print(f"  n              = {wt['n']}  "
+                  f"(n_eff = {wt['n_eff']:.1f})")
+            print(f"  mean diff      = {wt['mean_diff']:+.4f} "
+                  f"(95% CI ± {wt['ci95_half_diff']:.4f}) — {sign}")
+            print(f"  std of diffs   = {wt['std_diff']:.4f}")
+            print(f"  t-statistic    = {wt['t_stat']:+.4f}")
+            print(f"  p-value (two-sided, normal approx) = "
+                  f"{wt['p_value']:.4g}")
+
+        # Weighted paired t-test on LPIPS
+        if (weights is not None and b_lp is not None and m_lp is not None
+                and len(b_lp) == len(m_lp) == len(weights)):
+            wt = weighted_paired_ttest(b_lp, m_lp, weights)
+            sign = ("multitask better" if wt["mean_diff"] > 0
+                    else "baseline better")
+            print()
+            print("Weighted paired t-test (weight = 1 - roughness) on "
+                  "per-sample LPIPS:")
+            print(f"  n              = {wt['n']}  "
+                  f"(n_eff = {wt['n_eff']:.1f})")
+            print(f"  mean diff      = {wt['mean_diff']:+.4f} "
+                  f"(95% CI ± {wt['ci95_half_diff']:.4f}) — {sign}")
+            print(f"  t-statistic    = {wt['t_stat']:+.4f}")
+            print(f"  p-value (two-sided, normal approx) = "
+                  f"{wt['p_value']:.4g}")
 
     print()
     print("Per-material log_mse (mean ± 95% CI):")
