@@ -20,8 +20,9 @@ from training.losses import MultiTaskLoss
 from training.train import Trainer
 from evaluation.evaluator import evaluate_model, compute_all_metrics, compare_models
 from utils.visualizer import (
-    render_sphere_comparison, plot_sh_coefficients,
-    plot_per_material_comparison, plot_training_curves,
+    plot_envmap_comparison,
+    plot_per_material_comparison,
+    plot_training_curves,
 )
 
 
@@ -171,14 +172,9 @@ def main():
         )
         print("Baseline test metrics:")
         agg = baseline_metrics["aggregate"]
-        print(f"  angular_error:       {agg['angular_error_mean']:.2f} "
-              f"± {agg['angular_error_ci95_half']:.2f} deg "
-              f"(std={agg['angular_error_std']:.2f}, "
-              f"median={agg['angular_error_median']:.2f})")
-        print(f"  intensity_error:     {agg['intensity_error_mean']:.4f} "
-              f"± {agg['intensity_error_ci95_half']:.4f}")
-        print(f"  sh_mse:              {agg['sh_mse_mean']:.4f} "
-              f"± {agg['sh_mse_ci95_half']:.4f}")
+        print(f"  log_mse:    {agg['log_mse_mean']:.4f} ± {agg['log_mse_ci95_half']:.4f}")
+        print(f"  linear_mse: {agg['linear_mse_mean']:.4f} ± {agg['linear_mse_ci95_half']:.4f}")
+        print(f"  psnr_log:   {agg['psnr_log_mean']:.2f} ± {agg['psnr_log_ci95_half']:.2f} dB")
         print()
 
     if multitask_model is not None:
@@ -190,14 +186,9 @@ def main():
         )
         print("Multitask test metrics:")
         agg = multitask_metrics["aggregate"]
-        print(f"  angular_error:       {agg['angular_error_mean']:.2f} "
-              f"± {agg['angular_error_ci95_half']:.2f} deg "
-              f"(std={agg['angular_error_std']:.2f}, "
-              f"median={agg['angular_error_median']:.2f})")
-        print(f"  intensity_error:     {agg['intensity_error_mean']:.4f} "
-              f"± {agg['intensity_error_ci95_half']:.4f}")
-        print(f"  sh_mse:              {agg['sh_mse_mean']:.4f} "
-              f"± {agg['sh_mse_ci95_half']:.4f}")
+        print(f"  log_mse:    {agg['log_mse_mean']:.4f} ± {agg['log_mse_ci95_half']:.4f}")
+        print(f"  linear_mse: {agg['linear_mse_mean']:.4f} ± {agg['linear_mse_ci95_half']:.4f}")
+        print(f"  psnr_log:   {agg['psnr_log_mean']:.2f} ± {agg['psnr_log_ci95_half']:.2f} dB")
         if "material_param_mae" in multitask_metrics:
             mae = multitask_metrics["material_param_mae"]
             print(f"  material_param_mae (mean): {mae['mean']:.4f}")
@@ -219,23 +210,18 @@ def main():
         plot_per_material_comparison(baseline_metrics, multitask_metrics, chart_path)
         print(f"Per-material chart saved to {chart_path}")
 
-    # Sphere renders + SH bar charts for a few test samples
+    # Envmap GT vs predicted comparisons for a few test samples
     for tag, raw_results in [("baseline", baseline_results),
                               ("multitask", multitask_results)]:
         if raw_results is None:
             continue
-        n_vis = min(5, len(raw_results["pred_sh"]))
+        n_vis = min(5, len(raw_results["pred_env"]))
         for i in range(n_vis):
-            pred = raw_results["pred_sh"][i]
-            target = raw_results["target_sh"][i]
-
-            sphere_path = os.path.join(vis_dir, f"{tag}_sphere_{i}.png")
-            render_sphere_comparison(pred, target, sphere_path,
-                                     title=f"{tag.title()} Sample {i}")
-
-            sh_path = os.path.join(vis_dir, f"{tag}_sh_{i}.png")
-            plot_sh_coefficients(pred, target, sh_path,
-                                  title=f"{tag.title()} SH Coefficients - Sample {i}")
+            pred = raw_results["pred_env"][i]
+            target = raw_results["target_env"][i]
+            env_path = os.path.join(vis_dir, f"{tag}_envmap_{i}.png")
+            plot_envmap_comparison(pred, target, env_path,
+                                   title=f"{tag.title()} Sample {i}")
 
     # Save metrics to JSON. Drop per-sample arrays (they're large and only
     # needed in-memory for the paired t-test, which we persist separately).
@@ -258,10 +244,10 @@ def main():
     # Persist the paired t-test on per-sample angular errors
     if baseline_metrics is not None and multitask_metrics is not None:
         from evaluation.metrics import paired_ttest
-        b_ang = baseline_metrics.get("per_sample", {}).get("angular_error")
-        m_ang = multitask_metrics.get("per_sample", {}).get("angular_error")
-        if b_ang is not None and m_ang is not None and len(b_ang) == len(m_ang):
-            saved["paired_ttest_angular_error"] = paired_ttest(b_ang, m_ang)
+        b_log = baseline_metrics.get("per_sample", {}).get("log_mse")
+        m_log = multitask_metrics.get("per_sample", {}).get("log_mse")
+        if b_log is not None and m_log is not None and len(b_log) == len(m_log):
+            saved["paired_ttest_log_mse"] = paired_ttest(b_log, m_log)
 
     with open(results_path, 'w') as f:
         json.dump(saved, f, indent=2)
