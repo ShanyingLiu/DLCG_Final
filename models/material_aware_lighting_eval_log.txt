@@ -4,77 +4,72 @@ Evaluating on test set
 ============================================================
 
 Baseline test metrics:
-  log_mse:    0.0513 Â± 0.0072
-  linear_mse: 1039.8950 Â± 320.2816
-  psnr_log:   14.28 Â± 0.56 dB
+  log_mse:    0.0508 ± 0.0072
+  linear_mse: 1040.0867 ± 320.3335
+  psnr_log:   14.41 ± 0.60 dB
 
 Multitask test metrics:
-  log_mse:    0.0507 Â± 0.0070
-  linear_mse: 1039.9406 Â± 320.3144
-  psnr_log:   14.27 Â± 0.55 dB
-  material_param_mae (mean): 0.0527
-    metallic       0.0694
-    roughness      0.0568
-    specular       0.0387
-    transmission   0.0376
-    ior            0.0612
+  log_mse:    0.0499 ± 0.0069
+  linear_mse: 1040.0566 ± 320.3346
+  psnr_log:   14.38 ± 0.57 dB
+  material_param_mae (mean): 0.0545
+    metallic       0.0677
+    roughness      0.0621
+    specular       0.0414
+    transmission   0.0384
+    ior            0.0627
 
 ==============================================================================
 Metric                                          Baseline            Multitask
 ------------------------------------------------------------------------------
-  log_mse (mean Â± 95% CI)                0.0513 Â± 0.0072      0.0507 Â± 0.0070
-  linear_mse (mean Â± 95% CI)        1039.8950 Â± 320.2816 1039.9406 Â± 320.3144
-  psnr_log dB (mean Â± 95% CI)           14.2753 Â± 0.5611     14.2693 Â± 0.5549
-  material_param_mae (mean)                          N/A               0.0527
+  log_mse (mean ± 95% CI)                0.0508 ± 0.0072      0.0499 ± 0.0069
+  linear_mse (mean ± 95% CI)        1040.0867 ± 320.3335 1040.0566 ± 320.3346
+  psnr_log dB (mean ± 95% CI)           14.4126 ± 0.5952     14.3834 ± 0.5720
+  material_param_mae (mean)                          N/A               0.0545
 
 Paired t-test (baseline - multitask) on per-sample log_mse:
   n              = 150
-  mean diff      = +0.0006 (95% CI Â± 0.0017) â€” multitask better
-  std of diffs   = 0.0105
-  t-statistic    = +0.7353
-  p-value (two-sided, normal approx) = 0.4622
+  mean diff      = +0.0008 (95% CI ± 0.0018) — multitask better
+  std of diffs   = 0.0114
+  t-statistic    = +0.9034
+  p-value (two-sided, normal approx) = 0.3663
 
-Per-material log_mse (mean Â± 95% CI):
+Per-material log_mse (mean ± 95% CI):
   Material                         Baseline            Multitask      Delta
   ---------------------------------------------------------------------------
-  diffuse                   0.0579 Â± 0.0210      0.0588 Â± 0.0207    +0.0008
-  glossy                    0.0448 Â± 0.0137      0.0446 Â± 0.0130    -0.0003
-  metallic                  0.0468 Â± 0.0152      0.0462 Â± 0.0144    -0.0006
-  rough_metallic            0.0539 Â± 0.0155      0.0551 Â± 0.0155    +0.0012
-  dielectric                0.0527 Â± 0.0150      0.0485 Â± 0.0133    -0.0041
+  diffuse                   0.0556 ± 0.0200      0.0566 ± 0.0201    +0.0010
+  glossy                    0.0438 ± 0.0145      0.0432 ± 0.0124    -0.0006
+  metallic                  0.0477 ± 0.0155      0.0472 ± 0.0148    -0.0005
+  rough_metallic            0.0536 ± 0.0149      0.0544 ± 0.0165    +0.0008
+  dielectric                0.0529 ± 0.0152      0.0483 ± 0.0131    -0.0047
 
-Per-parameter-bucket log_mse (mean Â± 95% CI):
+Per-parameter-bucket log_mse (mean ± 95% CI):
   Bucket                           Baseline            Multitask      Delta
   ---------------------------------------------------------------------------
-  metallic_yes              0.0507 Â± 0.0109      0.0511 Â± 0.0107    +0.0004  (n=56)
-  metallic_no               0.0517 Â± 0.0096      0.0504 Â± 0.0091    -0.0012  (n=94)
-  transmissive              0.0527 Â± 0.0150      0.0485 Â± 0.0133    -0.0041  (n=32)
-  opaque                    0.0510 Â± 0.0083      0.0513 Â± 0.0081    +0.0003  (n=118)
-  rough_low                 0.0482 Â± 0.0084      0.0465 Â± 0.0077    -0.0018  (n=89)
-  rough_mid                 0.0442 Â± 0.0114      0.0450 Â± 0.0100    +0.0008  (n=19)
-  rough_high                0.0611 Â± 0.0179      0.0623 Â± 0.0179    +0.0011  (n=42)
+  metallic_yes              0.0510 ± 0.0107      0.0512 ± 0.0112    +0.0002  (n=56)
+  metallic_no               0.0507 ± 0.0095      0.0492 ± 0.0088    -0.0015  (n=94)
+  transmissive              0.0529 ± 0.0152      0.0483 ± 0.0131    -0.0047  (n=32)
+  opaque                    0.0502 ± 0.0082      0.0504 ± 0.0081    +0.0002  (n=118)
+  rough_low                 0.0482 ± 0.0087      0.0461 ± 0.0076    -0.0020  (n=89)
+  rough_mid                 0.0452 ± 0.0116      0.0449 ± 0.0098    -0.0003  (n=19)
+  rough_high                0.0588 ± 0.0170      0.0603 ± 0.0180    +0.0015  (n=42)
 
 Multitask per-parameter MAE:
-  metallic             0.0694
-  roughness            0.0568
-  specular             0.0387
-  transmission         0.0376
-  ior                  0.0612
+  metallic             0.0677
+  roughness            0.0621
+  specular             0.0414
+  transmission         0.0384
+  ior                  0.0627
 ======================================================================
-Per-material chart saved to result/material_aware_lighting/per_material_comparison.png
-Per-attribute bucket chart saved to result/material_aware_lighting/per_param_bucket_comparison.png
-Per-sample distribution saved to result/material_aware_lighting/log_mse_distribution.png
-Per-parameter MAE chart saved to result/material_aware_lighting/material_param_mae.png
+Per-material chart saved to result\material_aware_lighting\per_material_comparison.png
+Per-attribute bucket chart saved to result\material_aware_lighting\per_param_bucket_comparison.png
+Per-sample distribution saved to result\material_aware_lighting\log_mse_distribution.png
+Per-parameter MAE chart saved to result\material_aware_lighting\material_param_mae.png
 
-Results saved to ./models/material_aware_lighting_results.json
+Results saved to ./models\material_aware_lighting_results.json
 
 ============================================================
 Teapot insertion comparison renders
 ============================================================
 
-[teapot] Rendering 3 test sample(s) at 256px Ã— 32spp via /Applications/Blender.app/Contents/MacOS/Blender
-[teapot] Output dir: result/material_aware_lighting/teapot_renders
-[teapot] sample 0 -> result/material_aware_lighting/teapot_renders/sample_0_compare.png
-[teapot] sample 1 -> result/material_aware_lighting/teapot_renders/sample_1_compare.png
-[teapot] sample 2 -> result/material_aware_lighting/teapot_renders/sample_2_compare.png
-[teapot] Done. See result/material_aware_lighting/teapot_renders/sample_*_compare.png
+[teapot] Blender not found (set $BLENDER_BIN or install). Skipping teapot comparison renders.
