@@ -31,7 +31,7 @@ class Config:
     envmap_height = 64
     envmap_width = 128
     envmaps_root = "./dataset/envmaps"
-    log_eps = 1.0  # log(eps + x) — log1p style for HDR loss
+    log_eps = 1e-2  # log(eps + x); small eps preserves HDR slope at high values
     
     # Training
     batch_size = 32
@@ -46,8 +46,8 @@ class Config:
     #   MSE keeps the global radiometry, L1 reduces blur from bright outliers,
     #   SSIM preserves local contrast / sun-disk structure.
     lighting_mse_weight = 1.0
-    lighting_l1_weight = 0.5
-    lighting_ssim_weight = 0.2
+    lighting_l1_weight = 0.1
+    lighting_ssim_weight = 0.05
     
     # Model
     backbone = "resnet50" # "resnet18"/"efficientnet"
