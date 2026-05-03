@@ -5,21 +5,44 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-def log_hdr_mse(pred, target, eps: float = 1.0):
+def _peak_weight(target, peak_lambda: float):
+    """Per-pixel weight = 1 + lambda * log1p(target). Sun pixels (target~1e3)
+    weigh ~7-9x more than dark sky (target~0), so MSE/L1 gradients are not
+    dominated by the 99% of low-radiance pixels.
+    """
+    if peak_lambda == 0.0:
+        return None
+    return 1.0 + peak_lambda * torch.log1p(target.clamp_min(0))
+
+
+def log_hdr_mse(pred, target, eps: float = 1.0, peak_lambda: float = 0.0):
     """MSE in log-HDR space: ((log(pred+eps) - log(target+eps))^2).mean().
 
     eps=1.0 yields effectively log1p, which is well-behaved across HDR
     range [0, ~10k] and at exactly zero. pred is assumed non-negative
     (e.g. Softplus output); target is non-negative HDR irradiance.
+
+    peak_lambda > 0 applies a per-pixel weight that emphasizes bright pixels
+    (see `_peak_weight`).
     """
-    return F.mse_loss(torch.log(pred + eps), torch.log(target + eps))
+    sq = (torch.log(pred + eps) - torch.log(target + eps)).pow(2)
+    w = _peak_weight(target, peak_lambda)
+    if w is None:
+        return sq.mean()
+    return (sq * w).sum() / w.sum().clamp_min(1e-8)
 
 
-def log_hdr_l1(pred, target, eps: float = 1.0):
+def log_hdr_l1(pred, target, eps: float = 1.0, peak_lambda: float = 0.0):
     """L1 in log-HDR space. Less sensitive to bright outliers (e.g. sun pixels)
     than MSE, so it doesn't blur the prediction toward the mean as aggressively.
+
+    peak_lambda > 0 applies a per-pixel weight that emphasizes bright pixels.
     """
-    return F.l1_loss(torch.log(pred + eps), torch.log(target + eps))
+    abs_d = (torch.log(pred + eps) - torch.log(target + eps)).abs()
+    w = _peak_weight(target, peak_lambda)
+    if w is None:
+        return abs_d.mean()
+    return (abs_d * w).sum() / w.sum().clamp_min(1e-8)
 
 
 def _gaussian_window(window_size: int, sigma: float, device, dtype):
@@ -98,6 +121,7 @@ class MultiTaskLoss(nn.Module):
         self.mse_weight = float(getattr(config, "lighting_mse_weight", 1.0))
         self.l1_weight = float(getattr(config, "lighting_l1_weight", 0.5))
         self.ssim_weight = float(getattr(config, "lighting_ssim_weight", 0.2))
+        self.peak_lambda = float(getattr(config, "lighting_peak_weight_lambda", 0.0))
 
         self.material_loss = nn.MSELoss()
 
@@ -109,6 +133,7 @@ class MultiTaskLoss(nn.Module):
             mse_weight=self.mse_weight,
             l1_weight=self.l1_weight,
             ssim_weight=self.ssim_weight,
+            peak_lambda=self.peak_lambda,
         )
         loss_material = self.material_loss(pred_material, target_material)
 
@@ -120,13 +145,20 @@ class MultiTaskLoss(nn.Module):
 def lighting_loss(pred, target, eps: float = 1.0,
                   mse_weight: float = 1.0,
                   l1_weight: float = 0.5,
-                  ssim_weight: float = 0.2):
-    """Combined log-HDR lighting loss: weighted MSE + L1 + (1 - SSIM)."""
+                  ssim_weight: float = 0.2,
+                  peak_lambda: float = 0.0):
+    """Combined log-HDR lighting loss: weighted MSE + L1 + (1 - SSIM).
+
+    SSIM is window-based and is left unweighted; the per-pixel `peak_lambda`
+    boost only applies to the MSE/L1 terms.
+    """
     total = pred.new_zeros(())
     if mse_weight != 0.0:
-        total = total + mse_weight * log_hdr_mse(pred, target, eps=eps)
+        total = total + mse_weight * log_hdr_mse(pred, target, eps=eps,
+                                                 peak_lambda=peak_lambda)
     if l1_weight != 0.0:
-        total = total + l1_weight * log_hdr_l1(pred, target, eps=eps)
+        total = total + l1_weight * log_hdr_l1(pred, target, eps=eps,
+                                               peak_lambda=peak_lambda)
     if ssim_weight != 0.0:
         total = total + ssim_weight * log_hdr_ssim_loss(pred, target, eps=eps)
     return total

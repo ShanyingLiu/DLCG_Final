@@ -78,15 +78,33 @@ def load_hdr(path: Path) -> np.ndarray:
 
 
 def downsample(envmap: np.ndarray) -> np.ndarray:
-    """Area-averaged downsample to TARGET_H x TARGET_W. Preserves HDR energy."""
-    if _RESIZE_BACKEND == "cv2":
-        # cv2.resize takes (W, H)
-        out = cv2.resize(envmap, (TARGET_W, TARGET_H), interpolation=cv2.INTER_AREA)
-    else:
-        out = _sk_resize(
-            envmap, (TARGET_H, TARGET_W),
-            order=1, anti_aliasing=True, preserve_range=True,
-        )
+    """Peak-preserving downsample to TARGET_H x TARGET_W via block max-pool.
+
+    Linear area averaging from a 2K HDRI (~16x16 source pixels per output
+    pixel) smears single-pixel suns into surrounding sky, leaving the cached
+    target with very few bright pixels. Max-pool keeps the brightest source
+    pixel in each block so the supervision actually contains the spotlights
+    we want the model to predict. Energy is not conserved, but the cached
+    .npy is only used as a regression target -- renders use the original .hdr.
+    """
+    H_src, W_src = envmap.shape[:2]
+    bh, bw = H_src // TARGET_H, W_src // TARGET_W
+    if bh < 1 or bw < 1:
+        # Source smaller than target along some axis: fall back to area resize.
+        if _RESIZE_BACKEND == "cv2":
+            out = cv2.resize(envmap, (TARGET_W, TARGET_H),
+                             interpolation=cv2.INTER_AREA)
+        else:
+            out = _sk_resize(envmap, (TARGET_H, TARGET_W),
+                             order=1, anti_aliasing=True, preserve_range=True)
+        return out.astype(np.float32)
+    H_use, W_use = bh * TARGET_H, bw * TARGET_W
+    # Center-crop residual rows/cols so block reshape is exact.
+    y0 = (H_src - H_use) // 2
+    x0 = (W_src - W_use) // 2
+    cropped = envmap[y0:y0 + H_use, x0:x0 + W_use]
+    blocks = cropped.reshape(TARGET_H, bh, TARGET_W, bw, -1)
+    out = blocks.max(axis=(1, 3))
     return out.astype(np.float32)
 
 

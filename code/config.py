@@ -31,7 +31,9 @@ class Config:
     envmap_height = 64
     envmap_width = 128
     envmaps_root = "./dataset/envmaps"
-    log_eps = 1e-2  # log(eps + x); small eps preserves HDR slope at high values
+    log_eps = 1.0  # log(eps + x); ~log1p. Smaller eps blows up dark-pixel
+                   # error and drives predictions toward zero (more diffuse),
+                   # so keep eps near 1.0.
     
     # Training
     batch_size = 32
@@ -48,6 +50,10 @@ class Config:
     lighting_mse_weight = 1.0
     lighting_l1_weight = 0.1
     lighting_ssim_weight = 0.05
+    # Per-pixel weight applied to MSE/L1 terms: w = 1 + lambda * log1p(target).
+    # Boosts gradient on bright (sun) pixels which are <1% of the image but
+    # carry the structure we care about. lambda=1 gives sun pixels ~9x weight.
+    lighting_peak_weight_lambda = 1.0
     
     # Model
     backbone = "resnet50" # "resnet18"/"efficientnet"
