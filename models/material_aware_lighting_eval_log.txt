@@ -3,7 +3,6 @@
 Evaluating on test set
 ============================================================
 
-Downloading: "https://download.pytorch.org/models/alexnet-owt-7be5be79.pth" to /Users/jasmineliu/.cache/torch/hub/checkpoints/alexnet-owt-7be5be79.pth
 Baseline test metrics:
   log_mse:    0.0954 ± 0.0053
   linear_mse: 2972777.2508 ± 679518.0762
