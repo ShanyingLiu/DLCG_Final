@@ -1,4 +1,4 @@
-# Evaluation metrics for lighting estimation and material classification
+# Evaluation metrics for envmap lighting estimation and material regression
 
 import math
 import numpy as np
@@ -20,16 +20,7 @@ def _normal_cdf(x):
 
 
 def mean_std_ci(values):
-    """Return mean, sample std (ddof=1), and 95% CI half-width on the mean.
-
-    Args:
-        values: 1-D iterable of floats.
-
-    Returns:
-        dict with keys: mean, std, ci95_half, n. Half-width is `1.96 * sem`,
-        so the 95% CI is `[mean - ci95_half, mean + ci95_half]`. For n <= 1
-        the std and CI are reported as 0.0 (point estimate only).
-    """
+    """Return mean, sample std (ddof=1), and 95% CI half-width on the mean."""
     arr = np.asarray(list(values), dtype=np.float64)
     n = int(arr.size)
     if n == 0:
@@ -45,18 +36,9 @@ def mean_std_ci(values):
 def paired_ttest(values_a, values_b):
     """Two-sided paired t-test on per-sample arrays a and b.
 
-    Tests whether the mean of (a - b) differs from zero. Uses the normal
-    approximation for the p-value, which is essentially exact for n > ~50.
-
-    Args:
-        values_a, values_b: equal-length iterables of per-sample scores
-            (must be paired by sample index).
-
-    Returns:
-        dict with: n, mean_diff, std_diff, sem, t_stat, p_value, ci95_half_diff.
-        Convention: mean_diff = mean(a) - mean(b). For angular error, passing
-        baseline as `a` and multitask as `b` yields a positive mean_diff when
-        the multitask model is more accurate.
+    Convention: mean_diff = mean(a) - mean(b). For an error metric (lower is
+    better), passing baseline as `a` and multitask as `b` yields a positive
+    mean_diff when the multitask model is more accurate.
     """
     a = np.asarray(list(values_a), dtype=np.float64)
     b = np.asarray(list(values_b), dtype=np.float64)
@@ -85,91 +67,45 @@ def paired_ttest(values_a, values_b):
     }
 
 
-def dominant_light_direction(sh_coeffs):
-    """Extract dominant light direction from order-1 SH coefficients.
+# ---------------------------------------------------------------------------
+# Envmap metrics
+# ---------------------------------------------------------------------------
 
-    Args:
-        sh_coeffs: array of shape (27,) laid out as [R0..R8, G0..G8, B0..B8].
+def linear_mse(pred_env, target_env):
+    """MSE in linear HDR space, per-sample. Inputs (3, H, W) or (H, W, 3)."""
+    p = np.asarray(pred_env, dtype=np.float64).ravel()
+    t = np.asarray(target_env, dtype=np.float64).ravel()
+    return float(np.mean((p - t) ** 2))
 
-    Returns:
-        Unit-length direction vector (3,) derived from the L=1 band.
+
+def log_mse(pred_env, target_env, eps: float = 1.0):
+    """MSE in log-HDR space, per-sample. Mirrors training loss."""
+    p = np.log(np.asarray(pred_env, dtype=np.float64) + eps).ravel()
+    t = np.log(np.asarray(target_env, dtype=np.float64) + eps).ravel()
+    return float(np.mean((p - t) ** 2))
+
+
+def psnr_log(pred_env, target_env, eps: float = 1.0):
+    """PSNR computed in log-HDR space.
+
+    Treats log(env+eps) as the signal with peak 1.0. Comparable across runs
+    of the same dataset; not a calibrated photographic PSNR.
     """
-    sh = np.asarray(sh_coeffs, dtype=np.float64).reshape(3, 9)  # (RGB, 9 SH)
-    # Luminance-weight the three channels
-    lum = 0.2126 * sh[0] + 0.7152 * sh[1] + 0.0722 * sh[2]
-
-    # L=1 basis ordering (real SH): Y1^-1, Y1^0, Y1^+1  → indices 1,2,3
-    # These correspond to y, z, x directions respectively.
-    direction = np.array([lum[3], lum[1], lum[2]])  # (x, y, z)
-    norm = np.linalg.norm(direction)
-    if norm < 1e-8:
-        return np.zeros(3)
-    return direction / norm
+    mse = log_mse(pred_env, target_env, eps=eps)
+    if mse <= 1e-12:
+        return float("inf")
+    return float(10.0 * np.log10(1.0 / mse))
 
 
-def angular_error(pred_sh, target_sh):
-    """Angular error (degrees) between dominant light directions.
-
-    Args:
-        pred_sh: predicted SH coefficients, shape (27,).
-        target_sh: ground-truth SH coefficients, shape (27,).
-
-    Returns:
-        Angle in degrees between the two dominant directions.
-    """
-    d_pred = dominant_light_direction(pred_sh)
-    d_target = dominant_light_direction(target_sh)
-
-    cos_angle = np.clip(np.dot(d_pred, d_target), -1.0, 1.0)
-    return float(np.degrees(np.arccos(cos_angle)))
-
-
-def relative_intensity_error(pred_sh, target_sh):
-    """Relative error of overall lighting intensity (L0 band = ambient).
-
-    Computes |pred_intensity - gt_intensity| / (gt_intensity + eps).
-
-    Args:
-        pred_sh: predicted SH coefficients, shape (27,).
-        target_sh: ground-truth SH coefficients, shape (27,).
-
-    Returns:
-        Scalar relative intensity error.
-    """
-    pred = np.asarray(pred_sh, dtype=np.float64).reshape(3, 9)
-    target = np.asarray(target_sh, dtype=np.float64).reshape(3, 9)
-
-    # L0 coefficient (index 0) for each channel → luminance
-    pred_l0 = 0.2126 * pred[0, 0] + 0.7152 * pred[1, 0] + 0.0722 * pred[2, 0]
-    target_l0 = 0.2126 * target[0, 0] + 0.7152 * target[1, 0] + 0.0722 * target[2, 0]
-
-    eps = 1e-6
-    return float(abs(pred_l0 - target_l0) / (abs(target_l0) + eps))
-
-
-def sh_mse(pred_sh, target_sh):
-    """Mean squared error over all 27 SH coefficients."""
-    pred = np.asarray(pred_sh, dtype=np.float64)
-    target = np.asarray(target_sh, dtype=np.float64)
-    return float(np.mean((pred - target) ** 2))
-
+# ---------------------------------------------------------------------------
+# Material parameter regression
+# ---------------------------------------------------------------------------
 
 def material_param_mae(pred_params, target_params, param_names=None):
     """Mean absolute error for material parameter regression.
 
     Both inputs are expected to be in the same normalized space the model
     was trained in (params already in [0,1], with ior pre-normalized).
-
-    Args:
-        pred_params: (N, P) predicted material parameters.
-        target_params: (N, P) ground-truth material parameters.
-        param_names: optional list of length P naming each parameter; used
-                     for the per-parameter breakdown.
-
-    Returns:
-        Dict with keys:
-            'mean': float, MAE averaged over all params and samples.
-            'per_param': dict mapping param_name -> mean absolute error.
     """
     pred = np.asarray(pred_params, dtype=np.float64)
     target = np.asarray(target_params, dtype=np.float64)
@@ -186,57 +122,51 @@ def material_param_mae(pred_params, target_params, param_names=None):
     }
 
 
-def lighting_metrics_by_bucket(pred_sh_all, target_sh_all, buckets):
-    """Compute lighting metrics for each named subset of test samples.
+# ---------------------------------------------------------------------------
+# Bucketed and per-material aggregations
+# ---------------------------------------------------------------------------
 
-    Args:
-        pred_sh_all: (N, 27) predicted SH coefficients.
-        target_sh_all: (N, 27) ground-truth SH coefficients.
-        buckets: dict mapping bucket_name -> 1-D boolean mask of length N.
+def _summarize_bucket(pred_env_all, target_env_all, idxs):
+    """Compute log_mse (with CI), linear_mse, psnr_log over a set of indices."""
+    log_mses = [log_mse(pred_env_all[i], target_env_all[i]) for i in idxs]
+    lin_mses = [linear_mse(pred_env_all[i], target_env_all[i]) for i in idxs]
+    psnrs    = [psnr_log(pred_env_all[i], target_env_all[i])  for i in idxs]
+    s = mean_std_ci(log_mses)
+    return {
+        "log_mse": s["mean"],
+        "log_mse_std": s["std"],
+        "log_mse_ci95_half": s["ci95_half"],
+        "linear_mse": float(np.mean(lin_mses)),
+        "psnr_log": float(np.mean(psnrs)),
+        "count": len(idxs),
+    }
 
-    Returns:
-        Dict mapping bucket_name -> {angular_error, intensity_error, sh_mse, count}.
-    """
+
+def _empty_bucket():
+    return {"log_mse": None, "log_mse_std": None, "log_mse_ci95_half": None,
+            "linear_mse": None, "psnr_log": None, "count": 0}
+
+
+def lighting_metrics_by_bucket(pred_env_all, target_env_all, buckets):
+    """Compute envmap metrics for each named subset of test samples."""
     results = {}
-    n_total = len(pred_sh_all)
+    n_total = len(pred_env_all)
     for name, mask in buckets.items():
         mask = np.asarray(mask, dtype=bool)
         if mask.shape[0] != n_total:
             raise ValueError(f"bucket '{name}' mask length {mask.shape[0]} "
                              f"does not match N={n_total}")
-        count = int(mask.sum())
-        if count == 0:
-            results[name] = {"angular_error": None, "angular_error_std": None,
-                             "angular_error_ci95_half": None,
-                             "intensity_error": None,
-                             "sh_mse": None, "count": 0}
-            continue
         idxs = np.where(mask)[0]
-        ang = [angular_error(pred_sh_all[i], target_sh_all[i]) for i in idxs]
-        inten = [relative_intensity_error(pred_sh_all[i], target_sh_all[i])
-                 for i in idxs]
-        mses = [sh_mse(pred_sh_all[i], target_sh_all[i]) for i in idxs]
-        ang_stats = mean_std_ci(ang)
-        results[name] = {
-            "angular_error": ang_stats["mean"],
-            "angular_error_std": ang_stats["std"],
-            "angular_error_ci95_half": ang_stats["ci95_half"],
-            "intensity_error": float(np.mean(inten)),
-            "sh_mse": float(np.mean(mses)),
-            "count": count,
-        }
+        if idxs.size == 0:
+            results[name] = _empty_bucket()
+            continue
+        results[name] = _summarize_bucket(pred_env_all, target_env_all, idxs)
     return results
 
 
 def default_param_buckets(material_params, param_names):
     """Build the default continuous-parameter buckets used by the multitask
-    evaluator. Returns a dict[name -> boolean mask] suitable for
-    lighting_metrics_by_bucket.
-
-    Buckets (using the normalized [0,1] target parameters):
-        metallic_yes / metallic_no       (split at 0.5)
-        transmissive / opaque            (split at 0.25)
-        rough_low / rough_mid / rough_high  (cuts at 0.3 and 0.7)
+    evaluator. Returns a dict[name -> boolean mask].
     """
     p = np.asarray(material_params, dtype=np.float32)
     idx = {name: i for i, name in enumerate(param_names)}
@@ -255,56 +185,18 @@ def default_param_buckets(material_params, param_names):
     }
 
 
-def per_material_metrics(pred_sh_all, target_sh_all, material_labels, num_classes=5):
-    """Compute lighting metrics broken down by material category.
-
-    Args:
-        pred_sh_all: (N, 27) predicted SH coefficients.
-        target_sh_all: (N, 27) ground-truth SH coefficients.
-        material_labels: (N,) ground-truth material labels.
-        num_classes: number of material categories.
-
-    Returns:
-        Dict mapping material label → {angular_error, intensity_error, sh_mse, count}.
-    """
+def per_material_metrics(pred_env_all, target_env_all, material_labels, num_classes=5):
+    """Compute envmap metrics broken down by material category."""
     material_names = ["diffuse", "glossy", "metallic", "rough_metallic", "dielectric"]
     results = {}
 
     for label in range(num_classes):
         mask = np.asarray(material_labels) == label
-        count = int(mask.sum())
-        if count == 0:
-            results[material_names[label]] = {
-                "angular_error": None,
-                "angular_error_std": None,
-                "angular_error_ci95_half": None,
-                "intensity_error": None,
-                "sh_mse": None,
-                "count": 0,
-            }
+        idxs = np.where(mask)[0]
+        if idxs.size == 0:
+            results[material_names[label]] = _empty_bucket()
             continue
-
-        ang_errors = [
-            angular_error(pred_sh_all[i], target_sh_all[i])
-            for i in range(len(mask)) if mask[i]
-        ]
-        int_errors = [
-            relative_intensity_error(pred_sh_all[i], target_sh_all[i])
-            for i in range(len(mask)) if mask[i]
-        ]
-        mses = [
-            sh_mse(pred_sh_all[i], target_sh_all[i])
-            for i in range(len(mask)) if mask[i]
-        ]
-        ang_stats = mean_std_ci(ang_errors)
-
-        results[material_names[label]] = {
-            "angular_error": ang_stats["mean"],
-            "angular_error_std": ang_stats["std"],
-            "angular_error_ci95_half": ang_stats["ci95_half"],
-            "intensity_error": float(np.mean(int_errors)),
-            "sh_mse": float(np.mean(mses)),
-            "count": count,
-        }
-
+        results[material_names[label]] = _summarize_bucket(
+            pred_env_all, target_env_all, idxs
+        )
     return results
