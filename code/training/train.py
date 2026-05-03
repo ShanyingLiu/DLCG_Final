@@ -3,6 +3,8 @@
 import os
 import torch
 
+from training.losses import log_hdr_mse
+
 
 class Trainer:
     def __init__(self, model, criterion, optimizer, scheduler, config,
@@ -25,7 +27,7 @@ class Trainer:
 
         for i, batch in enumerate(dataloader):
             images = batch['image'].to(self.device)
-            target_sh = batch['lighting'].to(self.device)
+            target_light = batch['lighting'].to(self.device)
             target_mat = batch['material_params'].to(self.device)
 
             self.optimizer.zero_grad()
@@ -33,11 +35,12 @@ class Trainer:
             if self.is_multitask:
                 pred_light, pred_mat = self.model(images)
                 loss, loss_light, loss_mat = self.criterion(
-                    pred_light, pred_mat, target_sh, target_mat
+                    pred_light, pred_mat, target_light, target_mat
                 )
             else:
                 pred_light = self.model(images)
-                loss_light = torch.nn.functional.mse_loss(pred_light, target_sh)
+                loss_light = log_hdr_mse(pred_light, target_light,
+                                         eps=self.config.log_eps)
                 loss_mat = torch.tensor(0.0)
                 loss = loss_light
 
@@ -72,18 +75,19 @@ class Trainer:
 
         for batch in dataloader:
             images = batch['image'].to(self.device)
-            target_sh = batch['lighting'].to(self.device)
+            target_light = batch['lighting'].to(self.device)
             target_mat = batch['material_params'].to(self.device)
 
             if self.is_multitask:
                 pred_light, pred_mat = self.model(images)
                 loss, loss_light, loss_mat = self.criterion(
-                    pred_light, pred_mat, target_sh, target_mat
+                    pred_light, pred_mat, target_light, target_mat
                 )
                 sum_abs_err += (pred_mat - target_mat).abs().sum().item()
             else:
                 pred_light = self.model(images)
-                loss_light = torch.nn.functional.mse_loss(pred_light, target_sh)
+                loss_light = log_hdr_mse(pred_light, target_light,
+                                         eps=self.config.log_eps)
                 loss_mat = torch.tensor(0.0)
                 loss = loss_light
 
