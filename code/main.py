@@ -4,8 +4,10 @@ import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
 import argparse
+import contextlib
 import json
 import os
+import sys
 import torch
 from torch.utils.data import DataLoader
 from torch.optim import AdamW
@@ -22,6 +24,9 @@ from evaluation.evaluator import evaluate_model, compute_all_metrics, compare_mo
 from utils.visualizer import (
     plot_envmap_comparison,
     plot_per_material_comparison,
+    plot_per_param_bucket_comparison,
+    plot_per_param_mae,
+    plot_log_mse_distribution,
     plot_training_curves,
 )
 
@@ -79,6 +84,35 @@ def train_model(config, is_multitask, train_loader, val_loader):
     print(f"  Training curves saved to {curves_path}")
 
     return model
+
+
+class _Tee:
+    """File-like object that mirrors writes to two streams (stdout + a log file)."""
+
+    def __init__(self, *streams):
+        self._streams = streams
+
+    def write(self, data):
+        for s in self._streams:
+            s.write(data)
+
+    def flush(self):
+        for s in self._streams:
+            s.flush()
+
+
+@contextlib.contextmanager
+def _tee_stdout(log_path):
+    """Mirror everything printed inside the block to `log_path`."""
+    os.makedirs(os.path.dirname(log_path) or ".", exist_ok=True)
+    log_file = open(log_path, "w")
+    original = sys.stdout
+    sys.stdout = _Tee(original, log_file)
+    try:
+        yield
+    finally:
+        sys.stdout = original
+        log_file.close()
 
 
 def _load_checkpoint(model, config, tag):
@@ -152,7 +186,21 @@ def main():
             multitask_model = train_model(config, is_multitask=True,
                                           train_loader=train_loader, val_loader=val_loader)
 
-    # --- Evaluation on test set ---
+    # --- Evaluation on test set (mirrored to <experiment>_eval_log.txt) ---
+    eval_log_path = os.path.join(config.save_dir,
+                                 f"{config.experiment_name}_eval_log.txt")
+
+    with _tee_stdout(eval_log_path):
+        run_evaluation(config, test_loader, baseline_model, multitask_model)
+    print(f"Eval log saved to {eval_log_path}")
+
+
+def run_evaluation(config, test_loader, baseline_model, multitask_model):
+    """Run the full eval + reporting + visualization + JSON-save pipeline.
+
+    Lives in its own function so main() can wrap the entire stdout stream
+    with `_tee_stdout(...)` in one line.
+    """
     print(f"\n{'='*60}")
     print("Evaluating on test set")
     print(f"{'='*60}\n")
@@ -204,11 +252,29 @@ def main():
     # --- Visualizations ---
     vis_dir = os.path.join("result", config.experiment_name)
 
-    # Per-material comparison chart
+    # Per-material comparison chart (discrete categories)
     if baseline_metrics is not None and multitask_metrics is not None:
         chart_path = os.path.join(vis_dir, "per_material_comparison.png")
         plot_per_material_comparison(baseline_metrics, multitask_metrics, chart_path)
         print(f"Per-material chart saved to {chart_path}")
+
+        # Per-attribute (continuous BSDF property) bucket chart
+        bucket_path = os.path.join(vis_dir, "per_param_bucket_comparison.png")
+        plot_per_param_bucket_comparison(baseline_metrics, multitask_metrics,
+                                         bucket_path)
+        print(f"Per-attribute bucket chart saved to {bucket_path}")
+
+        # Per-sample log_mse histogram (visualizes the paired-test spread)
+        dist_path = os.path.join(vis_dir, "log_mse_distribution.png")
+        plot_log_mse_distribution(baseline_metrics, multitask_metrics, dist_path)
+        print(f"Per-sample distribution saved to {dist_path}")
+
+    # Multitask material-parameter regression MAE
+    if multitask_metrics is not None:
+        mae_path = os.path.join(vis_dir, "material_param_mae.png")
+        plot_per_param_mae(multitask_metrics, mae_path,
+                           param_names=config.material_param_names)
+        print(f"Per-parameter MAE chart saved to {mae_path}")
 
     # Envmap GT vs predicted comparisons for a few test samples
     for tag, raw_results in [("baseline", baseline_results),
