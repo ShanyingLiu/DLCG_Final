@@ -17,7 +17,7 @@ import torchvision.transforms as T
 from config import config
 from dataset.data import SphereDataset
 from models.baseline_model import BaselineLightingNet
-from models.multitask_model import MaterialAwareLightingNet
+from models.multitask_model import MaterialAwareLightingNet, MaterialGuidedLightingNet
 from training.losses import MultiTaskLoss
 from training.train import Trainer
 import numpy as np
@@ -80,13 +80,18 @@ def make_dataloaders(config, transform):
 
 
 def train_model(config, is_multitask, train_loader, val_loader):
-    tag = "multitask" if is_multitask else "baseline"
+    arch = getattr(config, 'multitask_arch', 'tiled')
+    if is_multitask:
+        tag = "multitask_film" if arch == 'film' else "multitask"
+    else:
+        tag = "baseline"
     print(f"\n{'='*60}")
     print(f"Training {tag} model ({config.backbone})")
     print(f"{'='*60}\n")
 
     if is_multitask:
-        model = MaterialAwareLightingNet(config).to(config.device)
+        cls = MaterialGuidedLightingNet if arch == 'film' else MaterialAwareLightingNet
+        model = cls(config).to(config.device)
         criterion = MultiTaskLoss(config)
     else:
         model = BaselineLightingNet(config).to(config.device)
@@ -166,6 +171,11 @@ def main():
     parser.add_argument('--eval-only', action='store_true',
                         help='Skip training; load saved checkpoints and run '
                              'evaluation + visualizations only.')
+    parser.add_argument('--multitask-arch', choices=['tiled', 'film'],
+                        default='tiled',
+                        help='Multitask conditioning: "tiled" (concat material '
+                             'features into decoder input) or "film" '
+                             '(material-guided FiLM modulation in decoder).')
     args = parser.parse_args()
 
     # Apply overrides
@@ -175,6 +185,7 @@ def main():
         config.batch_size = args.batch_size
     if args.backbone is not None:
         config.backbone = args.backbone
+    config.multitask_arch = args.multitask_arch
 
     # Device
     config.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -196,13 +207,19 @@ def main():
     baseline_model = None
     multitask_model = None
 
+    multitask_cls = (MaterialGuidedLightingNet
+                     if args.multitask_arch == 'film'
+                     else MaterialAwareLightingNet)
+    multitask_tag = ('multitask_film' if args.multitask_arch == 'film'
+                     else 'multitask')
+
     if args.eval_only:
         if args.mode in ('baseline', 'both'):
             baseline_model = _load_checkpoint(BaselineLightingNet(config), config,
                                               tag='baseline')
         if args.mode in ('multitask', 'both'):
-            multitask_model = _load_checkpoint(MaterialAwareLightingNet(config),
-                                               config, tag='multitask')
+            multitask_model = _load_checkpoint(multitask_cls(config),
+                                               config, tag=multitask_tag)
     else:
         if args.mode in ('baseline', 'both'):
             baseline_model = train_model(config, is_multitask=False,

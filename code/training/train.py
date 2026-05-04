@@ -168,7 +168,12 @@ class Trainer:
 
     def _save_checkpoint(self, epoch, is_best=False):
         os.makedirs(self.config.save_dir, exist_ok=True)
-        tag = "multitask" if self.is_multitask else "baseline"
+        if self.is_multitask:
+            tag = ("multitask_film"
+                   if getattr(self.config, 'multitask_arch', 'tiled') == 'film'
+                   else "multitask")
+        else:
+            tag = "baseline"
         filename = f"{self.config.experiment_name}_{tag}_best.pt" if is_best \
             else f"{self.config.experiment_name}_{tag}_epoch{epoch}.pt"
         path = os.path.join(self.config.save_dir, filename)
