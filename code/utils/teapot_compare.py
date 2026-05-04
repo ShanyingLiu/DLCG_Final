@@ -179,18 +179,28 @@ def run_teapot_comparisons(config,
         print("[teapot] No samples available; skipping.")
         return
 
+    # Pick a fresh random subset of eval positions each run so the showcase
+    # renders aren't always the same first-n samples. Uses entropy-based
+    # seeding (no fixed seed) for genuine variety run-to-run.
+    rng = np.random.default_rng()
+    positions = sorted(rng.choice(len(indices), n, replace=False).tolist())
+    picked_indices = [int(indices[p]) for p in positions]
+
     out_dir = os.path.join(vis_dir, "teapot_renders")
     os.makedirs(out_dir, exist_ok=True)
     print(f"[teapot] Rendering {n} test sample(s) at "
           f"{render_resolution}px × {render_samples}spp via {blender_bin}")
+    print(f"[teapot] Eval positions: {positions}  "
+          f"(metadata indices: {picked_indices})")
     print(f"[teapot] Output dir: {out_dir}")
 
     # Drop the source sphere image into teapot_renders/ so each sample's
     # inputs and renders sit next to each other.
-    copy_sample_inputs(config.images_root, metadata, indices, out_dir, n)
+    copy_sample_inputs(config.images_root, metadata, picked_indices,
+                       out_dir, n)
 
-    for i in range(n):
-        idx = int(indices[i])
+    for i, pos in enumerate(positions):
+        idx = int(indices[pos])
         if idx >= len(metadata):
             print(f"[teapot] sample {i}: metadata index {idx} out of range; skip")
             continue
@@ -216,7 +226,7 @@ def run_teapot_comparisons(config,
                              ("multitask", multitask_results)]:
             if results is None:
                 continue
-            pred_env = results["pred_env"][i]                 # (3, H, W)
+            pred_env = results["pred_env"][pos]               # (3, H, W)
             hdr_path = os.path.join(out_dir, f"sample_{i}_{tag}_pred.hdr")
             try:
                 save_envmap_as_hdr(pred_env, hdr_path)
