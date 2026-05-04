@@ -109,7 +109,7 @@ Per-attribute bucket chart saved to result/material_aware_lighting/per_param_buc
 Per-sample distribution saved to result/material_aware_lighting/log_mse_distribution.png
 Per-parameter MAE chart saved to result/material_aware_lighting/material_param_mae.png
 
-[showcase] selected eval positions: [410, 1192, 1312, 1669, 1932]
+[showcase] selected eval positions: [1130, 1714, 2086, 2173, 2182]
 
 Results saved to ./models/material_aware_lighting_results.json
 
@@ -118,7 +118,7 @@ Teapot insertion comparison renders
 ============================================================
 
 [teapot] Rendering 5 test sample(s) at 512px × 64spp via /Applications/Blender.app/Contents/MacOS/Blender
-[teapot] Eval positions: [410, 1192, 1312, 1669, 1932]  (metadata indices: [130, 5449, 1838, 1931, 13822])
+[teapot] Eval positions: [1130, 1714, 2086, 2173, 2182]  (metadata indices: [5240, 6293, 9762, 8226, 7041])
 [teapot] Output dir: result/material_aware_lighting/teapot_renders
 [teapot] sample 0 -> result/material_aware_lighting/teapot_renders/sample_0_compare.png
 [teapot] sample 1 -> result/material_aware_lighting/teapot_renders/sample_1_compare.png

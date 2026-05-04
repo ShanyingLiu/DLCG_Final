@@ -39,6 +39,10 @@ _p.add_argument("--samples", type=int, default=32)
 _p.add_argument("--transparent-bg", action="store_true",
                 help="Render with alpha=0 envmap background; keeps teapot "
                      "and ground plane visible. Saves RGBA PNG.")
+_p.add_argument("--black-bg", action="store_true",
+                help="Make the camera-visible sky pure black while keeping "
+                     "HDRI lighting/reflections on objects (Is Camera Ray "
+                     "switch). Output is solid-black-bg RGB.")
 _p.add_argument("--cycles-seed", type=int, default=0,
                 help="Fix Cycles sampling seed for reproducible renders.")
 args = _p.parse_args(_argv)
@@ -215,7 +219,7 @@ def add_ground_plane():
     plane.data.materials.append(mat)
 
 
-def setup_world_hdri(hdri_path, rotation_deg, strength):
+def setup_world_hdri(hdri_path, rotation_deg, strength, black_bg=False):
     sc = bpy.context.scene
     world = sc.world
     if world is None:
@@ -240,7 +244,25 @@ def setup_world_hdri(hdri_path, rotation_deg, strength):
     link(n_coord.outputs["Generated"], n_map.inputs["Vector"])
     link(n_map.outputs["Vector"], n_env.inputs["Vector"])
     link(n_env.outputs["Color"], n_bg.inputs["Color"])
-    link(n_bg.outputs["Background"], n_out.inputs["Surface"])
+
+    if not black_bg:
+        link(n_bg.outputs["Background"], n_out.inputs["Surface"])
+        return
+
+    # Black-bg variant: HDRI still lights/reflects, but the camera sees black
+    # for direct sky rays. Mix the HDRI background with a black background
+    # using Is Camera Ray as the factor (1 -> black for camera, 0 -> HDRI for
+    # diffuse/glossy/transmission shading).
+    n_path = tree.nodes.new("ShaderNodeLightPath")
+    n_black = tree.nodes.new("ShaderNodeBackground")
+    n_black.inputs["Color"].default_value = (0.0, 0.0, 0.0, 1.0)
+    n_black.inputs["Strength"].default_value = 1.0
+
+    n_mix = tree.nodes.new("ShaderNodeMixShader")
+    link(n_path.outputs["Is Camera Ray"], n_mix.inputs["Fac"])
+    link(n_bg.outputs["Background"], n_mix.inputs[1])     # fac=0 -> HDRI
+    link(n_black.outputs["Background"], n_mix.inputs[2])  # fac=1 -> black
+    link(n_mix.outputs["Shader"], n_out.inputs["Surface"])
 
 
 def main():
@@ -259,7 +281,8 @@ def main():
     apply_ceramic_material(teapot)
 
     add_ground_plane()
-    setup_world_hdri(args.hdri, args.rotation_z_deg, args.strength)
+    setup_world_hdri(args.hdri, args.rotation_z_deg, args.strength,
+                     black_bg=args.black_bg)
 
     bpy.context.scene.render.filepath = args.output
     bpy.ops.render.render(write_still=True)

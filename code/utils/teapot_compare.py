@@ -89,7 +89,8 @@ def _find_hdri_on_disk(hdri_root: str, filename: str) -> Optional[str]:
 
 def _run_blender(blender_bin, script_path, teapot, hdri, output,
                  rotation_deg, strength, resolution, samples,
-                 transparent_bg: bool = False) -> bool:
+                 transparent_bg: bool = False,
+                 black_bg: bool = False) -> bool:
     cmd = [
         blender_bin, "--background", "--python", script_path, "--",
         "--teapot", teapot,
@@ -102,6 +103,8 @@ def _run_blender(blender_bin, script_path, teapot, hdri, output,
     ]
     if transparent_bg:
         cmd.append("--transparent-bg")
+    if black_bg:
+        cmd.append("--black-bg")
     cmd += ["--cycles-seed", "0"]
     proc = subprocess.run(cmd, capture_output=True, text=True)
     if proc.returncode != 0:
@@ -145,7 +148,8 @@ def run_teapot_comparisons(config,
         teapot_path: str = "dataset/renders/utah_teapot.obj",
         hdri_root: str = "dataset/hdris",
         blender_script: str = "code/render_teapot.py",
-        positions=None):
+        positions=None,
+        black_bg: bool = True):
     """For up to n_samples test images, render: GT lit by original HDRI, and
     one prediction render per available model. Save individual PNGs and a
     side-by-side comparison.
@@ -215,11 +219,15 @@ def run_teapot_comparisons(config,
         rot_deg = float(meta["rotation_z_deg"])
         strength = float(meta["world_strength"])
 
-        # Ground-truth teapot render
+        # Ground-truth teapot render. black_bg=True (default) keeps HDRI
+        # lighting on the teapot/ground while making the camera-visible sky
+        # black, so the showcase strips foreground reflections and shading
+        # instead of the (predicted/GT) envmap pixels behind the object.
         gt_path = os.path.join(out_dir, f"sample_{i}_gt.png")
         ok_gt = _run_blender(blender_bin, blender_script, teapot_path,
                              hdri_disk, gt_path, rot_deg, strength,
-                             render_resolution, render_samples)
+                             render_resolution, render_samples,
+                             black_bg=black_bg)
 
         # Predicted renders, one per available model
         panels = [("Ground Truth (orig HDRI)", gt_path if ok_gt else None)]
@@ -238,7 +246,8 @@ def run_teapot_comparisons(config,
             ok = _run_blender(blender_bin, blender_script, teapot_path,
                               hdr_path, png_path,
                               0.0, 1.0,           # rotation/strength baked in
-                              render_resolution, render_samples)
+                              render_resolution, render_samples,
+                              black_bg=black_bg)
             label = f"{tag.title()} predicted envmap"
             panels.append((label, png_path if ok else None))
 
