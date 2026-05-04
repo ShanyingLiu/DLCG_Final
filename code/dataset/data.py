@@ -55,7 +55,12 @@ class SphereDataset(Dataset):
         ], dtype=np.float32)
 
         n = len(all_entries)
-        rng = np.random.RandomState(config.seed)
+        # Use a dedicated seed for the train/val/test split so that varying
+        # config.seed (model init / training stochasticity) does not change
+        # which samples land in the test set. Falls back to config.seed for
+        # backward compatibility.
+        split_seed = int(getattr(config, "data_split_seed", config.seed))
+        rng = np.random.RandomState(split_seed)
         indices = rng.permutation(n)
 
         n_train = int(0.70 * n)

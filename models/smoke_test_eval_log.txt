@@ -1,0 +1,119 @@
+
+============================================================
+Evaluating on test set
+============================================================
+
+==============================================================================
+Metric                                          Baseline            Multitask
+------------------------------------------------------------------------------
+  log_mse (mean ± 95% CI)                0.1733 ± 0.0072      0.1640 ± 0.0069
+  LPIPS (mean ± 95% CI)                  0.5968 ± 0.0056      0.5788 ± 0.0058
+  material_param_mae (mean)                          N/A               0.0900
+
+Paired t-test (baseline - multitask) on per-sample log_mse:
+  n              = 2250
+  mean diff      = +0.0093 (95% CI ± 0.0027) — multitask better
+  std of diffs   = 0.0643
+  t-statistic    = +6.8748
+  p-value (two-sided, normal approx) = 6.208e-12
+
+Paired t-test (baseline - multitask) on per-sample LPIPS:
+  n              = 2250
+  mean diff      = +0.0180 (95% CI ± 0.0021) — multitask better
+  t-statistic    = +17.1868
+  p-value (two-sided, normal approx) = 0
+
+Per-material log_mse (mean ± 95% CI):
+  Material                         Baseline            Multitask      Delta
+  ---------------------------------------------------------------------------
+  diffuse                   0.1906 ± 0.0168      0.1842 ± 0.0171    -0.0064
+  glossy                    0.1688 ± 0.0158      0.1629 ± 0.0155    -0.0059
+  metallic                  0.1615 ± 0.0154      0.1467 ± 0.0130    -0.0148
+  rough_metallic            0.1648 ± 0.0140      0.1556 ± 0.0146    -0.0093
+  dielectric                0.1811 ± 0.0184      0.1709 ± 0.0169    -0.0102
+
+Per-parameter-bucket log_mse (mean ± 95% CI):
+  Bucket                           Baseline            Multitask      Delta
+  ---------------------------------------------------------------------------
+  metallic_yes              0.1632 ± 0.0104      0.1512 ± 0.0098    -0.0120  (n=906)
+  metallic_no               0.1801 ± 0.0098      0.1726 ± 0.0095    -0.0075  (n=1344)
+  transmissive              0.1811 ± 0.0184      0.1709 ± 0.0169    -0.0102  (n=445)
+  opaque                    0.1714 ± 0.0078      0.1623 ± 0.0076    -0.0091  (n=1805)
+  rough_low                 0.1705 ± 0.0096      0.1602 ± 0.0088    -0.0103  (n=1341)
+  rough_mid                 0.1595 ± 0.0164      0.1493 ± 0.0174    -0.0103  (n=293)
+  rough_high                0.1860 ± 0.0141      0.1792 ± 0.0143    -0.0067  (n=616)
+
+Multitask per-parameter MAE:
+  metallic             0.1034
+  roughness            0.0892
+  specular             0.0932
+  transmission         0.0926
+  ior                  0.0717
+======================================================================
+
+============================================================
+Shiny subset (roughness < 0.2 AND metallic > 0.8): n = 442 / 2250
+============================================================
+
+==============================================================================
+Metric                                          Baseline            Multitask
+------------------------------------------------------------------------------
+  log_mse (mean ± 95% CI)                0.1615 ± 0.0154      0.1467 ± 0.0130
+  LPIPS (mean ± 95% CI)                  0.5831 ± 0.0129      0.5637 ± 0.0136
+  material_param_mae (mean)                          N/A               0.0467
+
+Paired t-test (baseline - multitask) on per-sample log_mse:
+  n              = 442
+  mean diff      = +0.0148 (95% CI ± 0.0058) — multitask better
+  std of diffs   = 0.0622
+  t-statistic    = +5.0133
+  p-value (two-sided, normal approx) = 5.349e-07
+
+Paired t-test (baseline - multitask) on per-sample LPIPS:
+  n              = 442
+  mean diff      = +0.0194 (95% CI ± 0.0049) — multitask better
+  t-statistic    = +7.7591
+  p-value (two-sided, normal approx) = 8.438e-15
+
+Per-material log_mse (mean ± 95% CI):
+  Material                         Baseline            Multitask      Delta
+  ---------------------------------------------------------------------------
+  diffuse                               N/A                  N/A          —
+  glossy                                N/A                  N/A          —
+  metallic                  0.1615 ± 0.0154      0.1467 ± 0.0130    -0.0148
+  rough_metallic                        N/A                  N/A          —
+  dielectric                            N/A                  N/A          —
+
+Per-parameter-bucket log_mse (mean ± 95% CI):
+  Bucket                           Baseline            Multitask      Delta
+  ---------------------------------------------------------------------------
+  metallic_yes              0.1615 ± 0.0154      0.1467 ± 0.0130    -0.0148  (n=442)
+  metallic_no                           N/A                  N/A          —  (n=0)
+  transmissive                          N/A                  N/A          —  (n=0)
+  opaque                    0.1615 ± 0.0154      0.1467 ± 0.0130    -0.0148  (n=442)
+  rough_low                 0.1615 ± 0.0154      0.1467 ± 0.0130    -0.0148  (n=442)
+  rough_mid                             N/A                  N/A          —  (n=0)
+  rough_high                            N/A                  N/A          —  (n=0)
+
+Multitask per-parameter MAE:
+  metallic             0.0562
+  roughness            0.0440
+  specular             0.0328
+  transmission         0.0685
+  ior                  0.0318
+======================================================================
+
+============================================================
+Rendered-teapot LPIPS on 442 shiny samples (transparent envmap bg)
+============================================================
+
+[teapot-lpips] Rendering 442 sample(s) at 256px × 16spp (transparent bg).
+[teapot-lpips] Rendered 0 complete triplet(s).
+Per-material chart saved to result\smoke_test\per_material_comparison.png
+Per-attribute bucket chart saved to result\smoke_test\per_param_bucket_comparison.png
+Per-sample distribution saved to result\smoke_test\log_mse_distribution.png
+Per-parameter MAE chart saved to result\smoke_test\material_param_mae.png
+
+Results saved to ./models\smoke_test_results.json
+
+[teapot insertion comparison renders skipped via --skip-teapot-insertion]

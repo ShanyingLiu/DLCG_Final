@@ -1,0 +1,195 @@
+{
+  "baseline": {
+    "aggregate": {
+      "log_mse_mean": 0.09480531782345998,
+      "log_mse_std": 0.12805045293224918,
+      "log_mse_ci95_half": 0.005291002349185227,
+      "n_samples": 2250,
+      "lpips_mean": 0.4158015786939197,
+      "lpips_std": 0.15340863598152923,
+      "lpips_ci95_half": 0.0063387940829309755
+    },
+    "per_material": {
+      "diffuse": {
+        "log_mse": 0.13070736373966477,
+        "log_mse_std": 0.18143123628572508,
+        "log_mse_ci95_half": 0.016856994644936577,
+        "count": 445
+      },
+      "glossy": {
+        "log_mse": 0.07635453604237251,
+        "log_mse_std": 0.0954139822849682,
+        "log_mse_ci95_half": 0.00892540345544479,
+        "count": 439
+      },
+      "metallic": {
+        "log_mse": 0.08089468596083789,
+        "log_mse_std": 0.0926551995791981,
+        "log_mse_ci95_half": 0.008513579424429223,
+        "count": 455
+      },
+      "rough_metallic": {
+        "log_mse": 0.09826738918827119,
+        "log_mse_std": 0.13982452359119107,
+        "log_mse_ci95_half": 0.012750007931832424,
+        "count": 462
+      },
+      "dielectric": {
+        "log_mse": 0.0877971737168599,
+        "log_mse_std": 0.10049761647483009,
+        "log_mse_ci95_half": 0.009295669740327092,
+        "count": 449
+      }
+    },
+    "per_param_bucket": {
+      "metallic_yes": {
+        "log_mse": 0.08964734560214017,
+        "log_mse_std": 0.11903787077864576,
+        "log_mse_ci95_half": 0.007704573040389161,
+        "count": 917
+      },
+      "metallic_no": {
+        "log_mse": 0.09835360028928916,
+        "log_mse_std": 0.13382722962149232,
+        "log_mse_ci95_half": 0.0071841850011794195,
+        "count": 1333
+      },
+      "transmissive": {
+        "log_mse": 0.0877971737168599,
+        "log_mse_std": 0.10049761647483009,
+        "log_mse_ci95_half": 0.009295669740327092,
+        "count": 449
+      },
+      "opaque": {
+        "log_mse": 0.09655248978562736,
+        "log_mse_std": 0.1340075088132042,
+        "log_mse_ci95_half": 0.006188998419837069,
+        "count": 1801
+      },
+      "rough_low": {
+        "log_mse": 0.08171828327152111,
+        "log_mse_std": 0.09627676864082224,
+        "log_mse_ci95_half": 0.005149103169748876,
+        "count": 1343
+      },
+      "rough_mid": {
+        "log_mse": 0.09188039222261292,
+        "log_mse_std": 0.1106390138487373,
+        "log_mse_ci95_half": 0.012913139313386494,
+        "count": 282
+      },
+      "rough_high": {
+        "log_mse": 0.12424646409976844,
+        "log_mse_std": 0.1800262445791819,
+        "log_mse_ci95_half": 0.014113798337215667,
+        "count": 625
+      }
+    }
+  },
+  "multitask": {
+    "aggregate": {
+      "log_mse_mean": 0.10104825572603937,
+      "log_mse_std": 0.13629440768576642,
+      "log_mse_ci95_half": 0.005631639832057036,
+      "n_samples": 2250,
+      "lpips_mean": 0.4241246256265375,
+      "lpips_std": 0.15209020482941563,
+      "lpips_ci95_half": 0.0062843169439335605
+    },
+    "per_material": {
+      "diffuse": {
+        "log_mse": 0.1356146427664756,
+        "log_mse_std": 0.19055060059112403,
+        "log_mse_ci95_half": 0.017704285764197008,
+        "count": 445
+      },
+      "glossy": {
+        "log_mse": 0.08241203805232963,
+        "log_mse_std": 0.1071266724315637,
+        "log_mse_ci95_half": 0.010021055084309328,
+        "count": 439
+      },
+      "metallic": {
+        "log_mse": 0.08822343217769897,
+        "log_mse_std": 0.10626613802116557,
+        "log_mse_ci95_half": 0.009764214100011126,
+        "count": 455
+      },
+      "rough_metallic": {
+        "log_mse": 0.10375213223338935,
+        "log_mse_std": 0.14021441269644355,
+        "log_mse_ci95_half": 0.012785560273130138,
+        "count": 462
+      },
+      "dielectric": {
+        "log_mse": 0.09522500649188267,
+        "log_mse_std": 0.11242182859673054,
+        "log_mse_ci95_half": 0.010398616672671031,
+        "count": 449
+      }
+    },
+    "per_param_bucket": {
+      "metallic_yes": {
+        "log_mse": 0.09604705205308497,
+        "log_mse_std": 0.12470649926008834,
+        "log_mse_ci95_half": 0.008071467725991514,
+        "count": 917
+      },
+      "metallic_no": {
+        "log_mse": 0.10448869366159766,
+        "log_mse_std": 0.14366950645490867,
+        "log_mse_ci95_half": 0.00771254337640749,
+        "count": 1333
+      },
+      "transmissive": {
+        "log_mse": 0.09522500649188267,
+        "log_mse_std": 0.11242182859673054,
+        "log_mse_ci95_half": 0.010398616672671031,
+        "count": 449
+      },
+      "opaque": {
+        "log_mse": 0.10250002635687577,
+        "log_mse_std": 0.14161107095121153,
+        "log_mse_ci95_half": 0.006540161085825107,
+        "count": 1801
+      },
+      "rough_low": {
+        "log_mse": 0.0886646122566501,
+        "log_mse_std": 0.10868415077769553,
+        "log_mse_ci95_half": 0.005812678522257863,
+        "count": 1343
+      },
+      "rough_mid": {
+        "log_mse": 0.09881537157199945,
+        "log_mse_std": 0.1180319724210813,
+        "log_mse_ci95_half": 0.01377600224628729,
+        "count": 282
+      },
+      "rough_high": {
+        "log_mse": 0.12866570614336587,
+        "log_mse_std": 0.18487233994222224,
+        "log_mse_ci95_half": 0.014493725235300707,
+        "count": 625
+      }
+    },
+    "material_param_mae": {
+      "mean": 0.03339086590734729,
+      "per_param": {
+        "metallic": 0.010504283499640879,
+        "roughness": 0.05458388821104826,
+        "specular": 0.020234498695382703,
+        "transmission": 0.02548549963905939,
+        "ior": 0.05614615949160523
+      }
+    }
+  },
+  "paired_ttest_log_mse": {
+    "n": 2250,
+    "mean_diff": -0.00624293790257938,
+    "std_diff": 0.03011747204566952,
+    "sem": 0.0006349320602051093,
+    "t_stat": -9.832450263359915,
+    "p_value": 0.0,
+    "ci95_half_diff": 0.0012444439804478468
+  }
+}

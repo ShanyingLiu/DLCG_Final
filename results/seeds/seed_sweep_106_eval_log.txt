@@ -1,0 +1,139 @@
+
+============================================================
+Evaluating on test set
+============================================================
+
+==============================================================================
+Metric                                          Baseline            Multitask
+------------------------------------------------------------------------------
+  log_mse (mean ± 95% CI)                0.0980 ± 0.0054      0.1004 ± 0.0057
+  LPIPS (mean ± 95% CI)                  0.4092 ± 0.0062      0.4051 ± 0.0061
+  material_param_mae (mean)                          N/A               0.0338
+
+Paired t-test (baseline - multitask) on per-sample log_mse:
+  n              = 2250
+  mean diff      = -0.0025 (95% CI ± 0.0013) — baseline better
+  std of diffs   = 0.0313
+  t-statistic    = -3.7498
+  p-value (two-sided, normal approx) = 0.000177
+
+Paired t-test (baseline - multitask) on per-sample LPIPS:
+  n              = 2250
+  mean diff      = +0.0041 (95% CI ± 0.0017) — multitask better
+  t-statistic    = +4.7692
+  p-value (two-sided, normal approx) = 1.849e-06
+
+Per-material log_mse (mean ± 95% CI):
+  Material                         Baseline            Multitask      Delta
+  ---------------------------------------------------------------------------
+  diffuse                   0.1335 ± 0.0169      0.1359 ± 0.0179    +0.0024
+  glossy                    0.0789 ± 0.0090      0.0821 ± 0.0102    +0.0033
+  metallic                  0.0828 ± 0.0086      0.0881 ± 0.0097    +0.0052
+  rough_metallic            0.1028 ± 0.0133      0.1033 ± 0.0129    +0.0005
+  dielectric                0.0918 ± 0.0099      0.0928 ± 0.0102    +0.0010
+
+Per-parameter-bucket log_mse (mean ± 95% CI):
+  Bucket                           Baseline            Multitask      Delta
+  ---------------------------------------------------------------------------
+  metallic_yes              0.0929 ± 0.0079      0.0957 ± 0.0081    +0.0028  (n=917)
+  metallic_no               0.1015 ± 0.0073      0.1037 ± 0.0078    +0.0022  (n=1333)
+  transmissive              0.0918 ± 0.0099      0.0928 ± 0.0102    +0.0010  (n=449)
+  opaque                    0.0995 ± 0.0063      0.1023 ± 0.0066    +0.0028  (n=1801)
+  rough_low                 0.0845 ± 0.0053      0.0877 ± 0.0058    +0.0032  (n=1343)
+  rough_mid                 0.0961 ± 0.0136      0.0992 ± 0.0143    +0.0031  (n=282)
+  rough_high                0.1277 ± 0.0143      0.1283 ± 0.0145    +0.0007  (n=625)
+
+Multitask per-parameter MAE:
+  metallic             0.0104
+  roughness            0.0566
+  specular             0.0216
+  transmission         0.0236
+  ior                  0.0569
+======================================================================
+
+============================================================
+Shiny subset (roughness < 0.2 AND metallic > 0.8): n = 455 / 2250
+============================================================
+
+==============================================================================
+Metric                                          Baseline            Multitask
+------------------------------------------------------------------------------
+  log_mse (mean ± 95% CI)                0.0828 ± 0.0086      0.0881 ± 0.0097
+  LPIPS (mean ± 95% CI)                  0.3901 ± 0.0133      0.3872 ± 0.0132
+  material_param_mae (mean)                          N/A               0.0139
+
+Paired t-test (baseline - multitask) on per-sample log_mse:
+  n              = 455
+  mean diff      = -0.0052 (95% CI ± 0.0025) — baseline better
+  std of diffs   = 0.0274
+  t-statistic    = -4.0835
+  p-value (two-sided, normal approx) = 4.436e-05
+
+Paired t-test (baseline - multitask) on per-sample LPIPS:
+  n              = 455
+  mean diff      = +0.0029 (95% CI ± 0.0035) — multitask better
+  t-statistic    = +1.6043
+  p-value (two-sided, normal approx) = 0.1086
+
+Per-material log_mse (mean ± 95% CI):
+  Material                         Baseline            Multitask      Delta
+  ---------------------------------------------------------------------------
+  diffuse                               N/A                  N/A          —
+  glossy                                N/A                  N/A          —
+  metallic                  0.0828 ± 0.0086      0.0881 ± 0.0097    +0.0052
+  rough_metallic                        N/A                  N/A          —
+  dielectric                            N/A                  N/A          —
+
+Per-parameter-bucket log_mse (mean ± 95% CI):
+  Bucket                           Baseline            Multitask      Delta
+  ---------------------------------------------------------------------------
+  metallic_yes              0.0828 ± 0.0086      0.0881 ± 0.0097    +0.0052  (n=455)
+  metallic_no                           N/A                  N/A          —  (n=0)
+  transmissive                          N/A                  N/A          —  (n=0)
+  opaque                    0.0828 ± 0.0086      0.0881 ± 0.0097    +0.0052  (n=455)
+  rough_low                 0.0828 ± 0.0086      0.0881 ± 0.0097    +0.0052  (n=455)
+  rough_mid                             N/A                  N/A          —  (n=0)
+  rough_high                            N/A                  N/A          —  (n=0)
+
+Multitask per-parameter MAE:
+  metallic             0.0014
+  roughness            0.0481
+  specular             0.0049
+  transmission         0.0007
+  ior                  0.0145
+======================================================================
+
+============================================================
+Rendered-teapot LPIPS on 120 shiny samples (transparent envmap bg)
+============================================================
+
+[teapot-lpips] Rendering 120 sample(s) at 256px × 16spp (transparent bg).
+[teapot-lpips] rendered 10/120
+[teapot-lpips] rendered 20/120
+[teapot-lpips] rendered 30/120
+[teapot-lpips] rendered 40/120
+[teapot-lpips] rendered 50/120
+[teapot-lpips] rendered 60/120
+[teapot-lpips] rendered 70/120
+[teapot-lpips] rendered 80/120
+[teapot-lpips] rendered 90/120
+[teapot-lpips] rendered 100/120
+[teapot-lpips] rendered 110/120
+[teapot-lpips] rendered 120/120
+[teapot-lpips] Rendered 120 complete triplet(s).
+
+  baseline render-LPIPS  mean = 0.1271
+  multitask render-LPIPS mean = 0.1053
+  paired t-test (baseline - multitask)
+    n            = 120
+    mean diff    = +0.0218 (95% CI ± 0.0098) — multitask better
+    t-statistic  = +4.3519
+    p-value      = 1.349e-05
+Per-material chart saved to result\seed_sweep_106\per_material_comparison.png
+Per-attribute bucket chart saved to result\seed_sweep_106\per_param_bucket_comparison.png
+Per-sample distribution saved to result\seed_sweep_106\log_mse_distribution.png
+Per-parameter MAE chart saved to result\seed_sweep_106\material_param_mae.png
+
+Results saved to ./models\seed_sweep_106_results.json
+
+[teapot insertion comparison renders skipped via --skip-teapot-insertion]

@@ -1,0 +1,18 @@
+[2026-05-04T01:06:52] sweep start: seeds=[101, 102, 103, 104, 105, 106, 107, 108] budget=6:25:00
+[2026-05-04T01:06:52] START seed=101 exp=seed_sweep_101
+[2026-05-04T01:48:14] DONE  seed=101 duration=0:41:21 rc=0
+[2026-05-04T01:48:14] START seed=102 exp=seed_sweep_102
+[2026-05-04T02:29:33] DONE  seed=102 duration=0:41:18 rc=0
+[2026-05-04T02:29:33] START seed=103 exp=seed_sweep_103
+[2026-05-04T03:10:49] DONE  seed=103 duration=0:41:15 rc=0
+[2026-05-04T03:10:49] START seed=104 exp=seed_sweep_104
+[2026-05-04T03:52:06] DONE  seed=104 duration=0:41:17 rc=0
+[2026-05-04T03:52:06] START seed=105 exp=seed_sweep_105
+[2026-05-04T04:33:36] DONE  seed=105 duration=0:41:29 rc=0
+[2026-05-04T04:33:36] START seed=106 exp=seed_sweep_106
+[2026-05-04T05:14:59] DONE  seed=106 duration=0:41:22 rc=0
+[2026-05-04T05:14:59] START seed=107 exp=seed_sweep_107
+[2026-05-04T05:56:20] DONE  seed=107 duration=0:41:20 rc=0
+[2026-05-04T05:56:20] START seed=108 exp=seed_sweep_108
+[2026-05-04T06:37:40] DONE  seed=108 duration=0:41:19 rc=0
+[2026-05-04T06:37:40] sweep end: completed=[101, 102, 103, 104, 105, 106, 107, 108] skipped=[] total=5:30:47

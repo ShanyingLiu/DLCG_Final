@@ -90,11 +90,18 @@ def _find_hdri_on_disk(hdri_root: str, filename: str) -> Optional[str]:
 def _run_blender(blender_bin, script_path, teapot, hdri, output,
                  rotation_deg, strength, resolution, samples,
                  transparent_bg: bool = False) -> bool:
+    # BPY image/file APIs do not reliably resolve relative paths against the
+    # subprocess CWD, so pass absolute paths for everything Blender opens.
+    script_abs = os.path.abspath(script_path)
+    teapot_abs = os.path.abspath(teapot)
+    hdri_abs   = os.path.abspath(hdri)
+    output_abs = os.path.abspath(output)
+    os.makedirs(os.path.dirname(output_abs) or ".", exist_ok=True)
     cmd = [
-        blender_bin, "--background", "--python", script_path, "--",
-        "--teapot", teapot,
-        "--hdri", hdri,
-        "--output", output,
+        blender_bin, "--background", "--python", script_abs, "--",
+        "--teapot", teapot_abs,
+        "--hdri", hdri_abs,
+        "--output", output_abs,
         "--rotation_z_deg", f"{float(rotation_deg)}",
         "--strength", f"{float(strength)}",
         "--resolution", str(int(resolution)),
@@ -106,9 +113,13 @@ def _run_blender(blender_bin, script_path, teapot, hdri, output,
     proc = subprocess.run(cmd, capture_output=True, text=True)
     if proc.returncode != 0:
         tail = (proc.stderr or proc.stdout or "")[-1500:]
-        print(f"[teapot] Blender failed (rc={proc.returncode}) for {output}\n{tail}")
+        print(f"[teapot] Blender failed (rc={proc.returncode}) for {output_abs}\n{tail}")
         return False
-    return os.path.exists(output)
+    if not os.path.exists(output_abs):
+        tail = (proc.stderr or proc.stdout or "")[-1500:]
+        print(f"[teapot] Blender exited 0 but no output at {output_abs}\n{tail}")
+        return False
+    return True
 
 
 def _compose_strip(out_dir, sample_idx, panels, suptitle):

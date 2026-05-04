@@ -176,6 +176,22 @@ def main():
                         help='Multitask conditioning: "tiled" (concat material '
                              'features into decoder input) or "film" '
                              '(material-guided FiLM modulation in decoder).')
+    parser.add_argument('--seed', type=int, default=None,
+                        help='Override config.seed (sets torch/numpy seeds).')
+    parser.add_argument('--data-split-seed', type=int, default=None,
+                        help='Seed for the train/val/test split. Hold this '
+                             'constant across runs to keep the test set fixed '
+                             'while varying --seed.')
+    parser.add_argument('--experiment-name', type=str, default=None,
+                        help='Override config.experiment_name (controls '
+                             'checkpoint / results / eval-log filenames).')
+    parser.add_argument('--skip-teapot-insertion', action='store_true',
+                        help='Skip the final Blender teapot-insertion side-by-'
+                             'side renders (still runs shiny-subset render '
+                             'LPIPS).')
+    parser.add_argument('--shiny-lpips-max-n', type=int, default=None,
+                        help='Cap the number of shiny samples rendered for the '
+                             'LPIPS test (deterministic sort + first-N).')
     args = parser.parse_args()
 
     # Apply overrides
@@ -185,7 +201,16 @@ def main():
         config.batch_size = args.batch_size
     if args.backbone is not None:
         config.backbone = args.backbone
+    if args.seed is not None:
+        config.seed = args.seed
+    if args.data_split_seed is not None:
+        config.data_split_seed = args.data_split_seed
+    if args.experiment_name is not None:
+        config.experiment_name = args.experiment_name
     config.multitask_arch = args.multitask_arch
+    config.skip_teapot_insertion = args.skip_teapot_insertion
+    if args.shiny_lpips_max_n is not None:
+        config.shiny_lpips_max_n = args.shiny_lpips_max_n
 
     # Device
     config.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -193,6 +218,10 @@ def main():
 
     # Seed
     torch.manual_seed(config.seed)
+    np.random.seed(config.seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(config.seed)
+    print(f"Seed: {config.seed}  Experiment: {config.experiment_name}")
 
     # Transforms
     transform = T.Compose([
@@ -310,6 +339,13 @@ def run_evaluation(config, test_loader, baseline_model, multitask_model):
             # become deterministic and near-instant.
             shiny_idxs = np.where(mask)[0]
             picked = np.sort(shiny_idxs).tolist()
+            # Optional deterministic cap on the LPIPS render count, useful for
+            # multi-seed sweeps where rendering all shiny samples per run is
+            # prohibitively slow. Same cap+sort gives the same subset across
+            # runs (provided data_split_seed is held constant).
+            shiny_cap = getattr(config, "shiny_lpips_max_n", None)
+            if shiny_cap is not None and len(picked) > shiny_cap:
+                picked = picked[:int(shiny_cap)]
             n_render = len(picked)
 
             print(f"\n{'='*60}")
@@ -424,6 +460,10 @@ def run_evaluation(config, test_loader, baseline_model, multitask_model):
     print(f"\nResults saved to {results_path}")
 
     # Utah teapot insertion comparison renders on Blender
+    if getattr(config, "skip_teapot_insertion", False):
+        print("\n[teapot insertion comparison renders skipped via "
+              "--skip-teapot-insertion]")
+        return
     print(f"\n{'='*60}")
     print("Teapot insertion comparison renders")
     print(f"{'='*60}\n")

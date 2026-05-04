@@ -1,0 +1,3816 @@
+# cmd: C:\Program Files\Python314\python.exe code\main.py --seed 106 --data-split-seed 42 --experiment-name seed_sweep_106 --skip-teapot-insertion --shiny-lpips-max-n 120
+# cwd: C:\Users\Shanying Liu\documents\dlcg
+Device: cuda
+Seed: 106  Experiment: seed_sweep_106
+Dataset splits: train=10500, val=2250, test=2250
+
+============================================================
+Training baseline model (resnet50)
+============================================================
+
+Epoch 1/50
+  batch 10/329 | loss=0.4275 light=0.4275 mat=0.0000
+  batch 20/329 | loss=0.3346 light=0.3346 mat=0.0000
+  batch 30/329 | loss=0.3307 light=0.3307 mat=0.0000
+  batch 40/329 | loss=0.3962 light=0.3962 mat=0.0000
+  batch 50/329 | loss=0.2837 light=0.2837 mat=0.0000
+  batch 60/329 | loss=0.3183 light=0.3183 mat=0.0000
+  batch 70/329 | loss=0.2025 light=0.2025 mat=0.0000
+  batch 80/329 | loss=0.3008 light=0.3008 mat=0.0000
+  batch 90/329 | loss=0.2970 light=0.2970 mat=0.0000
+  batch 100/329 | loss=0.2573 light=0.2573 mat=0.0000
+  batch 110/329 | loss=0.3126 light=0.3126 mat=0.0000
+  batch 120/329 | loss=0.2253 light=0.2253 mat=0.0000
+  batch 130/329 | loss=0.2323 light=0.2323 mat=0.0000
+  batch 140/329 | loss=0.2202 light=0.2202 mat=0.0000
+  batch 150/329 | loss=0.2855 light=0.2855 mat=0.0000
+  batch 160/329 | loss=0.2793 light=0.2793 mat=0.0000
+  batch 170/329 | loss=0.2539 light=0.2539 mat=0.0000
+  batch 180/329 | loss=0.2066 light=0.2066 mat=0.0000
+  batch 190/329 | loss=0.2616 light=0.2616 mat=0.0000
+  batch 200/329 | loss=0.2922 light=0.2922 mat=0.0000
+  batch 210/329 | loss=0.2605 light=0.2605 mat=0.0000
+  batch 220/329 | loss=0.1719 light=0.1719 mat=0.0000
+  batch 230/329 | loss=0.2429 light=0.2429 mat=0.0000
+  batch 240/329 | loss=0.2531 light=0.2531 mat=0.0000
+  batch 250/329 | loss=0.1747 light=0.1747 mat=0.0000
+  batch 260/329 | loss=0.2292 light=0.2292 mat=0.0000
+  batch 270/329 | loss=0.1939 light=0.1939 mat=0.0000
+  batch 280/329 | loss=0.2189 light=0.2189 mat=0.0000
+  batch 290/329 | loss=0.2818 light=0.2818 mat=0.0000
+  batch 300/329 | loss=0.1928 light=0.1928 mat=0.0000
+  batch 310/329 | loss=0.2464 light=0.2464 mat=0.0000
+  batch 320/329 | loss=0.2643 light=0.2643 mat=0.0000
+  train | loss=0.2597 light=0.2597 mat=0.0000
+  val   | loss=0.2218 light=0.2218 mat=0.0000
+  -> new best model (val_loss=0.2218)
+
+Epoch 2/50
+  batch 10/329 | loss=0.2016 light=0.2016 mat=0.0000
+  batch 20/329 | loss=0.2392 light=0.2392 mat=0.0000
+  batch 30/329 | loss=0.2163 light=0.2163 mat=0.0000
+  batch 40/329 | loss=0.1998 light=0.1998 mat=0.0000
+  batch 50/329 | loss=0.1909 light=0.1909 mat=0.0000
+  batch 60/329 | loss=0.2223 light=0.2223 mat=0.0000
+  batch 70/329 | loss=0.1843 light=0.1843 mat=0.0000
+  batch 80/329 | loss=0.1774 light=0.1774 mat=0.0000
+  batch 90/329 | loss=0.1547 light=0.1547 mat=0.0000
+  batch 100/329 | loss=0.2102 light=0.2102 mat=0.0000
+  batch 110/329 | loss=0.2493 light=0.2493 mat=0.0000
+  batch 120/329 | loss=0.2180 light=0.2180 mat=0.0000
+  batch 130/329 | loss=0.2369 light=0.2369 mat=0.0000
+  batch 140/329 | loss=0.2390 light=0.2390 mat=0.0000
+  batch 150/329 | loss=0.1919 light=0.1919 mat=0.0000
+  batch 160/329 | loss=0.2010 light=0.2010 mat=0.0000
+  batch 170/329 | loss=0.2489 light=0.2489 mat=0.0000
+  batch 180/329 | loss=0.2296 light=0.2296 mat=0.0000
+  batch 190/329 | loss=0.2057 light=0.2057 mat=0.0000
+  batch 200/329 | loss=0.2150 light=0.2150 mat=0.0000
+  batch 210/329 | loss=0.2299 light=0.2299 mat=0.0000
+  batch 220/329 | loss=0.2112 light=0.2112 mat=0.0000
+  batch 230/329 | loss=0.1524 light=0.1524 mat=0.0000
+  batch 240/329 | loss=0.1920 light=0.1920 mat=0.0000
+  batch 250/329 | loss=0.1819 light=0.1819 mat=0.0000
+  batch 260/329 | loss=0.1583 light=0.1583 mat=0.0000
+  batch 270/329 | loss=0.2147 light=0.2147 mat=0.0000
+  batch 280/329 | loss=0.1898 light=0.1898 mat=0.0000
+  batch 290/329 | loss=0.1939 light=0.1939 mat=0.0000
+  batch 300/329 | loss=0.1803 light=0.1803 mat=0.0000
+  batch 310/329 | loss=0.2256 light=0.2256 mat=0.0000
+  batch 320/329 | loss=0.2565 light=0.2565 mat=0.0000
+  train | loss=0.2062 light=0.2062 mat=0.0000
+  val   | loss=0.1940 light=0.1940 mat=0.0000
+  -> new best model (val_loss=0.1940)
+
+Epoch 3/50
+  batch 10/329 | loss=0.1821 light=0.1821 mat=0.0000
+  batch 20/329 | loss=0.1769 light=0.1769 mat=0.0000
+  batch 30/329 | loss=0.2077 light=0.2077 mat=0.0000
+  batch 40/329 | loss=0.1744 light=0.1744 mat=0.0000
+  batch 50/329 | loss=0.1762 light=0.1762 mat=0.0000
+  batch 60/329 | loss=0.2501 light=0.2501 mat=0.0000
+  batch 70/329 | loss=0.1476 light=0.1476 mat=0.0000
+  batch 80/329 | loss=0.2107 light=0.2107 mat=0.0000
+  batch 90/329 | loss=0.2033 light=0.2033 mat=0.0000
+  batch 100/329 | loss=0.1606 light=0.1606 mat=0.0000
+  batch 110/329 | loss=0.2342 light=0.2342 mat=0.0000
+  batch 120/329 | loss=0.1921 light=0.1921 mat=0.0000
+  batch 130/329 | loss=0.1649 light=0.1649 mat=0.0000
+  batch 140/329 | loss=0.2113 light=0.2113 mat=0.0000
+  batch 150/329 | loss=0.1424 light=0.1424 mat=0.0000
+  batch 160/329 | loss=0.2208 light=0.2208 mat=0.0000
+  batch 170/329 | loss=0.1959 light=0.1959 mat=0.0000
+  batch 180/329 | loss=0.2166 light=0.2166 mat=0.0000
+  batch 190/329 | loss=0.2260 light=0.2260 mat=0.0000
+  batch 200/329 | loss=0.1629 light=0.1629 mat=0.0000
+  batch 210/329 | loss=0.1305 light=0.1305 mat=0.0000
+  batch 220/329 | loss=0.2136 light=0.2136 mat=0.0000
+  batch 230/329 | loss=0.1704 light=0.1704 mat=0.0000
+  batch 240/329 | loss=0.1936 light=0.1936 mat=0.0000
+  batch 250/329 | loss=0.2207 light=0.2207 mat=0.0000
+  batch 260/329 | loss=0.2261 light=0.2261 mat=0.0000
+  batch 270/329 | loss=0.1621 light=0.1621 mat=0.0000
+  batch 280/329 | loss=0.1762 light=0.1762 mat=0.0000
+  batch 290/329 | loss=0.2029 light=0.2029 mat=0.0000
+  batch 300/329 | loss=0.1314 light=0.1314 mat=0.0000
+  batch 310/329 | loss=0.1755 light=0.1755 mat=0.0000
+  batch 320/329 | loss=0.1411 light=0.1411 mat=0.0000
+  train | loss=0.1882 light=0.1882 mat=0.0000
+  val   | loss=0.1854 light=0.1854 mat=0.0000
+  -> new best model (val_loss=0.1854)
+
+Epoch 4/50
+  batch 10/329 | loss=0.2281 light=0.2281 mat=0.0000
+  batch 20/329 | loss=0.2169 light=0.2169 mat=0.0000
+  batch 30/329 | loss=0.1390 light=0.1390 mat=0.0000
+  batch 40/329 | loss=0.1700 light=0.1700 mat=0.0000
+  batch 50/329 | loss=0.1517 light=0.1517 mat=0.0000
+  batch 60/329 | loss=0.1701 light=0.1701 mat=0.0000
+  batch 70/329 | loss=0.2093 light=0.2093 mat=0.0000
+  batch 80/329 | loss=0.1698 light=0.1698 mat=0.0000
+  batch 90/329 | loss=0.1701 light=0.1701 mat=0.0000
+  batch 100/329 | loss=0.1598 light=0.1598 mat=0.0000
+  batch 110/329 | loss=0.1980 light=0.1980 mat=0.0000
+  batch 120/329 | loss=0.1761 light=0.1761 mat=0.0000
+  batch 130/329 | loss=0.1900 light=0.1900 mat=0.0000
+  batch 140/329 | loss=0.1917 light=0.1917 mat=0.0000
+  batch 150/329 | loss=0.1693 light=0.1693 mat=0.0000
+  batch 160/329 | loss=0.1528 light=0.1528 mat=0.0000
+  batch 170/329 | loss=0.1315 light=0.1315 mat=0.0000
+  batch 180/329 | loss=0.2192 light=0.2192 mat=0.0000
+  batch 190/329 | loss=0.1669 light=0.1669 mat=0.0000
+  batch 200/329 | loss=0.1333 light=0.1333 mat=0.0000
+  batch 210/329 | loss=0.1683 light=0.1683 mat=0.0000
+  batch 220/329 | loss=0.1454 light=0.1454 mat=0.0000
+  batch 230/329 | loss=0.1701 light=0.1701 mat=0.0000
+  batch 240/329 | loss=0.2039 light=0.2039 mat=0.0000
+  batch 250/329 | loss=0.1682 light=0.1682 mat=0.0000
+  batch 260/329 | loss=0.1682 light=0.1682 mat=0.0000
+  batch 270/329 | loss=0.2106 light=0.2106 mat=0.0000
+  batch 280/329 | loss=0.1598 light=0.1598 mat=0.0000
+  batch 290/329 | loss=0.1806 light=0.1806 mat=0.0000
+  batch 300/329 | loss=0.1366 light=0.1366 mat=0.0000
+  batch 310/329 | loss=0.1683 light=0.1683 mat=0.0000
+  batch 320/329 | loss=0.1837 light=0.1837 mat=0.0000
+  train | loss=0.1758 light=0.1758 mat=0.0000
+  val   | loss=0.1739 light=0.1739 mat=0.0000
+  -> new best model (val_loss=0.1739)
+
+Epoch 5/50
+  batch 10/329 | loss=0.1335 light=0.1335 mat=0.0000
+  batch 20/329 | loss=0.1425 light=0.1425 mat=0.0000
+  batch 30/329 | loss=0.1539 light=0.1539 mat=0.0000
+  batch 40/329 | loss=0.1607 light=0.1607 mat=0.0000
+  batch 50/329 | loss=0.1737 light=0.1737 mat=0.0000
+  batch 60/329 | loss=0.1484 light=0.1484 mat=0.0000
+  batch 70/329 | loss=0.1729 light=0.1729 mat=0.0000
+  batch 80/329 | loss=0.1675 light=0.1675 mat=0.0000
+  batch 90/329 | loss=0.1784 light=0.1784 mat=0.0000
+  batch 100/329 | loss=0.2016 light=0.2016 mat=0.0000
+  batch 110/329 | loss=0.1594 light=0.1594 mat=0.0000
+  batch 120/329 | loss=0.1560 light=0.1560 mat=0.0000
+  batch 130/329 | loss=0.2373 light=0.2373 mat=0.0000
+  batch 140/329 | loss=0.2214 light=0.2214 mat=0.0000
+  batch 150/329 | loss=0.2025 light=0.2025 mat=0.0000
+  batch 160/329 | loss=0.1878 light=0.1878 mat=0.0000
+  batch 170/329 | loss=0.1649 light=0.1649 mat=0.0000
+  batch 180/329 | loss=0.1957 light=0.1957 mat=0.0000
+  batch 190/329 | loss=0.1676 light=0.1676 mat=0.0000
+  batch 200/329 | loss=0.1266 light=0.1266 mat=0.0000
+  batch 210/329 | loss=0.1872 light=0.1872 mat=0.0000
+  batch 220/329 | loss=0.1624 light=0.1624 mat=0.0000
+  batch 230/329 | loss=0.1588 light=0.1588 mat=0.0000
+  batch 240/329 | loss=0.1701 light=0.1701 mat=0.0000
+  batch 250/329 | loss=0.1281 light=0.1281 mat=0.0000
+  batch 260/329 | loss=0.1431 light=0.1431 mat=0.0000
+  batch 270/329 | loss=0.1766 light=0.1766 mat=0.0000
+  batch 280/329 | loss=0.1734 light=0.1734 mat=0.0000
+  batch 290/329 | loss=0.2273 light=0.2273 mat=0.0000
+  batch 300/329 | loss=0.2187 light=0.2187 mat=0.0000
+  batch 310/329 | loss=0.1310 light=0.1310 mat=0.0000
+  batch 320/329 | loss=0.1280 light=0.1280 mat=0.0000
+  train | loss=0.1657 light=0.1657 mat=0.0000
+  val   | loss=0.1706 light=0.1706 mat=0.0000
+  -> new best model (val_loss=0.1706)
+
+Epoch 6/50
+  batch 10/329 | loss=0.1589 light=0.1589 mat=0.0000
+  batch 20/329 | loss=0.1876 light=0.1876 mat=0.0000
+  batch 30/329 | loss=0.1560 light=0.1560 mat=0.0000
+  batch 40/329 | loss=0.1641 light=0.1641 mat=0.0000
+  batch 50/329 | loss=0.1639 light=0.1639 mat=0.0000
+  batch 60/329 | loss=0.1196 light=0.1196 mat=0.0000
+  batch 70/329 | loss=0.1330 light=0.1330 mat=0.0000
+  batch 80/329 | loss=0.1421 light=0.1421 mat=0.0000
+  batch 90/329 | loss=0.1951 light=0.1951 mat=0.0000
+  batch 100/329 | loss=0.1956 light=0.1956 mat=0.0000
+  batch 110/329 | loss=0.1399 light=0.1399 mat=0.0000
+  batch 120/329 | loss=0.1351 light=0.1351 mat=0.0000
+  batch 130/329 | loss=0.1458 light=0.1458 mat=0.0000
+  batch 140/329 | loss=0.1416 light=0.1416 mat=0.0000
+  batch 150/329 | loss=0.1684 light=0.1684 mat=0.0000
+  batch 160/329 | loss=0.1825 light=0.1825 mat=0.0000
+  batch 170/329 | loss=0.1715 light=0.1715 mat=0.0000
+  batch 180/329 | loss=0.1782 light=0.1782 mat=0.0000
+  batch 190/329 | loss=0.1767 light=0.1767 mat=0.0000
+  batch 200/329 | loss=0.1608 light=0.1608 mat=0.0000
+  batch 210/329 | loss=0.1570 light=0.1570 mat=0.0000
+  batch 220/329 | loss=0.1511 light=0.1511 mat=0.0000
+  batch 230/329 | loss=0.2089 light=0.2089 mat=0.0000
+  batch 240/329 | loss=0.1443 light=0.1443 mat=0.0000
+  batch 250/329 | loss=0.1704 light=0.1704 mat=0.0000
+  batch 260/329 | loss=0.1567 light=0.1567 mat=0.0000
+  batch 270/329 | loss=0.1603 light=0.1603 mat=0.0000
+  batch 280/329 | loss=0.1471 light=0.1471 mat=0.0000
+  batch 290/329 | loss=0.1812 light=0.1812 mat=0.0000
+  batch 300/329 | loss=0.1454 light=0.1454 mat=0.0000
+  batch 310/329 | loss=0.1295 light=0.1295 mat=0.0000
+  batch 320/329 | loss=0.1298 light=0.1298 mat=0.0000
+  train | loss=0.1588 light=0.1588 mat=0.0000
+  val   | loss=0.1715 light=0.1715 mat=0.0000
+
+Epoch 7/50
+  batch 10/329 | loss=0.1397 light=0.1397 mat=0.0000
+  batch 20/329 | loss=0.1953 light=0.1953 mat=0.0000
+  batch 30/329 | loss=0.2047 light=0.2047 mat=0.0000
+  batch 40/329 | loss=0.1374 light=0.1374 mat=0.0000
+  batch 50/329 | loss=0.1702 light=0.1702 mat=0.0000
+  batch 60/329 | loss=0.1355 light=0.1355 mat=0.0000
+  batch 70/329 | loss=0.1273 light=0.1273 mat=0.0000
+  batch 80/329 | loss=0.1373 light=0.1373 mat=0.0000
+  batch 90/329 | loss=0.1292 light=0.1292 mat=0.0000
+  batch 100/329 | loss=0.1450 light=0.1450 mat=0.0000
+  batch 110/329 | loss=0.1656 light=0.1656 mat=0.0000
+  batch 120/329 | loss=0.1746 light=0.1746 mat=0.0000
+  batch 130/329 | loss=0.1257 light=0.1257 mat=0.0000
+  batch 140/329 | loss=0.1490 light=0.1490 mat=0.0000
+  batch 150/329 | loss=0.1816 light=0.1816 mat=0.0000
+  batch 160/329 | loss=0.1646 light=0.1646 mat=0.0000
+  batch 170/329 | loss=0.2022 light=0.2022 mat=0.0000
+  batch 180/329 | loss=0.1759 light=0.1759 mat=0.0000
+  batch 190/329 | loss=0.2276 light=0.2276 mat=0.0000
+  batch 200/329 | loss=0.1879 light=0.1879 mat=0.0000
+  batch 210/329 | loss=0.1361 light=0.1361 mat=0.0000
+  batch 220/329 | loss=0.1780 light=0.1780 mat=0.0000
+  batch 230/329 | loss=0.2008 light=0.2008 mat=0.0000
+  batch 240/329 | loss=0.1436 light=0.1436 mat=0.0000
+  batch 250/329 | loss=0.1386 light=0.1386 mat=0.0000
+  batch 260/329 | loss=0.1424 light=0.1424 mat=0.0000
+  batch 270/329 | loss=0.1703 light=0.1703 mat=0.0000
+  batch 280/329 | loss=0.1622 light=0.1622 mat=0.0000
+  batch 290/329 | loss=0.1330 light=0.1330 mat=0.0000
+  batch 300/329 | loss=0.1591 light=0.1591 mat=0.0000
+  batch 310/329 | loss=0.1597 light=0.1597 mat=0.0000
+  batch 320/329 | loss=0.1477 light=0.1477 mat=0.0000
+  train | loss=0.1545 light=0.1545 mat=0.0000
+  val   | loss=0.1649 light=0.1649 mat=0.0000
+  -> new best model (val_loss=0.1649)
+
+Epoch 8/50
+  batch 10/329 | loss=0.1485 light=0.1485 mat=0.0000
+  batch 20/329 | loss=0.1422 light=0.1422 mat=0.0000
+  batch 30/329 | loss=0.1294 light=0.1294 mat=0.0000
+  batch 40/329 | loss=0.1286 light=0.1286 mat=0.0000
+  batch 50/329 | loss=0.1012 light=0.1012 mat=0.0000
+  batch 60/329 | loss=0.1569 light=0.1569 mat=0.0000
+  batch 70/329 | loss=0.1499 light=0.1499 mat=0.0000
+  batch 80/329 | loss=0.1918 light=0.1918 mat=0.0000
+  batch 90/329 | loss=0.1322 light=0.1322 mat=0.0000
+  batch 100/329 | loss=0.1589 light=0.1589 mat=0.0000
+  batch 110/329 | loss=0.1730 light=0.1730 mat=0.0000
+  batch 120/329 | loss=0.1446 light=0.1446 mat=0.0000
+  batch 130/329 | loss=0.1537 light=0.1537 mat=0.0000
+  batch 140/329 | loss=0.1382 light=0.1382 mat=0.0000
+  batch 150/329 | loss=0.1371 light=0.1371 mat=0.0000
+  batch 160/329 | loss=0.1247 light=0.1247 mat=0.0000
+  batch 170/329 | loss=0.1549 light=0.1549 mat=0.0000
+  batch 180/329 | loss=0.1612 light=0.1612 mat=0.0000
+  batch 190/329 | loss=0.1450 light=0.1450 mat=0.0000
+  batch 200/329 | loss=0.1351 light=0.1351 mat=0.0000
+  batch 210/329 | loss=0.1741 light=0.1741 mat=0.0000
+  batch 220/329 | loss=0.1721 light=0.1721 mat=0.0000
+  batch 230/329 | loss=0.1215 light=0.1215 mat=0.0000
+  batch 240/329 | loss=0.1291 light=0.1291 mat=0.0000
+  batch 250/329 | loss=0.1296 light=0.1296 mat=0.0000
+  batch 260/329 | loss=0.1604 light=0.1604 mat=0.0000
+  batch 270/329 | loss=0.1594 light=0.1594 mat=0.0000
+  batch 280/329 | loss=0.1274 light=0.1274 mat=0.0000
+  batch 290/329 | loss=0.1443 light=0.1443 mat=0.0000
+  batch 300/329 | loss=0.1468 light=0.1468 mat=0.0000
+  batch 310/329 | loss=0.1504 light=0.1504 mat=0.0000
+  batch 320/329 | loss=0.1435 light=0.1435 mat=0.0000
+  train | loss=0.1466 light=0.1466 mat=0.0000
+  val   | loss=0.1638 light=0.1638 mat=0.0000
+  -> new best model (val_loss=0.1638)
+
+Epoch 9/50
+  batch 10/329 | loss=0.1334 light=0.1334 mat=0.0000
+  batch 20/329 | loss=0.1509 light=0.1509 mat=0.0000
+  batch 30/329 | loss=0.1391 light=0.1391 mat=0.0000
+  batch 40/329 | loss=0.1553 light=0.1553 mat=0.0000
+  batch 50/329 | loss=0.1428 light=0.1428 mat=0.0000
+  batch 60/329 | loss=0.1122 light=0.1122 mat=0.0000
+  batch 70/329 | loss=0.1099 light=0.1099 mat=0.0000
+  batch 80/329 | loss=0.1249 light=0.1249 mat=0.0000
+  batch 90/329 | loss=0.1162 light=0.1162 mat=0.0000
+  batch 100/329 | loss=0.1320 light=0.1320 mat=0.0000
+  batch 110/329 | loss=0.1427 light=0.1427 mat=0.0000
+  batch 120/329 | loss=0.1195 light=0.1195 mat=0.0000
+  batch 130/329 | loss=0.1398 light=0.1398 mat=0.0000
+  batch 140/329 | loss=0.2180 light=0.2180 mat=0.0000
+  batch 150/329 | loss=0.1590 light=0.1590 mat=0.0000
+  batch 160/329 | loss=0.0899 light=0.0899 mat=0.0000
+  batch 170/329 | loss=0.1523 light=0.1523 mat=0.0000
+  batch 180/329 | loss=0.1259 light=0.1259 mat=0.0000
+  batch 190/329 | loss=0.1481 light=0.1481 mat=0.0000
+  batch 200/329 | loss=0.1179 light=0.1179 mat=0.0000
+  batch 210/329 | loss=0.1085 light=0.1085 mat=0.0000
+  batch 220/329 | loss=0.1839 light=0.1839 mat=0.0000
+  batch 230/329 | loss=0.0997 light=0.0997 mat=0.0000
+  batch 240/329 | loss=0.1257 light=0.1257 mat=0.0000
+  batch 250/329 | loss=0.1361 light=0.1361 mat=0.0000
+  batch 260/329 | loss=0.1307 light=0.1307 mat=0.0000
+  batch 270/329 | loss=0.1037 light=0.1037 mat=0.0000
+  batch 280/329 | loss=0.1769 light=0.1769 mat=0.0000
+  batch 290/329 | loss=0.1686 light=0.1686 mat=0.0000
+  batch 300/329 | loss=0.1317 light=0.1317 mat=0.0000
+  batch 310/329 | loss=0.1051 light=0.1051 mat=0.0000
+  batch 320/329 | loss=0.1466 light=0.1466 mat=0.0000
+  train | loss=0.1430 light=0.1430 mat=0.0000
+  val   | loss=0.1601 light=0.1601 mat=0.0000
+  -> new best model (val_loss=0.1601)
+
+Epoch 10/50
+  batch 10/329 | loss=0.1171 light=0.1171 mat=0.0000
+  batch 20/329 | loss=0.1390 light=0.1390 mat=0.0000
+  batch 30/329 | loss=0.1175 light=0.1175 mat=0.0000
+  batch 40/329 | loss=0.1343 light=0.1343 mat=0.0000
+  batch 50/329 | loss=0.1638 light=0.1638 mat=0.0000
+  batch 60/329 | loss=0.1057 light=0.1057 mat=0.0000
+  batch 70/329 | loss=0.1216 light=0.1216 mat=0.0000
+  batch 80/329 | loss=0.1328 light=0.1328 mat=0.0000
+  batch 90/329 | loss=0.1189 light=0.1189 mat=0.0000
+  batch 100/329 | loss=0.1233 light=0.1233 mat=0.0000
+  batch 110/329 | loss=0.1089 light=0.1089 mat=0.0000
+  batch 120/329 | loss=0.1418 light=0.1418 mat=0.0000
+  batch 130/329 | loss=0.1594 light=0.1594 mat=0.0000
+  batch 140/329 | loss=0.0871 light=0.0871 mat=0.0000
+  batch 150/329 | loss=0.1417 light=0.1417 mat=0.0000
+  batch 160/329 | loss=0.1748 light=0.1748 mat=0.0000
+  batch 170/329 | loss=0.1519 light=0.1519 mat=0.0000
+  batch 180/329 | loss=0.1929 light=0.1929 mat=0.0000
+  batch 190/329 | loss=0.1324 light=0.1324 mat=0.0000
+  batch 200/329 | loss=0.1231 light=0.1231 mat=0.0000
+  batch 210/329 | loss=0.1183 light=0.1183 mat=0.0000
+  batch 220/329 | loss=0.1423 light=0.1423 mat=0.0000
+  batch 230/329 | loss=0.1336 light=0.1336 mat=0.0000
+  batch 240/329 | loss=0.1275 light=0.1275 mat=0.0000
+  batch 250/329 | loss=0.1524 light=0.1524 mat=0.0000
+  batch 260/329 | loss=0.1289 light=0.1289 mat=0.0000
+  batch 270/329 | loss=0.1397 light=0.1397 mat=0.0000
+  batch 280/329 | loss=0.1723 light=0.1723 mat=0.0000
+  batch 290/329 | loss=0.1399 light=0.1399 mat=0.0000
+  batch 300/329 | loss=0.1408 light=0.1408 mat=0.0000
+  batch 310/329 | loss=0.1194 light=0.1194 mat=0.0000
+  batch 320/329 | loss=0.1531 light=0.1531 mat=0.0000
+  train | loss=0.1398 light=0.1398 mat=0.0000
+  val   | loss=0.1546 light=0.1546 mat=0.0000
+  -> new best model (val_loss=0.1546)
+
+Epoch 11/50
+  batch 10/329 | loss=0.0996 light=0.0996 mat=0.0000
+  batch 20/329 | loss=0.1175 light=0.1175 mat=0.0000
+  batch 30/329 | loss=0.1376 light=0.1376 mat=0.0000
+  batch 40/329 | loss=0.1615 light=0.1615 mat=0.0000
+  batch 50/329 | loss=0.1263 light=0.1263 mat=0.0000
+  batch 60/329 | loss=0.1250 light=0.1250 mat=0.0000
+  batch 70/329 | loss=0.1545 light=0.1545 mat=0.0000
+  batch 80/329 | loss=0.0978 light=0.0978 mat=0.0000
+  batch 90/329 | loss=0.1070 light=0.1070 mat=0.0000
+  batch 100/329 | loss=0.1494 light=0.1494 mat=0.0000
+  batch 110/329 | loss=0.1370 light=0.1370 mat=0.0000
+  batch 120/329 | loss=0.1347 light=0.1347 mat=0.0000
+  batch 130/329 | loss=0.1079 light=0.1079 mat=0.0000
+  batch 140/329 | loss=0.1231 light=0.1231 mat=0.0000
+  batch 150/329 | loss=0.1132 light=0.1132 mat=0.0000
+  batch 160/329 | loss=0.1519 light=0.1519 mat=0.0000
+  batch 170/329 | loss=0.1699 light=0.1699 mat=0.0000
+  batch 180/329 | loss=0.1265 light=0.1265 mat=0.0000
+  batch 190/329 | loss=0.1358 light=0.1358 mat=0.0000
+  batch 200/329 | loss=0.1254 light=0.1254 mat=0.0000
+  batch 210/329 | loss=0.2332 light=0.2332 mat=0.0000
+  batch 220/329 | loss=0.1652 light=0.1652 mat=0.0000
+  batch 230/329 | loss=0.1051 light=0.1051 mat=0.0000
+  batch 240/329 | loss=0.1440 light=0.1440 mat=0.0000
+  batch 250/329 | loss=0.1699 light=0.1699 mat=0.0000
+  batch 260/329 | loss=0.1071 light=0.1071 mat=0.0000
+  batch 270/329 | loss=0.0922 light=0.0922 mat=0.0000
+  batch 280/329 | loss=0.1728 light=0.1728 mat=0.0000
+  batch 290/329 | loss=0.1673 light=0.1673 mat=0.0000
+  batch 300/329 | loss=0.1256 light=0.1256 mat=0.0000
+  batch 310/329 | loss=0.1470 light=0.1470 mat=0.0000
+  batch 320/329 | loss=0.1428 light=0.1428 mat=0.0000
+  train | loss=0.1348 light=0.1348 mat=0.0000
+  val   | loss=0.1558 light=0.1558 mat=0.0000
+
+Epoch 12/50
+  batch 10/329 | loss=0.1493 light=0.1493 mat=0.0000
+  batch 20/329 | loss=0.0942 light=0.0942 mat=0.0000
+  batch 30/329 | loss=0.1029 light=0.1029 mat=0.0000
+  batch 40/329 | loss=0.1629 light=0.1629 mat=0.0000
+  batch 50/329 | loss=0.1065 light=0.1065 mat=0.0000
+  batch 60/329 | loss=0.1361 light=0.1361 mat=0.0000
+  batch 70/329 | loss=0.0996 light=0.0996 mat=0.0000
+  batch 80/329 | loss=0.1053 light=0.1053 mat=0.0000
+  batch 90/329 | loss=0.1392 light=0.1392 mat=0.0000
+  batch 100/329 | loss=0.1233 light=0.1233 mat=0.0000
+  batch 110/329 | loss=0.1260 light=0.1260 mat=0.0000
+  batch 120/329 | loss=0.1628 light=0.1628 mat=0.0000
+  batch 130/329 | loss=0.1195 light=0.1195 mat=0.0000
+  batch 140/329 | loss=0.1506 light=0.1506 mat=0.0000
+  batch 150/329 | loss=0.1418 light=0.1418 mat=0.0000
+  batch 160/329 | loss=0.1204 light=0.1204 mat=0.0000
+  batch 170/329 | loss=0.1383 light=0.1383 mat=0.0000
+  batch 180/329 | loss=0.1167 light=0.1167 mat=0.0000
+  batch 190/329 | loss=0.1687 light=0.1687 mat=0.0000
+  batch 200/329 | loss=0.1223 light=0.1223 mat=0.0000
+  batch 210/329 | loss=0.1327 light=0.1327 mat=0.0000
+  batch 220/329 | loss=0.1182 light=0.1182 mat=0.0000
+  batch 230/329 | loss=0.1147 light=0.1147 mat=0.0000
+  batch 240/329 | loss=0.1178 light=0.1178 mat=0.0000
+  batch 250/329 | loss=0.1394 light=0.1394 mat=0.0000
+  batch 260/329 | loss=0.1359 light=0.1359 mat=0.0000
+  batch 270/329 | loss=0.1255 light=0.1255 mat=0.0000
+  batch 280/329 | loss=0.1269 light=0.1269 mat=0.0000
+  batch 290/329 | loss=0.1484 light=0.1484 mat=0.0000
+  batch 300/329 | loss=0.1364 light=0.1364 mat=0.0000
+  batch 310/329 | loss=0.1531 light=0.1531 mat=0.0000
+  batch 320/329 | loss=0.1159 light=0.1159 mat=0.0000
+  train | loss=0.1312 light=0.1312 mat=0.0000
+  val   | loss=0.1493 light=0.1493 mat=0.0000
+  -> new best model (val_loss=0.1493)
+
+Epoch 13/50
+  batch 10/329 | loss=0.1155 light=0.1155 mat=0.0000
+  batch 20/329 | loss=0.1417 light=0.1417 mat=0.0000
+  batch 30/329 | loss=0.0857 light=0.0857 mat=0.0000
+  batch 40/329 | loss=0.1095 light=0.1095 mat=0.0000
+  batch 50/329 | loss=0.1010 light=0.1010 mat=0.0000
+  batch 60/329 | loss=0.1037 light=0.1037 mat=0.0000
+  batch 70/329 | loss=0.1043 light=0.1043 mat=0.0000
+  batch 80/329 | loss=0.1261 light=0.1261 mat=0.0000
+  batch 90/329 | loss=0.0969 light=0.0969 mat=0.0000
+  batch 100/329 | loss=0.1066 light=0.1066 mat=0.0000
+  batch 110/329 | loss=0.1322 light=0.1322 mat=0.0000
+  batch 120/329 | loss=0.1253 light=0.1253 mat=0.0000
+  batch 130/329 | loss=0.1291 light=0.1291 mat=0.0000
+  batch 140/329 | loss=0.1215 light=0.1215 mat=0.0000
+  batch 150/329 | loss=0.1619 light=0.1619 mat=0.0000
+  batch 160/329 | loss=0.1033 light=0.1033 mat=0.0000
+  batch 170/329 | loss=0.1254 light=0.1254 mat=0.0000
+  batch 180/329 | loss=0.1349 light=0.1349 mat=0.0000
+  batch 190/329 | loss=0.1432 light=0.1432 mat=0.0000
+  batch 200/329 | loss=0.1228 light=0.1228 mat=0.0000
+  batch 210/329 | loss=0.1133 light=0.1133 mat=0.0000
+  batch 220/329 | loss=0.1122 light=0.1122 mat=0.0000
+  batch 230/329 | loss=0.1347 light=0.1347 mat=0.0000
+  batch 240/329 | loss=0.1154 light=0.1154 mat=0.0000
+  batch 250/329 | loss=0.1257 light=0.1257 mat=0.0000
+  batch 260/329 | loss=0.1276 light=0.1276 mat=0.0000
+  batch 270/329 | loss=0.1205 light=0.1205 mat=0.0000
+  batch 280/329 | loss=0.1041 light=0.1041 mat=0.0000
+  batch 290/329 | loss=0.1426 light=0.1426 mat=0.0000
+  batch 300/329 | loss=0.1459 light=0.1459 mat=0.0000
+  batch 310/329 | loss=0.1276 light=0.1276 mat=0.0000
+  batch 320/329 | loss=0.1607 light=0.1607 mat=0.0000
+  train | loss=0.1271 light=0.1271 mat=0.0000
+  val   | loss=0.1482 light=0.1482 mat=0.0000
+  -> new best model (val_loss=0.1482)
+
+Epoch 14/50
+  batch 10/329 | loss=0.1432 light=0.1432 mat=0.0000
+  batch 20/329 | loss=0.1460 light=0.1460 mat=0.0000
+  batch 30/329 | loss=0.0752 light=0.0752 mat=0.0000
+  batch 40/329 | loss=0.1642 light=0.1642 mat=0.0000
+  batch 50/329 | loss=0.1340 light=0.1340 mat=0.0000
+  batch 60/329 | loss=0.1091 light=0.1091 mat=0.0000
+  batch 70/329 | loss=0.1827 light=0.1827 mat=0.0000
+  batch 80/329 | loss=0.1053 light=0.1053 mat=0.0000
+  batch 90/329 | loss=0.1247 light=0.1247 mat=0.0000
+  batch 100/329 | loss=0.1469 light=0.1469 mat=0.0000
+  batch 110/329 | loss=0.1003 light=0.1003 mat=0.0000
+  batch 120/329 | loss=0.1387 light=0.1387 mat=0.0000
+  batch 130/329 | loss=0.1178 light=0.1178 mat=0.0000
+  batch 140/329 | loss=0.1298 light=0.1298 mat=0.0000
+  batch 150/329 | loss=0.1053 light=0.1053 mat=0.0000
+  batch 160/329 | loss=0.1396 light=0.1396 mat=0.0000
+  batch 170/329 | loss=0.1075 light=0.1075 mat=0.0000
+  batch 180/329 | loss=0.1338 light=0.1338 mat=0.0000
+  batch 190/329 | loss=0.1227 light=0.1227 mat=0.0000
+  batch 200/329 | loss=0.0965 light=0.0965 mat=0.0000
+  batch 210/329 | loss=0.1359 light=0.1359 mat=0.0000
+  batch 220/329 | loss=0.1479 light=0.1479 mat=0.0000
+  batch 230/329 | loss=0.1326 light=0.1326 mat=0.0000
+  batch 240/329 | loss=0.1340 light=0.1340 mat=0.0000
+  batch 250/329 | loss=0.1160 light=0.1160 mat=0.0000
+  batch 260/329 | loss=0.1154 light=0.1154 mat=0.0000
+  batch 270/329 | loss=0.1348 light=0.1348 mat=0.0000
+  batch 280/329 | loss=0.1316 light=0.1316 mat=0.0000
+  batch 290/329 | loss=0.1136 light=0.1136 mat=0.0000
+  batch 300/329 | loss=0.1522 light=0.1522 mat=0.0000
+  batch 310/329 | loss=0.1161 light=0.1161 mat=0.0000
+  batch 320/329 | loss=0.1307 light=0.1307 mat=0.0000
+  train | loss=0.1251 light=0.1251 mat=0.0000
+  val   | loss=0.1479 light=0.1479 mat=0.0000
+  -> new best model (val_loss=0.1479)
+
+Epoch 15/50
+  batch 10/329 | loss=0.1342 light=0.1342 mat=0.0000
+  batch 20/329 | loss=0.1283 light=0.1283 mat=0.0000
+  batch 30/329 | loss=0.1246 light=0.1246 mat=0.0000
+  batch 40/329 | loss=0.1242 light=0.1242 mat=0.0000
+  batch 50/329 | loss=0.0916 light=0.0916 mat=0.0000
+  batch 60/329 | loss=0.0970 light=0.0970 mat=0.0000
+  batch 70/329 | loss=0.1307 light=0.1307 mat=0.0000
+  batch 80/329 | loss=0.1026 light=0.1026 mat=0.0000
+  batch 90/329 | loss=0.0984 light=0.0984 mat=0.0000
+  batch 100/329 | loss=0.1249 light=0.1249 mat=0.0000
+  batch 110/329 | loss=0.1411 light=0.1411 mat=0.0000
+  batch 120/329 | loss=0.1066 light=0.1066 mat=0.0000
+  batch 130/329 | loss=0.1490 light=0.1490 mat=0.0000
+  batch 140/329 | loss=0.1438 light=0.1438 mat=0.0000
+  batch 150/329 | loss=0.1500 light=0.1500 mat=0.0000
+  batch 160/329 | loss=0.1250 light=0.1250 mat=0.0000
+  batch 170/329 | loss=0.1561 light=0.1561 mat=0.0000
+  batch 180/329 | loss=0.1218 light=0.1218 mat=0.0000
+  batch 190/329 | loss=0.1501 light=0.1501 mat=0.0000
+  batch 200/329 | loss=0.1043 light=0.1043 mat=0.0000
+  batch 210/329 | loss=0.0809 light=0.0809 mat=0.0000
+  batch 220/329 | loss=0.1313 light=0.1313 mat=0.0000
+  batch 230/329 | loss=0.1510 light=0.1510 mat=0.0000
+  batch 240/329 | loss=0.1489 light=0.1489 mat=0.0000
+  batch 250/329 | loss=0.1207 light=0.1207 mat=0.0000
+  batch 260/329 | loss=0.1177 light=0.1177 mat=0.0000
+  batch 270/329 | loss=0.1128 light=0.1128 mat=0.0000
+  batch 280/329 | loss=0.1121 light=0.1121 mat=0.0000
+  batch 290/329 | loss=0.1140 light=0.1140 mat=0.0000
+  batch 300/329 | loss=0.1007 light=0.1007 mat=0.0000
+  batch 310/329 | loss=0.1127 light=0.1127 mat=0.0000
+  batch 320/329 | loss=0.1222 light=0.1222 mat=0.0000
+  train | loss=0.1216 light=0.1216 mat=0.0000
+  val   | loss=0.1475 light=0.1475 mat=0.0000
+  -> new best model (val_loss=0.1475)
+
+Epoch 16/50
+  batch 10/329 | loss=0.1146 light=0.1146 mat=0.0000
+  batch 20/329 | loss=0.1164 light=0.1164 mat=0.0000
+  batch 30/329 | loss=0.1366 light=0.1366 mat=0.0000
+  batch 40/329 | loss=0.1113 light=0.1113 mat=0.0000
+  batch 50/329 | loss=0.1184 light=0.1184 mat=0.0000
+  batch 60/329 | loss=0.1221 light=0.1221 mat=0.0000
+  batch 70/329 | loss=0.1208 light=0.1208 mat=0.0000
+  batch 80/329 | loss=0.1393 light=0.1393 mat=0.0000
+  batch 90/329 | loss=0.1198 light=0.1198 mat=0.0000
+  batch 100/329 | loss=0.0961 light=0.0961 mat=0.0000
+  batch 110/329 | loss=0.1097 light=0.1097 mat=0.0000
+  batch 120/329 | loss=0.0875 light=0.0875 mat=0.0000
+  batch 130/329 | loss=0.1086 light=0.1086 mat=0.0000
+  batch 140/329 | loss=0.1492 light=0.1492 mat=0.0000
+  batch 150/329 | loss=0.1217 light=0.1217 mat=0.0000
+  batch 160/329 | loss=0.1351 light=0.1351 mat=0.0000
+  batch 170/329 | loss=0.1109 light=0.1109 mat=0.0000
+  batch 180/329 | loss=0.1173 light=0.1173 mat=0.0000
+  batch 190/329 | loss=0.1383 light=0.1383 mat=0.0000
+  batch 200/329 | loss=0.0916 light=0.0916 mat=0.0000
+  batch 210/329 | loss=0.1238 light=0.1238 mat=0.0000
+  batch 220/329 | loss=0.1800 light=0.1800 mat=0.0000
+  batch 230/329 | loss=0.1153 light=0.1153 mat=0.0000
+  batch 240/329 | loss=0.1437 light=0.1437 mat=0.0000
+  batch 250/329 | loss=0.0920 light=0.0920 mat=0.0000
+  batch 260/329 | loss=0.1150 light=0.1150 mat=0.0000
+  batch 270/329 | loss=0.0945 light=0.0945 mat=0.0000
+  batch 280/329 | loss=0.1337 light=0.1337 mat=0.0000
+  batch 290/329 | loss=0.1159 light=0.1159 mat=0.0000
+  batch 300/329 | loss=0.0920 light=0.0920 mat=0.0000
+  batch 310/329 | loss=0.0988 light=0.0988 mat=0.0000
+  batch 320/329 | loss=0.1491 light=0.1491 mat=0.0000
+  train | loss=0.1196 light=0.1196 mat=0.0000
+  val   | loss=0.1430 light=0.1430 mat=0.0000
+  -> new best model (val_loss=0.1430)
+
+Epoch 17/50
+  batch 10/329 | loss=0.0948 light=0.0948 mat=0.0000
+  batch 20/329 | loss=0.0955 light=0.0955 mat=0.0000
+  batch 30/329 | loss=0.1256 light=0.1256 mat=0.0000
+  batch 40/329 | loss=0.1081 light=0.1081 mat=0.0000
+  batch 50/329 | loss=0.0994 light=0.0994 mat=0.0000
+  batch 60/329 | loss=0.1428 light=0.1428 mat=0.0000
+  batch 70/329 | loss=0.1020 light=0.1020 mat=0.0000
+  batch 80/329 | loss=0.1231 light=0.1231 mat=0.0000
+  batch 90/329 | loss=0.1061 light=0.1061 mat=0.0000
+  batch 100/329 | loss=0.1121 light=0.1121 mat=0.0000
+  batch 110/329 | loss=0.1211 light=0.1211 mat=0.0000
+  batch 120/329 | loss=0.1266 light=0.1266 mat=0.0000
+  batch 130/329 | loss=0.1036 light=0.1036 mat=0.0000
+  batch 140/329 | loss=0.1066 light=0.1066 mat=0.0000
+  batch 150/329 | loss=0.1156 light=0.1156 mat=0.0000
+  batch 160/329 | loss=0.1326 light=0.1326 mat=0.0000
+  batch 170/329 | loss=0.1269 light=0.1269 mat=0.0000
+  batch 180/329 | loss=0.0871 light=0.0871 mat=0.0000
+  batch 190/329 | loss=0.0902 light=0.0902 mat=0.0000
+  batch 200/329 | loss=0.1016 light=0.1016 mat=0.0000
+  batch 210/329 | loss=0.0962 light=0.0962 mat=0.0000
+  batch 220/329 | loss=0.1528 light=0.1528 mat=0.0000
+  batch 230/329 | loss=0.1215 light=0.1215 mat=0.0000
+  batch 240/329 | loss=0.1066 light=0.1066 mat=0.0000
+  batch 250/329 | loss=0.0821 light=0.0821 mat=0.0000
+  batch 260/329 | loss=0.1025 light=0.1025 mat=0.0000
+  batch 270/329 | loss=0.1426 light=0.1426 mat=0.0000
+  batch 280/329 | loss=0.0939 light=0.0939 mat=0.0000
+  batch 290/329 | loss=0.1059 light=0.1059 mat=0.0000
+  batch 300/329 | loss=0.1469 light=0.1469 mat=0.0000
+  batch 310/329 | loss=0.1292 light=0.1292 mat=0.0000
+  batch 320/329 | loss=0.1001 light=0.1001 mat=0.0000
+  train | loss=0.1167 light=0.1167 mat=0.0000
+  val   | loss=0.1415 light=0.1415 mat=0.0000
+  -> new best model (val_loss=0.1415)
+
+Epoch 18/50
+  batch 10/329 | loss=0.0964 light=0.0964 mat=0.0000
+  batch 20/329 | loss=0.1039 light=0.1039 mat=0.0000
+  batch 30/329 | loss=0.0617 light=0.0617 mat=0.0000
+  batch 40/329 | loss=0.0844 light=0.0844 mat=0.0000
+  batch 50/329 | loss=0.1062 light=0.1062 mat=0.0000
+  batch 60/329 | loss=0.1204 light=0.1204 mat=0.0000
+  batch 70/329 | loss=0.1005 light=0.1005 mat=0.0000
+  batch 80/329 | loss=0.1165 light=0.1165 mat=0.0000
+  batch 90/329 | loss=0.1034 light=0.1034 mat=0.0000
+  batch 100/329 | loss=0.1133 light=0.1133 mat=0.0000
+  batch 110/329 | loss=0.1202 light=0.1202 mat=0.0000
+  batch 120/329 | loss=0.1188 light=0.1188 mat=0.0000
+  batch 130/329 | loss=0.0879 light=0.0879 mat=0.0000
+  batch 140/329 | loss=0.1064 light=0.1064 mat=0.0000
+  batch 150/329 | loss=0.1399 light=0.1399 mat=0.0000
+  batch 160/329 | loss=0.1145 light=0.1145 mat=0.0000
+  batch 170/329 | loss=0.0951 light=0.0951 mat=0.0000
+  batch 180/329 | loss=0.1159 light=0.1159 mat=0.0000
+  batch 190/329 | loss=0.1142 light=0.1142 mat=0.0000
+  batch 200/329 | loss=0.1099 light=0.1099 mat=0.0000
+  batch 210/329 | loss=0.1322 light=0.1322 mat=0.0000
+  batch 220/329 | loss=0.1388 light=0.1388 mat=0.0000
+  batch 230/329 | loss=0.0898 light=0.0898 mat=0.0000
+  batch 240/329 | loss=0.1360 light=0.1360 mat=0.0000
+  batch 250/329 | loss=0.1086 light=0.1086 mat=0.0000
+  batch 260/329 | loss=0.1531 light=0.1531 mat=0.0000
+  batch 270/329 | loss=0.1085 light=0.1085 mat=0.0000
+  batch 280/329 | loss=0.0881 light=0.0881 mat=0.0000
+  batch 290/329 | loss=0.1322 light=0.1322 mat=0.0000
+  batch 300/329 | loss=0.0725 light=0.0725 mat=0.0000
+  batch 310/329 | loss=0.1190 light=0.1190 mat=0.0000
+  batch 320/329 | loss=0.0966 light=0.0966 mat=0.0000
+  train | loss=0.1153 light=0.1153 mat=0.0000
+  val   | loss=0.1429 light=0.1429 mat=0.0000
+
+Epoch 19/50
+  batch 10/329 | loss=0.1507 light=0.1507 mat=0.0000
+  batch 20/329 | loss=0.1086 light=0.1086 mat=0.0000
+  batch 30/329 | loss=0.0799 light=0.0799 mat=0.0000
+  batch 40/329 | loss=0.1137 light=0.1137 mat=0.0000
+  batch 50/329 | loss=0.1023 light=0.1023 mat=0.0000
+  batch 60/329 | loss=0.0791 light=0.0791 mat=0.0000
+  batch 70/329 | loss=0.1358 light=0.1358 mat=0.0000
+  batch 80/329 | loss=0.1376 light=0.1376 mat=0.0000
+  batch 90/329 | loss=0.1099 light=0.1099 mat=0.0000
+  batch 100/329 | loss=0.1296 light=0.1296 mat=0.0000
+  batch 110/329 | loss=0.0706 light=0.0706 mat=0.0000
+  batch 120/329 | loss=0.1079 light=0.1079 mat=0.0000
+  batch 130/329 | loss=0.1471 light=0.1471 mat=0.0000
+  batch 140/329 | loss=0.1007 light=0.1007 mat=0.0000
+  batch 150/329 | loss=0.1064 light=0.1064 mat=0.0000
+  batch 160/329 | loss=0.1402 light=0.1402 mat=0.0000
+  batch 170/329 | loss=0.1347 light=0.1347 mat=0.0000
+  batch 180/329 | loss=0.1273 light=0.1273 mat=0.0000
+  batch 190/329 | loss=0.0712 light=0.0712 mat=0.0000
+  batch 200/329 | loss=0.1021 light=0.1021 mat=0.0000
+  batch 210/329 | loss=0.1266 light=0.1266 mat=0.0000
+  batch 220/329 | loss=0.0948 light=0.0948 mat=0.0000
+  batch 230/329 | loss=0.0926 light=0.0926 mat=0.0000
+  batch 240/329 | loss=0.1153 light=0.1153 mat=0.0000
+  batch 250/329 | loss=0.1072 light=0.1072 mat=0.0000
+  batch 260/329 | loss=0.1318 light=0.1318 mat=0.0000
+  batch 270/329 | loss=0.1449 light=0.1449 mat=0.0000
+  batch 280/329 | loss=0.1297 light=0.1297 mat=0.0000
+  batch 290/329 | loss=0.0946 light=0.0946 mat=0.0000
+  batch 300/329 | loss=0.1310 light=0.1310 mat=0.0000
+  batch 310/329 | loss=0.1313 light=0.1313 mat=0.0000
+  batch 320/329 | loss=0.1269 light=0.1269 mat=0.0000
+  train | loss=0.1121 light=0.1121 mat=0.0000
+  val   | loss=0.1409 light=0.1409 mat=0.0000
+  -> new best model (val_loss=0.1409)
+
+Epoch 20/50
+  batch 10/329 | loss=0.0896 light=0.0896 mat=0.0000
+  batch 20/329 | loss=0.1273 light=0.1273 mat=0.0000
+  batch 30/329 | loss=0.1186 light=0.1186 mat=0.0000
+  batch 40/329 | loss=0.0920 light=0.0920 mat=0.0000
+  batch 50/329 | loss=0.1481 light=0.1481 mat=0.0000
+  batch 60/329 | loss=0.1068 light=0.1068 mat=0.0000
+  batch 70/329 | loss=0.1087 light=0.1087 mat=0.0000
+  batch 80/329 | loss=0.0988 light=0.0988 mat=0.0000
+  batch 90/329 | loss=0.1369 light=0.1369 mat=0.0000
+  batch 100/329 | loss=0.0953 light=0.0953 mat=0.0000
+  batch 110/329 | loss=0.1117 light=0.1117 mat=0.0000
+  batch 120/329 | loss=0.1558 light=0.1558 mat=0.0000
+  batch 130/329 | loss=0.1474 light=0.1474 mat=0.0000
+  batch 140/329 | loss=0.0914 light=0.0914 mat=0.0000
+  batch 150/329 | loss=0.0988 light=0.0988 mat=0.0000
+  batch 160/329 | loss=0.0778 light=0.0778 mat=0.0000
+  batch 170/329 | loss=0.1086 light=0.1086 mat=0.0000
+  batch 180/329 | loss=0.0995 light=0.0995 mat=0.0000
+  batch 190/329 | loss=0.0962 light=0.0962 mat=0.0000
+  batch 200/329 | loss=0.0930 light=0.0930 mat=0.0000
+  batch 210/329 | loss=0.1037 light=0.1037 mat=0.0000
+  batch 220/329 | loss=0.0817 light=0.0817 mat=0.0000
+  batch 230/329 | loss=0.1033 light=0.1033 mat=0.0000
+  batch 240/329 | loss=0.1114 light=0.1114 mat=0.0000
+  batch 250/329 | loss=0.1083 light=0.1083 mat=0.0000
+  batch 260/329 | loss=0.1123 light=0.1123 mat=0.0000
+  batch 270/329 | loss=0.1151 light=0.1151 mat=0.0000
+  batch 280/329 | loss=0.1531 light=0.1531 mat=0.0000
+  batch 290/329 | loss=0.1146 light=0.1146 mat=0.0000
+  batch 300/329 | loss=0.1298 light=0.1298 mat=0.0000
+  batch 310/329 | loss=0.1061 light=0.1061 mat=0.0000
+  batch 320/329 | loss=0.1116 light=0.1116 mat=0.0000
+  train | loss=0.1100 light=0.1100 mat=0.0000
+  val   | loss=0.1402 light=0.1402 mat=0.0000
+  -> new best model (val_loss=0.1402)
+
+Epoch 21/50
+  batch 10/329 | loss=0.0932 light=0.0932 mat=0.0000
+  batch 20/329 | loss=0.1226 light=0.1226 mat=0.0000
+  batch 30/329 | loss=0.1078 light=0.1078 mat=0.0000
+  batch 40/329 | loss=0.1140 light=0.1140 mat=0.0000
+  batch 50/329 | loss=0.1227 light=0.1227 mat=0.0000
+  batch 60/329 | loss=0.1067 light=0.1067 mat=0.0000
+  batch 70/329 | loss=0.0936 light=0.0936 mat=0.0000
+  batch 80/329 | loss=0.1297 light=0.1297 mat=0.0000
+  batch 90/329 | loss=0.1237 light=0.1237 mat=0.0000
+  batch 100/329 | loss=0.1342 light=0.1342 mat=0.0000
+  batch 110/329 | loss=0.1401 light=0.1401 mat=0.0000
+  batch 120/329 | loss=0.1132 light=0.1132 mat=0.0000
+  batch 130/329 | loss=0.1230 light=0.1230 mat=0.0000
+  batch 140/329 | loss=0.1070 light=0.1070 mat=0.0000
+  batch 150/329 | loss=0.1121 light=0.1121 mat=0.0000
+  batch 160/329 | loss=0.0795 light=0.0795 mat=0.0000
+  batch 170/329 | loss=0.1002 light=0.1002 mat=0.0000
+  batch 180/329 | loss=0.0880 light=0.0880 mat=0.0000
+  batch 190/329 | loss=0.0950 light=0.0950 mat=0.0000
+  batch 200/329 | loss=0.0883 light=0.0883 mat=0.0000
+  batch 210/329 | loss=0.1097 light=0.1097 mat=0.0000
+  batch 220/329 | loss=0.1208 light=0.1208 mat=0.0000
+  batch 230/329 | loss=0.1072 light=0.1072 mat=0.0000
+  batch 240/329 | loss=0.0833 light=0.0833 mat=0.0000
+  batch 250/329 | loss=0.1191 light=0.1191 mat=0.0000
+  batch 260/329 | loss=0.1076 light=0.1076 mat=0.0000
+  batch 270/329 | loss=0.1093 light=0.1093 mat=0.0000
+  batch 280/329 | loss=0.0796 light=0.0796 mat=0.0000
+  batch 290/329 | loss=0.1064 light=0.1064 mat=0.0000
+  batch 300/329 | loss=0.0839 light=0.0839 mat=0.0000
+  batch 310/329 | loss=0.1147 light=0.1147 mat=0.0000
+  batch 320/329 | loss=0.1020 light=0.1020 mat=0.0000
+  train | loss=0.1077 light=0.1077 mat=0.0000
+  val   | loss=0.1384 light=0.1384 mat=0.0000
+  -> new best model (val_loss=0.1384)
+
+Epoch 22/50
+  batch 10/329 | loss=0.0848 light=0.0848 mat=0.0000
+  batch 20/329 | loss=0.1219 light=0.1219 mat=0.0000
+  batch 30/329 | loss=0.1071 light=0.1071 mat=0.0000
+  batch 40/329 | loss=0.0854 light=0.0854 mat=0.0000
+  batch 50/329 | loss=0.1001 light=0.1001 mat=0.0000
+  batch 60/329 | loss=0.1044 light=0.1044 mat=0.0000
+  batch 70/329 | loss=0.1289 light=0.1289 mat=0.0000
+  batch 80/329 | loss=0.0951 light=0.0951 mat=0.0000
+  batch 90/329 | loss=0.0927 light=0.0927 mat=0.0000
+  batch 100/329 | loss=0.1145 light=0.1145 mat=0.0000
+  batch 110/329 | loss=0.1066 light=0.1066 mat=0.0000
+  batch 120/329 | loss=0.1350 light=0.1350 mat=0.0000
+  batch 130/329 | loss=0.1165 light=0.1165 mat=0.0000
+  batch 140/329 | loss=0.1314 light=0.1314 mat=0.0000
+  batch 150/329 | loss=0.1041 light=0.1041 mat=0.0000
+  batch 160/329 | loss=0.1336 light=0.1336 mat=0.0000
+  batch 170/329 | loss=0.1112 light=0.1112 mat=0.0000
+  batch 180/329 | loss=0.1026 light=0.1026 mat=0.0000
+  batch 190/329 | loss=0.0878 light=0.0878 mat=0.0000
+  batch 200/329 | loss=0.1227 light=0.1227 mat=0.0000
+  batch 210/329 | loss=0.1082 light=0.1082 mat=0.0000
+  batch 220/329 | loss=0.1477 light=0.1477 mat=0.0000
+  batch 230/329 | loss=0.1080 light=0.1080 mat=0.0000
+  batch 240/329 | loss=0.1207 light=0.1207 mat=0.0000
+  batch 250/329 | loss=0.1223 light=0.1223 mat=0.0000
+  batch 260/329 | loss=0.0926 light=0.0926 mat=0.0000
+  batch 270/329 | loss=0.1017 light=0.1017 mat=0.0000
+  batch 280/329 | loss=0.1220 light=0.1220 mat=0.0000
+  batch 290/329 | loss=0.1196 light=0.1196 mat=0.0000
+  batch 300/329 | loss=0.0805 light=0.0805 mat=0.0000
+  batch 310/329 | loss=0.0927 light=0.0927 mat=0.0000
+  batch 320/329 | loss=0.1115 light=0.1115 mat=0.0000
+  train | loss=0.1061 light=0.1061 mat=0.0000
+  val   | loss=0.1368 light=0.1368 mat=0.0000
+  -> new best model (val_loss=0.1368)
+
+Epoch 23/50
+  batch 10/329 | loss=0.0981 light=0.0981 mat=0.0000
+  batch 20/329 | loss=0.1178 light=0.1178 mat=0.0000
+  batch 30/329 | loss=0.1165 light=0.1165 mat=0.0000
+  batch 40/329 | loss=0.0992 light=0.0992 mat=0.0000
+  batch 50/329 | loss=0.0971 light=0.0971 mat=0.0000
+  batch 60/329 | loss=0.1238 light=0.1238 mat=0.0000
+  batch 70/329 | loss=0.0967 light=0.0967 mat=0.0000
+  batch 80/329 | loss=0.0755 light=0.0755 mat=0.0000
+  batch 90/329 | loss=0.0977 light=0.0977 mat=0.0000
+  batch 100/329 | loss=0.1768 light=0.1768 mat=0.0000
+  batch 110/329 | loss=0.1316 light=0.1316 mat=0.0000
+  batch 120/329 | loss=0.0768 light=0.0768 mat=0.0000
+  batch 130/329 | loss=0.0820 light=0.0820 mat=0.0000
+  batch 140/329 | loss=0.1130 light=0.1130 mat=0.0000
+  batch 150/329 | loss=0.1169 light=0.1169 mat=0.0000
+  batch 160/329 | loss=0.1433 light=0.1433 mat=0.0000
+  batch 170/329 | loss=0.1157 light=0.1157 mat=0.0000
+  batch 180/329 | loss=0.1243 light=0.1243 mat=0.0000
+  batch 190/329 | loss=0.1151 light=0.1151 mat=0.0000
+  batch 200/329 | loss=0.0764 light=0.0764 mat=0.0000
+  batch 210/329 | loss=0.0986 light=0.0986 mat=0.0000
+  batch 220/329 | loss=0.1084 light=0.1084 mat=0.0000
+  batch 230/329 | loss=0.0700 light=0.0700 mat=0.0000
+  batch 240/329 | loss=0.1195 light=0.1195 mat=0.0000
+  batch 250/329 | loss=0.1018 light=0.1018 mat=0.0000
+  batch 260/329 | loss=0.0933 light=0.0933 mat=0.0000
+  batch 270/329 | loss=0.1063 light=0.1063 mat=0.0000
+  batch 280/329 | loss=0.1142 light=0.1142 mat=0.0000
+  batch 290/329 | loss=0.0978 light=0.0978 mat=0.0000
+  batch 300/329 | loss=0.1336 light=0.1336 mat=0.0000
+  batch 310/329 | loss=0.1342 light=0.1342 mat=0.0000
+  batch 320/329 | loss=0.1023 light=0.1023 mat=0.0000
+  train | loss=0.1065 light=0.1065 mat=0.0000
+  val   | loss=0.1376 light=0.1376 mat=0.0000
+
+Epoch 24/50
+  batch 10/329 | loss=0.0801 light=0.0801 mat=0.0000
+  batch 20/329 | loss=0.1159 light=0.1159 mat=0.0000
+  batch 30/329 | loss=0.0971 light=0.0971 mat=0.0000
+  batch 40/329 | loss=0.1293 light=0.1293 mat=0.0000
+  batch 50/329 | loss=0.1082 light=0.1082 mat=0.0000
+  batch 60/329 | loss=0.0848 light=0.0848 mat=0.0000
+  batch 70/329 | loss=0.1211 light=0.1211 mat=0.0000
+  batch 80/329 | loss=0.1037 light=0.1037 mat=0.0000
+  batch 90/329 | loss=0.1080 light=0.1080 mat=0.0000
+  batch 100/329 | loss=0.0929 light=0.0929 mat=0.0000
+  batch 110/329 | loss=0.1094 light=0.1094 mat=0.0000
+  batch 120/329 | loss=0.1056 light=0.1056 mat=0.0000
+  batch 130/329 | loss=0.0910 light=0.0910 mat=0.0000
+  batch 140/329 | loss=0.0934 light=0.0934 mat=0.0000
+  batch 150/329 | loss=0.1029 light=0.1029 mat=0.0000
+  batch 160/329 | loss=0.0932 light=0.0932 mat=0.0000
+  batch 170/329 | loss=0.1015 light=0.1015 mat=0.0000
+  batch 180/329 | loss=0.0994 light=0.0994 mat=0.0000
+  batch 190/329 | loss=0.0873 light=0.0873 mat=0.0000
+  batch 200/329 | loss=0.1303 light=0.1303 mat=0.0000
+  batch 210/329 | loss=0.1372 light=0.1372 mat=0.0000
+  batch 220/329 | loss=0.1060 light=0.1060 mat=0.0000
+  batch 230/329 | loss=0.1181 light=0.1181 mat=0.0000
+  batch 240/329 | loss=0.0986 light=0.0986 mat=0.0000
+  batch 250/329 | loss=0.0968 light=0.0968 mat=0.0000
+  batch 260/329 | loss=0.0904 light=0.0904 mat=0.0000
+  batch 270/329 | loss=0.0995 light=0.0995 mat=0.0000
+  batch 280/329 | loss=0.0946 light=0.0946 mat=0.0000
+  batch 290/329 | loss=0.0863 light=0.0863 mat=0.0000
+  batch 300/329 | loss=0.0970 light=0.0970 mat=0.0000
+  batch 310/329 | loss=0.1086 light=0.1086 mat=0.0000
+  batch 320/329 | loss=0.1291 light=0.1291 mat=0.0000
+  train | loss=0.1044 light=0.1044 mat=0.0000
+  val   | loss=0.1355 light=0.1355 mat=0.0000
+  -> new best model (val_loss=0.1355)
+
+Epoch 25/50
+  batch 10/329 | loss=0.0853 light=0.0853 mat=0.0000
+  batch 20/329 | loss=0.0969 light=0.0969 mat=0.0000
+  batch 30/329 | loss=0.1170 light=0.1170 mat=0.0000
+  batch 40/329 | loss=0.1149 light=0.1149 mat=0.0000
+  batch 50/329 | loss=0.1020 light=0.1020 mat=0.0000
+  batch 60/329 | loss=0.0779 light=0.0779 mat=0.0000
+  batch 70/329 | loss=0.1026 light=0.1026 mat=0.0000
+  batch 80/329 | loss=0.1144 light=0.1144 mat=0.0000
+  batch 90/329 | loss=0.0932 light=0.0932 mat=0.0000
+  batch 100/329 | loss=0.0757 light=0.0757 mat=0.0000
+  batch 110/329 | loss=0.0942 light=0.0942 mat=0.0000
+  batch 120/329 | loss=0.1327 light=0.1327 mat=0.0000
+  batch 130/329 | loss=0.0839 light=0.0839 mat=0.0000
+  batch 140/329 | loss=0.0914 light=0.0914 mat=0.0000
+  batch 150/329 | loss=0.1159 light=0.1159 mat=0.0000
+  batch 160/329 | loss=0.0859 light=0.0859 mat=0.0000
+  batch 170/329 | loss=0.0979 light=0.0979 mat=0.0000
+  batch 180/329 | loss=0.0810 light=0.0810 mat=0.0000
+  batch 190/329 | loss=0.0924 light=0.0924 mat=0.0000
+  batch 200/329 | loss=0.1265 light=0.1265 mat=0.0000
+  batch 210/329 | loss=0.0895 light=0.0895 mat=0.0000
+  batch 220/329 | loss=0.1220 light=0.1220 mat=0.0000
+  batch 230/329 | loss=0.1277 light=0.1277 mat=0.0000
+  batch 240/329 | loss=0.0842 light=0.0842 mat=0.0000
+  batch 250/329 | loss=0.0981 light=0.0981 mat=0.0000
+  batch 260/329 | loss=0.0942 light=0.0942 mat=0.0000
+  batch 270/329 | loss=0.0912 light=0.0912 mat=0.0000
+  batch 280/329 | loss=0.0994 light=0.0994 mat=0.0000
+  batch 290/329 | loss=0.0922 light=0.0922 mat=0.0000
+  batch 300/329 | loss=0.0930 light=0.0930 mat=0.0000
+  batch 310/329 | loss=0.0903 light=0.0903 mat=0.0000
+  batch 320/329 | loss=0.1298 light=0.1298 mat=0.0000
+  train | loss=0.1016 light=0.1016 mat=0.0000
+  val   | loss=0.1344 light=0.1344 mat=0.0000
+  -> new best model (val_loss=0.1344)
+
+Epoch 26/50
+  batch 10/329 | loss=0.0868 light=0.0868 mat=0.0000
+  batch 20/329 | loss=0.1432 light=0.1432 mat=0.0000
+  batch 30/329 | loss=0.0901 light=0.0901 mat=0.0000
+  batch 40/329 | loss=0.1091 light=0.1091 mat=0.0000
+  batch 50/329 | loss=0.0760 light=0.0760 mat=0.0000
+  batch 60/329 | loss=0.1044 light=0.1044 mat=0.0000
+  batch 70/329 | loss=0.0948 light=0.0948 mat=0.0000
+  batch 80/329 | loss=0.1467 light=0.1467 mat=0.0000
+  batch 90/329 | loss=0.0783 light=0.0783 mat=0.0000
+  batch 100/329 | loss=0.0989 light=0.0989 mat=0.0000
+  batch 110/329 | loss=0.0837 light=0.0837 mat=0.0000
+  batch 120/329 | loss=0.1062 light=0.1062 mat=0.0000
+  batch 130/329 | loss=0.0996 light=0.0996 mat=0.0000
+  batch 140/329 | loss=0.0880 light=0.0880 mat=0.0000
+  batch 150/329 | loss=0.1384 light=0.1384 mat=0.0000
+  batch 160/329 | loss=0.0838 light=0.0838 mat=0.0000
+  batch 170/329 | loss=0.0792 light=0.0792 mat=0.0000
+  batch 180/329 | loss=0.0847 light=0.0847 mat=0.0000
+  batch 190/329 | loss=0.0853 light=0.0853 mat=0.0000
+  batch 200/329 | loss=0.0758 light=0.0758 mat=0.0000
+  batch 210/329 | loss=0.1206 light=0.1206 mat=0.0000
+  batch 220/329 | loss=0.1114 light=0.1114 mat=0.0000
+  batch 230/329 | loss=0.1290 light=0.1290 mat=0.0000
+  batch 240/329 | loss=0.1012 light=0.1012 mat=0.0000
+  batch 250/329 | loss=0.1344 light=0.1344 mat=0.0000
+  batch 260/329 | loss=0.0779 light=0.0779 mat=0.0000
+  batch 270/329 | loss=0.0710 light=0.0710 mat=0.0000
+  batch 280/329 | loss=0.0948 light=0.0948 mat=0.0000
+  batch 290/329 | loss=0.1001 light=0.1001 mat=0.0000
+  batch 300/329 | loss=0.0818 light=0.0818 mat=0.0000
+  batch 310/329 | loss=0.1135 light=0.1135 mat=0.0000
+  batch 320/329 | loss=0.0988 light=0.0988 mat=0.0000
+  train | loss=0.0999 light=0.0999 mat=0.0000
+  val   | loss=0.1333 light=0.1333 mat=0.0000
+  -> new best model (val_loss=0.1333)
+
+Epoch 27/50
+  batch 10/329 | loss=0.0897 light=0.0897 mat=0.0000
+  batch 20/329 | loss=0.1143 light=0.1143 mat=0.0000
+  batch 30/329 | loss=0.0940 light=0.0940 mat=0.0000
+  batch 40/329 | loss=0.1443 light=0.1443 mat=0.0000
+  batch 50/329 | loss=0.0986 light=0.0986 mat=0.0000
+  batch 60/329 | loss=0.0891 light=0.0891 mat=0.0000
+  batch 70/329 | loss=0.0997 light=0.0997 mat=0.0000
+  batch 80/329 | loss=0.0784 light=0.0784 mat=0.0000
+  batch 90/329 | loss=0.0982 light=0.0982 mat=0.0000
+  batch 100/329 | loss=0.1105 light=0.1105 mat=0.0000
+  batch 110/329 | loss=0.0889 light=0.0889 mat=0.0000
+  batch 120/329 | loss=0.0717 light=0.0717 mat=0.0000
+  batch 130/329 | loss=0.0767 light=0.0767 mat=0.0000
+  batch 140/329 | loss=0.0946 light=0.0946 mat=0.0000
+  batch 150/329 | loss=0.0888 light=0.0888 mat=0.0000
+  batch 160/329 | loss=0.1007 light=0.1007 mat=0.0000
+  batch 170/329 | loss=0.1013 light=0.1013 mat=0.0000
+  batch 180/329 | loss=0.1037 light=0.1037 mat=0.0000
+  batch 190/329 | loss=0.1193 light=0.1193 mat=0.0000
+  batch 200/329 | loss=0.1364 light=0.1364 mat=0.0000
+  batch 210/329 | loss=0.0711 light=0.0711 mat=0.0000
+  batch 220/329 | loss=0.1113 light=0.1113 mat=0.0000
+  batch 230/329 | loss=0.0910 light=0.0910 mat=0.0000
+  batch 240/329 | loss=0.1141 light=0.1141 mat=0.0000
+  batch 250/329 | loss=0.0926 light=0.0926 mat=0.0000
+  batch 260/329 | loss=0.1090 light=0.1090 mat=0.0000
+  batch 270/329 | loss=0.0898 light=0.0898 mat=0.0000
+  batch 280/329 | loss=0.0960 light=0.0960 mat=0.0000
+  batch 290/329 | loss=0.1214 light=0.1214 mat=0.0000
+  batch 300/329 | loss=0.1283 light=0.1283 mat=0.0000
+  batch 310/329 | loss=0.0765 light=0.0765 mat=0.0000
+  batch 320/329 | loss=0.1015 light=0.1015 mat=0.0000
+  train | loss=0.0983 light=0.0983 mat=0.0000
+  val   | loss=0.1357 light=0.1357 mat=0.0000
+
+Epoch 28/50
+  batch 10/329 | loss=0.1109 light=0.1109 mat=0.0000
+  batch 20/329 | loss=0.1628 light=0.1628 mat=0.0000
+  batch 30/329 | loss=0.0709 light=0.0709 mat=0.0000
+  batch 40/329 | loss=0.1014 light=0.1014 mat=0.0000
+  batch 50/329 | loss=0.1017 light=0.1017 mat=0.0000
+  batch 60/329 | loss=0.0918 light=0.0918 mat=0.0000
+  batch 70/329 | loss=0.1215 light=0.1215 mat=0.0000
+  batch 80/329 | loss=0.0948 light=0.0948 mat=0.0000
+  batch 90/329 | loss=0.0784 light=0.0784 mat=0.0000
+  batch 100/329 | loss=0.0873 light=0.0873 mat=0.0000
+  batch 110/329 | loss=0.0716 light=0.0716 mat=0.0000
+  batch 120/329 | loss=0.1202 light=0.1202 mat=0.0000
+  batch 130/329 | loss=0.0791 light=0.0791 mat=0.0000
+  batch 140/329 | loss=0.0825 light=0.0825 mat=0.0000
+  batch 150/329 | loss=0.0984 light=0.0984 mat=0.0000
+  batch 160/329 | loss=0.1162 light=0.1162 mat=0.0000
+  batch 170/329 | loss=0.0686 light=0.0686 mat=0.0000
+  batch 180/329 | loss=0.0719 light=0.0719 mat=0.0000
+  batch 190/329 | loss=0.0942 light=0.0942 mat=0.0000
+  batch 200/329 | loss=0.0974 light=0.0974 mat=0.0000
+  batch 210/329 | loss=0.0877 light=0.0877 mat=0.0000
+  batch 220/329 | loss=0.1022 light=0.1022 mat=0.0000
+  batch 230/329 | loss=0.0913 light=0.0913 mat=0.0000
+  batch 240/329 | loss=0.1146 light=0.1146 mat=0.0000
+  batch 250/329 | loss=0.0865 light=0.0865 mat=0.0000
+  batch 260/329 | loss=0.1219 light=0.1219 mat=0.0000
+  batch 270/329 | loss=0.0873 light=0.0873 mat=0.0000
+  batch 280/329 | loss=0.0885 light=0.0885 mat=0.0000
+  batch 290/329 | loss=0.1300 light=0.1300 mat=0.0000
+  batch 300/329 | loss=0.1182 light=0.1182 mat=0.0000
+  batch 310/329 | loss=0.0923 light=0.0923 mat=0.0000
+  batch 320/329 | loss=0.1193 light=0.1193 mat=0.0000
+  train | loss=0.0977 light=0.0977 mat=0.0000
+  val   | loss=0.1328 light=0.1328 mat=0.0000
+  -> new best model (val_loss=0.1328)
+
+Epoch 29/50
+  batch 10/329 | loss=0.0746 light=0.0746 mat=0.0000
+  batch 20/329 | loss=0.0716 light=0.0716 mat=0.0000
+  batch 30/329 | loss=0.0956 light=0.0956 mat=0.0000
+  batch 40/329 | loss=0.0616 light=0.0616 mat=0.0000
+  batch 50/329 | loss=0.0790 light=0.0790 mat=0.0000
+  batch 60/329 | loss=0.1027 light=0.1027 mat=0.0000
+  batch 70/329 | loss=0.1353 light=0.1353 mat=0.0000
+  batch 80/329 | loss=0.1087 light=0.1087 mat=0.0000
+  batch 90/329 | loss=0.0723 light=0.0723 mat=0.0000
+  batch 100/329 | loss=0.0793 light=0.0793 mat=0.0000
+  batch 110/329 | loss=0.0997 light=0.0997 mat=0.0000
+  batch 120/329 | loss=0.0722 light=0.0722 mat=0.0000
+  batch 130/329 | loss=0.0870 light=0.0870 mat=0.0000
+  batch 140/329 | loss=0.0836 light=0.0836 mat=0.0000
+  batch 150/329 | loss=0.0758 light=0.0758 mat=0.0000
+  batch 160/329 | loss=0.1029 light=0.1029 mat=0.0000
+  batch 170/329 | loss=0.0861 light=0.0861 mat=0.0000
+  batch 180/329 | loss=0.1296 light=0.1296 mat=0.0000
+  batch 190/329 | loss=0.1107 light=0.1107 mat=0.0000
+  batch 200/329 | loss=0.1448 light=0.1448 mat=0.0000
+  batch 210/329 | loss=0.0658 light=0.0658 mat=0.0000
+  batch 220/329 | loss=0.1098 light=0.1098 mat=0.0000
+  batch 230/329 | loss=0.1045 light=0.1045 mat=0.0000
+  batch 240/329 | loss=0.1039 light=0.1039 mat=0.0000
+  batch 250/329 | loss=0.1065 light=0.1065 mat=0.0000
+  batch 260/329 | loss=0.0733 light=0.0733 mat=0.0000
+  batch 270/329 | loss=0.0720 light=0.0720 mat=0.0000
+  batch 280/329 | loss=0.1077 light=0.1077 mat=0.0000
+  batch 290/329 | loss=0.0916 light=0.0916 mat=0.0000
+  batch 300/329 | loss=0.1227 light=0.1227 mat=0.0000
+  batch 310/329 | loss=0.0998 light=0.0998 mat=0.0000
+  batch 320/329 | loss=0.0963 light=0.0963 mat=0.0000
+  train | loss=0.0956 light=0.0956 mat=0.0000
+  val   | loss=0.1329 light=0.1329 mat=0.0000
+
+Epoch 30/50
+  batch 10/329 | loss=0.0806 light=0.0806 mat=0.0000
+  batch 20/329 | loss=0.0763 light=0.0763 mat=0.0000
+  batch 30/329 | loss=0.1171 light=0.1171 mat=0.0000
+  batch 40/329 | loss=0.0673 light=0.0673 mat=0.0000
+  batch 50/329 | loss=0.1048 light=0.1048 mat=0.0000
+  batch 60/329 | loss=0.1357 light=0.1357 mat=0.0000
+  batch 70/329 | loss=0.0984 light=0.0984 mat=0.0000
+  batch 80/329 | loss=0.1168 light=0.1168 mat=0.0000
+  batch 90/329 | loss=0.1057 light=0.1057 mat=0.0000
+  batch 100/329 | loss=0.0954 light=0.0954 mat=0.0000
+  batch 110/329 | loss=0.0747 light=0.0747 mat=0.0000
+  batch 120/329 | loss=0.0894 light=0.0894 mat=0.0000
+  batch 130/329 | loss=0.0633 light=0.0633 mat=0.0000
+  batch 140/329 | loss=0.1092 light=0.1092 mat=0.0000
+  batch 150/329 | loss=0.0822 light=0.0822 mat=0.0000
+  batch 160/329 | loss=0.0791 light=0.0791 mat=0.0000
+  batch 170/329 | loss=0.0981 light=0.0981 mat=0.0000
+  batch 180/329 | loss=0.0874 light=0.0874 mat=0.0000
+  batch 190/329 | loss=0.0752 light=0.0752 mat=0.0000
+  batch 200/329 | loss=0.0856 light=0.0856 mat=0.0000
+  batch 210/329 | loss=0.0638 light=0.0638 mat=0.0000
+  batch 220/329 | loss=0.0879 light=0.0879 mat=0.0000
+  batch 230/329 | loss=0.0970 light=0.0970 mat=0.0000
+  batch 240/329 | loss=0.1125 light=0.1125 mat=0.0000
+  batch 250/329 | loss=0.0889 light=0.0889 mat=0.0000
+  batch 260/329 | loss=0.1117 light=0.1117 mat=0.0000
+  batch 270/329 | loss=0.0786 light=0.0786 mat=0.0000
+  batch 280/329 | loss=0.0617 light=0.0617 mat=0.0000
+  batch 290/329 | loss=0.0693 light=0.0693 mat=0.0000
+  batch 300/329 | loss=0.0847 light=0.0847 mat=0.0000
+  batch 310/329 | loss=0.1101 light=0.1101 mat=0.0000
+  batch 320/329 | loss=0.1000 light=0.1000 mat=0.0000
+  train | loss=0.0945 light=0.0945 mat=0.0000
+  val   | loss=0.1311 light=0.1311 mat=0.0000
+  -> new best model (val_loss=0.1311)
+
+Epoch 31/50
+  batch 10/329 | loss=0.0672 light=0.0672 mat=0.0000
+  batch 20/329 | loss=0.0918 light=0.0918 mat=0.0000
+  batch 30/329 | loss=0.1387 light=0.1387 mat=0.0000
+  batch 40/329 | loss=0.0944 light=0.0944 mat=0.0000
+  batch 50/329 | loss=0.1079 light=0.1079 mat=0.0000
+  batch 60/329 | loss=0.0850 light=0.0850 mat=0.0000
+  batch 70/329 | loss=0.0885 light=0.0885 mat=0.0000
+  batch 80/329 | loss=0.0853 light=0.0853 mat=0.0000
+  batch 90/329 | loss=0.0807 light=0.0807 mat=0.0000
+  batch 100/329 | loss=0.0623 light=0.0623 mat=0.0000
+  batch 110/329 | loss=0.1176 light=0.1176 mat=0.0000
+  batch 120/329 | loss=0.0975 light=0.0975 mat=0.0000
+  batch 130/329 | loss=0.0740 light=0.0740 mat=0.0000
+  batch 140/329 | loss=0.0824 light=0.0824 mat=0.0000
+  batch 150/329 | loss=0.0877 light=0.0877 mat=0.0000
+  batch 160/329 | loss=0.0728 light=0.0728 mat=0.0000
+  batch 170/329 | loss=0.1172 light=0.1172 mat=0.0000
+  batch 180/329 | loss=0.0838 light=0.0838 mat=0.0000
+  batch 190/329 | loss=0.0784 light=0.0784 mat=0.0000
+  batch 200/329 | loss=0.0939 light=0.0939 mat=0.0000
+  batch 210/329 | loss=0.1034 light=0.1034 mat=0.0000
+  batch 220/329 | loss=0.0815 light=0.0815 mat=0.0000
+  batch 230/329 | loss=0.1287 light=0.1287 mat=0.0000
+  batch 240/329 | loss=0.1390 light=0.1390 mat=0.0000
+  batch 250/329 | loss=0.0956 light=0.0956 mat=0.0000
+  batch 260/329 | loss=0.0909 light=0.0909 mat=0.0000
+  batch 270/329 | loss=0.0742 light=0.0742 mat=0.0000
+  batch 280/329 | loss=0.1176 light=0.1176 mat=0.0000
+  batch 290/329 | loss=0.1044 light=0.1044 mat=0.0000
+  batch 300/329 | loss=0.1023 light=0.1023 mat=0.0000
+  batch 310/329 | loss=0.0922 light=0.0922 mat=0.0000
+  batch 320/329 | loss=0.0937 light=0.0937 mat=0.0000
+  train | loss=0.0932 light=0.0932 mat=0.0000
+  val   | loss=0.1316 light=0.1316 mat=0.0000
+
+Epoch 32/50
+  batch 10/329 | loss=0.0700 light=0.0700 mat=0.0000
+  batch 20/329 | loss=0.1061 light=0.1061 mat=0.0000
+  batch 30/329 | loss=0.0936 light=0.0936 mat=0.0000
+  batch 40/329 | loss=0.0978 light=0.0978 mat=0.0000
+  batch 50/329 | loss=0.0880 light=0.0880 mat=0.0000
+  batch 60/329 | loss=0.1275 light=0.1275 mat=0.0000
+  batch 70/329 | loss=0.0707 light=0.0707 mat=0.0000
+  batch 80/329 | loss=0.1167 light=0.1167 mat=0.0000
+  batch 90/329 | loss=0.0694 light=0.0694 mat=0.0000
+  batch 100/329 | loss=0.0863 light=0.0863 mat=0.0000
+  batch 110/329 | loss=0.0812 light=0.0812 mat=0.0000
+  batch 120/329 | loss=0.0909 light=0.0909 mat=0.0000
+  batch 130/329 | loss=0.0995 light=0.0995 mat=0.0000
+  batch 140/329 | loss=0.0998 light=0.0998 mat=0.0000
+  batch 150/329 | loss=0.1409 light=0.1409 mat=0.0000
+  batch 160/329 | loss=0.0810 light=0.0810 mat=0.0000
+  batch 170/329 | loss=0.1135 light=0.1135 mat=0.0000
+  batch 180/329 | loss=0.0631 light=0.0631 mat=0.0000
+  batch 190/329 | loss=0.1068 light=0.1068 mat=0.0000
+  batch 200/329 | loss=0.0830 light=0.0830 mat=0.0000
+  batch 210/329 | loss=0.0953 light=0.0953 mat=0.0000
+  batch 220/329 | loss=0.0783 light=0.0783 mat=0.0000
+  batch 230/329 | loss=0.0948 light=0.0948 mat=0.0000
+  batch 240/329 | loss=0.0823 light=0.0823 mat=0.0000
+  batch 250/329 | loss=0.1008 light=0.1008 mat=0.0000
+  batch 260/329 | loss=0.0843 light=0.0843 mat=0.0000
+  batch 270/329 | loss=0.0930 light=0.0930 mat=0.0000
+  batch 280/329 | loss=0.0821 light=0.0821 mat=0.0000
+  batch 290/329 | loss=0.0932 light=0.0932 mat=0.0000
+  batch 300/329 | loss=0.0662 light=0.0662 mat=0.0000
+  batch 310/329 | loss=0.0943 light=0.0943 mat=0.0000
+  batch 320/329 | loss=0.0764 light=0.0764 mat=0.0000
+  train | loss=0.0914 light=0.0914 mat=0.0000
+  val   | loss=0.1322 light=0.1322 mat=0.0000
+
+Epoch 33/50
+  batch 10/329 | loss=0.0775 light=0.0775 mat=0.0000
+  batch 20/329 | loss=0.0775 light=0.0775 mat=0.0000
+  batch 30/329 | loss=0.0773 light=0.0773 mat=0.0000
+  batch 40/329 | loss=0.0956 light=0.0956 mat=0.0000
+  batch 50/329 | loss=0.1074 light=0.1074 mat=0.0000
+  batch 60/329 | loss=0.1054 light=0.1054 mat=0.0000
+  batch 70/329 | loss=0.1030 light=0.1030 mat=0.0000
+  batch 80/329 | loss=0.1340 light=0.1340 mat=0.0000
+  batch 90/329 | loss=0.0805 light=0.0805 mat=0.0000
+  batch 100/329 | loss=0.0973 light=0.0973 mat=0.0000
+  batch 110/329 | loss=0.0766 light=0.0766 mat=0.0000
+  batch 120/329 | loss=0.0657 light=0.0657 mat=0.0000
+  batch 130/329 | loss=0.0876 light=0.0876 mat=0.0000
+  batch 140/329 | loss=0.0917 light=0.0917 mat=0.0000
+  batch 150/329 | loss=0.0843 light=0.0843 mat=0.0000
+  batch 160/329 | loss=0.0912 light=0.0912 mat=0.0000
+  batch 170/329 | loss=0.0812 light=0.0812 mat=0.0000
+  batch 180/329 | loss=0.0682 light=0.0682 mat=0.0000
+  batch 190/329 | loss=0.0972 light=0.0972 mat=0.0000
+  batch 200/329 | loss=0.1170 light=0.1170 mat=0.0000
+  batch 210/329 | loss=0.0906 light=0.0906 mat=0.0000
+  batch 220/329 | loss=0.0912 light=0.0912 mat=0.0000
+  batch 230/329 | loss=0.0860 light=0.0860 mat=0.0000
+  batch 240/329 | loss=0.0638 light=0.0638 mat=0.0000
+  batch 250/329 | loss=0.0805 light=0.0805 mat=0.0000
+  batch 260/329 | loss=0.1422 light=0.1422 mat=0.0000
+  batch 270/329 | loss=0.0676 light=0.0676 mat=0.0000
+  batch 280/329 | loss=0.0780 light=0.0780 mat=0.0000
+  batch 290/329 | loss=0.1080 light=0.1080 mat=0.0000
+  batch 300/329 | loss=0.0777 light=0.0777 mat=0.0000
+  batch 310/329 | loss=0.0988 light=0.0988 mat=0.0000
+  batch 320/329 | loss=0.0737 light=0.0737 mat=0.0000
+  train | loss=0.0910 light=0.0910 mat=0.0000
+  val   | loss=0.1318 light=0.1318 mat=0.0000
+
+Epoch 34/50
+  batch 10/329 | loss=0.1043 light=0.1043 mat=0.0000
+  batch 20/329 | loss=0.1135 light=0.1135 mat=0.0000
+  batch 30/329 | loss=0.1057 light=0.1057 mat=0.0000
+  batch 40/329 | loss=0.0793 light=0.0793 mat=0.0000
+  batch 50/329 | loss=0.0945 light=0.0945 mat=0.0000
+  batch 60/329 | loss=0.0936 light=0.0936 mat=0.0000
+  batch 70/329 | loss=0.1605 light=0.1605 mat=0.0000
+  batch 80/329 | loss=0.1025 light=0.1025 mat=0.0000
+  batch 90/329 | loss=0.0829 light=0.0829 mat=0.0000
+  batch 100/329 | loss=0.0857 light=0.0857 mat=0.0000
+  batch 110/329 | loss=0.0873 light=0.0873 mat=0.0000
+  batch 120/329 | loss=0.0898 light=0.0898 mat=0.0000
+  batch 130/329 | loss=0.0910 light=0.0910 mat=0.0000
+  batch 140/329 | loss=0.0791 light=0.0791 mat=0.0000
+  batch 150/329 | loss=0.0863 light=0.0863 mat=0.0000
+  batch 160/329 | loss=0.0948 light=0.0948 mat=0.0000
+  batch 170/329 | loss=0.0947 light=0.0947 mat=0.0000
+  batch 180/329 | loss=0.0861 light=0.0861 mat=0.0000
+  batch 190/329 | loss=0.0896 light=0.0896 mat=0.0000
+  batch 200/329 | loss=0.0903 light=0.0903 mat=0.0000
+  batch 210/329 | loss=0.1009 light=0.1009 mat=0.0000
+  batch 220/329 | loss=0.0612 light=0.0612 mat=0.0000
+  batch 230/329 | loss=0.0841 light=0.0841 mat=0.0000
+  batch 240/329 | loss=0.0860 light=0.0860 mat=0.0000
+  batch 250/329 | loss=0.0985 light=0.0985 mat=0.0000
+  batch 260/329 | loss=0.1041 light=0.1041 mat=0.0000
+  batch 270/329 | loss=0.0996 light=0.0996 mat=0.0000
+  batch 280/329 | loss=0.0811 light=0.0811 mat=0.0000
+  batch 290/329 | loss=0.0914 light=0.0914 mat=0.0000
+  batch 300/329 | loss=0.0877 light=0.0877 mat=0.0000
+  batch 310/329 | loss=0.1314 light=0.1314 mat=0.0000
+  batch 320/329 | loss=0.0690 light=0.0690 mat=0.0000
+  train | loss=0.0901 light=0.0901 mat=0.0000
+  val   | loss=0.1302 light=0.1302 mat=0.0000
+  -> new best model (val_loss=0.1302)
+
+Epoch 35/50
+  batch 10/329 | loss=0.1268 light=0.1268 mat=0.0000
+  batch 20/329 | loss=0.1124 light=0.1124 mat=0.0000
+  batch 30/329 | loss=0.0623 light=0.0623 mat=0.0000
+  batch 40/329 | loss=0.0867 light=0.0867 mat=0.0000
+  batch 50/329 | loss=0.0722 light=0.0722 mat=0.0000
+  batch 60/329 | loss=0.0842 light=0.0842 mat=0.0000
+  batch 70/329 | loss=0.0998 light=0.0998 mat=0.0000
+  batch 80/329 | loss=0.0694 light=0.0694 mat=0.0000
+  batch 90/329 | loss=0.0938 light=0.0938 mat=0.0000
+  batch 100/329 | loss=0.0822 light=0.0822 mat=0.0000
+  batch 110/329 | loss=0.0789 light=0.0789 mat=0.0000
+  batch 120/329 | loss=0.0993 light=0.0993 mat=0.0000
+  batch 130/329 | loss=0.1165 light=0.1165 mat=0.0000
+  batch 140/329 | loss=0.1183 light=0.1183 mat=0.0000
+  batch 150/329 | loss=0.0921 light=0.0921 mat=0.0000
+  batch 160/329 | loss=0.1167 light=0.1167 mat=0.0000
+  batch 170/329 | loss=0.0982 light=0.0982 mat=0.0000
+  batch 180/329 | loss=0.0744 light=0.0744 mat=0.0000
+  batch 190/329 | loss=0.1068 light=0.1068 mat=0.0000
+  batch 200/329 | loss=0.0762 light=0.0762 mat=0.0000
+  batch 210/329 | loss=0.1192 light=0.1192 mat=0.0000
+  batch 220/329 | loss=0.0854 light=0.0854 mat=0.0000
+  batch 230/329 | loss=0.0786 light=0.0786 mat=0.0000
+  batch 240/329 | loss=0.0894 light=0.0894 mat=0.0000
+  batch 250/329 | loss=0.0619 light=0.0619 mat=0.0000
+  batch 260/329 | loss=0.0884 light=0.0884 mat=0.0000
+  batch 270/329 | loss=0.0890 light=0.0890 mat=0.0000
+  batch 280/329 | loss=0.1029 light=0.1029 mat=0.0000
+  batch 290/329 | loss=0.0666 light=0.0666 mat=0.0000
+  batch 300/329 | loss=0.0819 light=0.0819 mat=0.0000
+  batch 310/329 | loss=0.0743 light=0.0743 mat=0.0000
+  batch 320/329 | loss=0.0709 light=0.0709 mat=0.0000
+  train | loss=0.0889 light=0.0889 mat=0.0000
+  val   | loss=0.1298 light=0.1298 mat=0.0000
+  -> new best model (val_loss=0.1298)
+
+Epoch 36/50
+  batch 10/329 | loss=0.0761 light=0.0761 mat=0.0000
+  batch 20/329 | loss=0.0748 light=0.0748 mat=0.0000
+  batch 30/329 | loss=0.1139 light=0.1139 mat=0.0000
+  batch 40/329 | loss=0.0948 light=0.0948 mat=0.0000
+  batch 50/329 | loss=0.0907 light=0.0907 mat=0.0000
+  batch 60/329 | loss=0.0936 light=0.0936 mat=0.0000
+  batch 70/329 | loss=0.0790 light=0.0790 mat=0.0000
+  batch 80/329 | loss=0.0745 light=0.0745 mat=0.0000
+  batch 90/329 | loss=0.1120 light=0.1120 mat=0.0000
+  batch 100/329 | loss=0.0879 light=0.0879 mat=0.0000
+  batch 110/329 | loss=0.0638 light=0.0638 mat=0.0000
+  batch 120/329 | loss=0.0852 light=0.0852 mat=0.0000
+  batch 130/329 | loss=0.0987 light=0.0987 mat=0.0000
+  batch 140/329 | loss=0.1165 light=0.1165 mat=0.0000
+  batch 150/329 | loss=0.1083 light=0.1083 mat=0.0000
+  batch 160/329 | loss=0.1034 light=0.1034 mat=0.0000
+  batch 170/329 | loss=0.1076 light=0.1076 mat=0.0000
+  batch 180/329 | loss=0.0996 light=0.0996 mat=0.0000
+  batch 190/329 | loss=0.0706 light=0.0706 mat=0.0000
+  batch 200/329 | loss=0.1082 light=0.1082 mat=0.0000
+  batch 210/329 | loss=0.0916 light=0.0916 mat=0.0000
+  batch 220/329 | loss=0.1014 light=0.1014 mat=0.0000
+  batch 230/329 | loss=0.0926 light=0.0926 mat=0.0000
+  batch 240/329 | loss=0.1119 light=0.1119 mat=0.0000
+  batch 250/329 | loss=0.0980 light=0.0980 mat=0.0000
+  batch 260/329 | loss=0.1204 light=0.1204 mat=0.0000
+  batch 270/329 | loss=0.0921 light=0.0921 mat=0.0000
+  batch 280/329 | loss=0.0725 light=0.0725 mat=0.0000
+  batch 290/329 | loss=0.0737 light=0.0737 mat=0.0000
+  batch 300/329 | loss=0.0677 light=0.0677 mat=0.0000
+  batch 310/329 | loss=0.1107 light=0.1107 mat=0.0000
+  batch 320/329 | loss=0.1026 light=0.1026 mat=0.0000
+  train | loss=0.0882 light=0.0882 mat=0.0000
+  val   | loss=0.1312 light=0.1312 mat=0.0000
+
+Epoch 37/50
+  batch 10/329 | loss=0.1092 light=0.1092 mat=0.0000
+  batch 20/329 | loss=0.0648 light=0.0648 mat=0.0000
+  batch 30/329 | loss=0.1162 light=0.1162 mat=0.0000
+  batch 40/329 | loss=0.0658 light=0.0658 mat=0.0000
+  batch 50/329 | loss=0.0912 light=0.0912 mat=0.0000
+  batch 60/329 | loss=0.0772 light=0.0772 mat=0.0000
+  batch 70/329 | loss=0.0966 light=0.0966 mat=0.0000
+  batch 80/329 | loss=0.0755 light=0.0755 mat=0.0000
+  batch 90/329 | loss=0.1232 light=0.1232 mat=0.0000
+  batch 100/329 | loss=0.0765 light=0.0765 mat=0.0000
+  batch 110/329 | loss=0.0580 light=0.0580 mat=0.0000
+  batch 120/329 | loss=0.0851 light=0.0851 mat=0.0000
+  batch 130/329 | loss=0.0685 light=0.0685 mat=0.0000
+  batch 140/329 | loss=0.0666 light=0.0666 mat=0.0000
+  batch 150/329 | loss=0.1092 light=0.1092 mat=0.0000
+  batch 160/329 | loss=0.0745 light=0.0745 mat=0.0000
+  batch 170/329 | loss=0.1052 light=0.1052 mat=0.0000
+  batch 180/329 | loss=0.0700 light=0.0700 mat=0.0000
+  batch 190/329 | loss=0.1045 light=0.1045 mat=0.0000
+  batch 200/329 | loss=0.0928 light=0.0928 mat=0.0000
+  batch 210/329 | loss=0.0840 light=0.0840 mat=0.0000
+  batch 220/329 | loss=0.0870 light=0.0870 mat=0.0000
+  batch 230/329 | loss=0.0716 light=0.0716 mat=0.0000
+  batch 240/329 | loss=0.0900 light=0.0900 mat=0.0000
+  batch 250/329 | loss=0.0803 light=0.0803 mat=0.0000
+  batch 260/329 | loss=0.0749 light=0.0749 mat=0.0000
+  batch 270/329 | loss=0.0954 light=0.0954 mat=0.0000
+  batch 280/329 | loss=0.0819 light=0.0819 mat=0.0000
+  batch 290/329 | loss=0.0802 light=0.0802 mat=0.0000
+  batch 300/329 | loss=0.0682 light=0.0682 mat=0.0000
+  batch 310/329 | loss=0.1165 light=0.1165 mat=0.0000
+  batch 320/329 | loss=0.0723 light=0.0723 mat=0.0000
+  train | loss=0.0875 light=0.0875 mat=0.0000
+  val   | loss=0.1295 light=0.1295 mat=0.0000
+  -> new best model (val_loss=0.1295)
+
+Epoch 38/50
+  batch 10/329 | loss=0.0759 light=0.0759 mat=0.0000
+  batch 20/329 | loss=0.0715 light=0.0715 mat=0.0000
+  batch 30/329 | loss=0.1022 light=0.1022 mat=0.0000
+  batch 40/329 | loss=0.0913 light=0.0913 mat=0.0000
+  batch 50/329 | loss=0.0579 light=0.0579 mat=0.0000
+  batch 60/329 | loss=0.0743 light=0.0743 mat=0.0000
+  batch 70/329 | loss=0.0965 light=0.0965 mat=0.0000
+  batch 80/329 | loss=0.0912 light=0.0912 mat=0.0000
+  batch 90/329 | loss=0.0643 light=0.0643 mat=0.0000
+  batch 100/329 | loss=0.0694 light=0.0694 mat=0.0000
+  batch 110/329 | loss=0.0898 light=0.0898 mat=0.0000
+  batch 120/329 | loss=0.1012 light=0.1012 mat=0.0000
+  batch 130/329 | loss=0.0976 light=0.0976 mat=0.0000
+  batch 140/329 | loss=0.0633 light=0.0633 mat=0.0000
+  batch 150/329 | loss=0.0722 light=0.0722 mat=0.0000
+  batch 160/329 | loss=0.0798 light=0.0798 mat=0.0000
+  batch 170/329 | loss=0.0801 light=0.0801 mat=0.0000
+  batch 180/329 | loss=0.0863 light=0.0863 mat=0.0000
+  batch 190/329 | loss=0.0855 light=0.0855 mat=0.0000
+  batch 200/329 | loss=0.0665 light=0.0665 mat=0.0000
+  batch 210/329 | loss=0.0890 light=0.0890 mat=0.0000
+  batch 220/329 | loss=0.0747 light=0.0747 mat=0.0000
+  batch 230/329 | loss=0.0961 light=0.0961 mat=0.0000
+  batch 240/329 | loss=0.0760 light=0.0760 mat=0.0000
+  batch 250/329 | loss=0.0878 light=0.0878 mat=0.0000
+  batch 260/329 | loss=0.1023 light=0.1023 mat=0.0000
+  batch 270/329 | loss=0.0849 light=0.0849 mat=0.0000
+  batch 280/329 | loss=0.0807 light=0.0807 mat=0.0000
+  batch 290/329 | loss=0.0554 light=0.0554 mat=0.0000
+  batch 300/329 | loss=0.0835 light=0.0835 mat=0.0000
+  batch 310/329 | loss=0.0947 light=0.0947 mat=0.0000
+  batch 320/329 | loss=0.0808 light=0.0808 mat=0.0000
+  train | loss=0.0867 light=0.0867 mat=0.0000
+  val   | loss=0.1292 light=0.1292 mat=0.0000
+  -> new best model (val_loss=0.1292)
+
+Epoch 39/50
+  batch 10/329 | loss=0.0728 light=0.0728 mat=0.0000
+  batch 20/329 | loss=0.0661 light=0.0661 mat=0.0000
+  batch 30/329 | loss=0.0771 light=0.0771 mat=0.0000
+  batch 40/329 | loss=0.0644 light=0.0644 mat=0.0000
+  batch 50/329 | loss=0.0995 light=0.0995 mat=0.0000
+  batch 60/329 | loss=0.0823 light=0.0823 mat=0.0000
+  batch 70/329 | loss=0.1003 light=0.1003 mat=0.0000
+  batch 80/329 | loss=0.0767 light=0.0767 mat=0.0000
+  batch 90/329 | loss=0.1270 light=0.1270 mat=0.0000
+  batch 100/329 | loss=0.0689 light=0.0689 mat=0.0000
+  batch 110/329 | loss=0.1015 light=0.1015 mat=0.0000
+  batch 120/329 | loss=0.0861 light=0.0861 mat=0.0000
+  batch 130/329 | loss=0.0727 light=0.0727 mat=0.0000
+  batch 140/329 | loss=0.0660 light=0.0660 mat=0.0000
+  batch 150/329 | loss=0.0661 light=0.0661 mat=0.0000
+  batch 160/329 | loss=0.1123 light=0.1123 mat=0.0000
+  batch 170/329 | loss=0.0981 light=0.0981 mat=0.0000
+  batch 180/329 | loss=0.0692 light=0.0692 mat=0.0000
+  batch 190/329 | loss=0.0951 light=0.0951 mat=0.0000
+  batch 200/329 | loss=0.0992 light=0.0992 mat=0.0000
+  batch 210/329 | loss=0.1150 light=0.1150 mat=0.0000
+  batch 220/329 | loss=0.0907 light=0.0907 mat=0.0000
+  batch 230/329 | loss=0.0915 light=0.0915 mat=0.0000
+  batch 240/329 | loss=0.0776 light=0.0776 mat=0.0000
+  batch 250/329 | loss=0.0829 light=0.0829 mat=0.0000
+  batch 260/329 | loss=0.0600 light=0.0600 mat=0.0000
+  batch 270/329 | loss=0.0755 light=0.0755 mat=0.0000
+  batch 280/329 | loss=0.0646 light=0.0646 mat=0.0000
+  batch 290/329 | loss=0.0610 light=0.0610 mat=0.0000
+  batch 300/329 | loss=0.0683 light=0.0683 mat=0.0000
+  batch 310/329 | loss=0.0687 light=0.0687 mat=0.0000
+  batch 320/329 | loss=0.0686 light=0.0686 mat=0.0000
+  train | loss=0.0858 light=0.0858 mat=0.0000
+  val   | loss=0.1297 light=0.1297 mat=0.0000
+
+Epoch 40/50
+  batch 10/329 | loss=0.1170 light=0.1170 mat=0.0000
+  batch 20/329 | loss=0.0981 light=0.0981 mat=0.0000
+  batch 30/329 | loss=0.0832 light=0.0832 mat=0.0000
+  batch 40/329 | loss=0.0945 light=0.0945 mat=0.0000
+  batch 50/329 | loss=0.0692 light=0.0692 mat=0.0000
+  batch 60/329 | loss=0.0743 light=0.0743 mat=0.0000
+  batch 70/329 | loss=0.0822 light=0.0822 mat=0.0000
+  batch 80/329 | loss=0.0500 light=0.0500 mat=0.0000
+  batch 90/329 | loss=0.1041 light=0.1041 mat=0.0000
+  batch 100/329 | loss=0.0876 light=0.0876 mat=0.0000
+  batch 110/329 | loss=0.0995 light=0.0995 mat=0.0000
+  batch 120/329 | loss=0.0611 light=0.0611 mat=0.0000
+  batch 130/329 | loss=0.0780 light=0.0780 mat=0.0000
+  batch 140/329 | loss=0.1148 light=0.1148 mat=0.0000
+  batch 150/329 | loss=0.0997 light=0.0997 mat=0.0000
+  batch 160/329 | loss=0.0600 light=0.0600 mat=0.0000
+  batch 170/329 | loss=0.0660 light=0.0660 mat=0.0000
+  batch 180/329 | loss=0.0656 light=0.0656 mat=0.0000
+  batch 190/329 | loss=0.0706 light=0.0706 mat=0.0000
+  batch 200/329 | loss=0.0768 light=0.0768 mat=0.0000
+  batch 210/329 | loss=0.1243 light=0.1243 mat=0.0000
+  batch 220/329 | loss=0.1160 light=0.1160 mat=0.0000
+  batch 230/329 | loss=0.0957 light=0.0957 mat=0.0000
+  batch 240/329 | loss=0.0919 light=0.0919 mat=0.0000
+  batch 250/329 | loss=0.0905 light=0.0905 mat=0.0000
+  batch 260/329 | loss=0.0762 light=0.0762 mat=0.0000
+  batch 270/329 | loss=0.0937 light=0.0937 mat=0.0000
+  batch 280/329 | loss=0.0964 light=0.0964 mat=0.0000
+  batch 290/329 | loss=0.0938 light=0.0938 mat=0.0000
+  batch 300/329 | loss=0.1030 light=0.1030 mat=0.0000
+  batch 310/329 | loss=0.0943 light=0.0943 mat=0.0000
+  batch 320/329 | loss=0.0668 light=0.0668 mat=0.0000
+  train | loss=0.0852 light=0.0852 mat=0.0000
+  val   | loss=0.1300 light=0.1300 mat=0.0000
+
+Epoch 41/50
+  batch 10/329 | loss=0.0742 light=0.0742 mat=0.0000
+  batch 20/329 | loss=0.1087 light=0.1087 mat=0.0000
+  batch 30/329 | loss=0.0968 light=0.0968 mat=0.0000
+  batch 40/329 | loss=0.0680 light=0.0680 mat=0.0000
+  batch 50/329 | loss=0.0936 light=0.0936 mat=0.0000
+  batch 60/329 | loss=0.1049 light=0.1049 mat=0.0000
+  batch 70/329 | loss=0.0692 light=0.0692 mat=0.0000
+  batch 80/329 | loss=0.0702 light=0.0702 mat=0.0000
+  batch 90/329 | loss=0.1153 light=0.1153 mat=0.0000
+  batch 100/329 | loss=0.0695 light=0.0695 mat=0.0000
+  batch 110/329 | loss=0.0975 light=0.0975 mat=0.0000
+  batch 120/329 | loss=0.0863 light=0.0863 mat=0.0000
+  batch 130/329 | loss=0.0700 light=0.0700 mat=0.0000
+  batch 140/329 | loss=0.0948 light=0.0948 mat=0.0000
+  batch 150/329 | loss=0.0986 light=0.0986 mat=0.0000
+  batch 160/329 | loss=0.0882 light=0.0882 mat=0.0000
+  batch 170/329 | loss=0.0606 light=0.0606 mat=0.0000
+  batch 180/329 | loss=0.0958 light=0.0958 mat=0.0000
+  batch 190/329 | loss=0.0904 light=0.0904 mat=0.0000
+  batch 200/329 | loss=0.0900 light=0.0900 mat=0.0000
+  batch 210/329 | loss=0.0905 light=0.0905 mat=0.0000
+  batch 220/329 | loss=0.1044 light=0.1044 mat=0.0000
+  batch 230/329 | loss=0.0654 light=0.0654 mat=0.0000
+  batch 240/329 | loss=0.0736 light=0.0736 mat=0.0000
+  batch 250/329 | loss=0.0627 light=0.0627 mat=0.0000
+  batch 260/329 | loss=0.0652 light=0.0652 mat=0.0000
+  batch 270/329 | loss=0.0962 light=0.0962 mat=0.0000
+  batch 280/329 | loss=0.0707 light=0.0707 mat=0.0000
+  batch 290/329 | loss=0.0807 light=0.0807 mat=0.0000
+  batch 300/329 | loss=0.0935 light=0.0935 mat=0.0000
+  batch 310/329 | loss=0.0760 light=0.0760 mat=0.0000
+  batch 320/329 | loss=0.0916 light=0.0916 mat=0.0000
+  train | loss=0.0849 light=0.0849 mat=0.0000
+  val   | loss=0.1287 light=0.1287 mat=0.0000
+  -> new best model (val_loss=0.1287)
+
+Epoch 42/50
+  batch 10/329 | loss=0.0952 light=0.0952 mat=0.0000
+  batch 20/329 | loss=0.0793 light=0.0793 mat=0.0000
+  batch 30/329 | loss=0.0715 light=0.0715 mat=0.0000
+  batch 40/329 | loss=0.0826 light=0.0826 mat=0.0000
+  batch 50/329 | loss=0.0539 light=0.0539 mat=0.0000
+  batch 60/329 | loss=0.0867 light=0.0867 mat=0.0000
+  batch 70/329 | loss=0.0862 light=0.0862 mat=0.0000
+  batch 80/329 | loss=0.0556 light=0.0556 mat=0.0000
+  batch 90/329 | loss=0.0874 light=0.0874 mat=0.0000
+  batch 100/329 | loss=0.0819 light=0.0819 mat=0.0000
+  batch 110/329 | loss=0.0750 light=0.0750 mat=0.0000
+  batch 120/329 | loss=0.1027 light=0.1027 mat=0.0000
+  batch 130/329 | loss=0.1001 light=0.1001 mat=0.0000
+  batch 140/329 | loss=0.0567 light=0.0567 mat=0.0000
+  batch 150/329 | loss=0.1023 light=0.1023 mat=0.0000
+  batch 160/329 | loss=0.1047 light=0.1047 mat=0.0000
+  batch 170/329 | loss=0.0556 light=0.0556 mat=0.0000
+  batch 180/329 | loss=0.0791 light=0.0791 mat=0.0000
+  batch 190/329 | loss=0.0861 light=0.0861 mat=0.0000
+  batch 200/329 | loss=0.0788 light=0.0788 mat=0.0000
+  batch 210/329 | loss=0.0696 light=0.0696 mat=0.0000
+  batch 220/329 | loss=0.0660 light=0.0660 mat=0.0000
+  batch 230/329 | loss=0.0784 light=0.0784 mat=0.0000
+  batch 240/329 | loss=0.0709 light=0.0709 mat=0.0000
+  batch 250/329 | loss=0.0806 light=0.0806 mat=0.0000
+  batch 260/329 | loss=0.0851 light=0.0851 mat=0.0000
+  batch 270/329 | loss=0.0635 light=0.0635 mat=0.0000
+  batch 280/329 | loss=0.0895 light=0.0895 mat=0.0000
+  batch 290/329 | loss=0.0965 light=0.0965 mat=0.0000
+  batch 300/329 | loss=0.0945 light=0.0945 mat=0.0000
+  batch 310/329 | loss=0.0773 light=0.0773 mat=0.0000
+  batch 320/329 | loss=0.0682 light=0.0682 mat=0.0000
+  train | loss=0.0849 light=0.0849 mat=0.0000
+  val   | loss=0.1292 light=0.1292 mat=0.0000
+
+Epoch 43/50
+  batch 10/329 | loss=0.1110 light=0.1110 mat=0.0000
+  batch 20/329 | loss=0.0764 light=0.0764 mat=0.0000
+  batch 30/329 | loss=0.0936 light=0.0936 mat=0.0000
+  batch 40/329 | loss=0.0913 light=0.0913 mat=0.0000
+  batch 50/329 | loss=0.0883 light=0.0883 mat=0.0000
+  batch 60/329 | loss=0.0920 light=0.0920 mat=0.0000
+  batch 70/329 | loss=0.0797 light=0.0797 mat=0.0000
+  batch 80/329 | loss=0.0739 light=0.0739 mat=0.0000
+  batch 90/329 | loss=0.0855 light=0.0855 mat=0.0000
+  batch 100/329 | loss=0.1020 light=0.1020 mat=0.0000
+  batch 110/329 | loss=0.0819 light=0.0819 mat=0.0000
+  batch 120/329 | loss=0.0869 light=0.0869 mat=0.0000
+  batch 130/329 | loss=0.0889 light=0.0889 mat=0.0000
+  batch 140/329 | loss=0.0699 light=0.0699 mat=0.0000
+  batch 150/329 | loss=0.0748 light=0.0748 mat=0.0000
+  batch 160/329 | loss=0.1181 light=0.1181 mat=0.0000
+  batch 170/329 | loss=0.0566 light=0.0566 mat=0.0000
+  batch 180/329 | loss=0.0683 light=0.0683 mat=0.0000
+  batch 190/329 | loss=0.0983 light=0.0983 mat=0.0000
+  batch 200/329 | loss=0.0837 light=0.0837 mat=0.0000
+  batch 210/329 | loss=0.0665 light=0.0665 mat=0.0000
+  batch 220/329 | loss=0.0575 light=0.0575 mat=0.0000
+  batch 230/329 | loss=0.0894 light=0.0894 mat=0.0000
+  batch 240/329 | loss=0.0779 light=0.0779 mat=0.0000
+  batch 250/329 | loss=0.0962 light=0.0962 mat=0.0000
+  batch 260/329 | loss=0.0792 light=0.0792 mat=0.0000
+  batch 270/329 | loss=0.0965 light=0.0965 mat=0.0000
+  batch 280/329 | loss=0.0823 light=0.0823 mat=0.0000
+  batch 290/329 | loss=0.0645 light=0.0645 mat=0.0000
+  batch 300/329 | loss=0.0948 light=0.0948 mat=0.0000
+  batch 310/329 | loss=0.0764 light=0.0764 mat=0.0000
+  batch 320/329 | loss=0.0892 light=0.0892 mat=0.0000
+  train | loss=0.0842 light=0.0842 mat=0.0000
+  val   | loss=0.1290 light=0.1290 mat=0.0000
+
+Epoch 44/50
+  batch 10/329 | loss=0.0743 light=0.0743 mat=0.0000
+  batch 20/329 | loss=0.0477 light=0.0477 mat=0.0000
+  batch 30/329 | loss=0.0711 light=0.0711 mat=0.0000
+  batch 40/329 | loss=0.0916 light=0.0916 mat=0.0000
+  batch 50/329 | loss=0.0642 light=0.0642 mat=0.0000
+  batch 60/329 | loss=0.0590 light=0.0590 mat=0.0000
+  batch 70/329 | loss=0.0755 light=0.0755 mat=0.0000
+  batch 80/329 | loss=0.0903 light=0.0903 mat=0.0000
+  batch 90/329 | loss=0.0758 light=0.0758 mat=0.0000
+  batch 100/329 | loss=0.0857 light=0.0857 mat=0.0000
+  batch 110/329 | loss=0.0737 light=0.0737 mat=0.0000
+  batch 120/329 | loss=0.0846 light=0.0846 mat=0.0000
+  batch 130/329 | loss=0.0906 light=0.0906 mat=0.0000
+  batch 140/329 | loss=0.0589 light=0.0589 mat=0.0000
+  batch 150/329 | loss=0.1104 light=0.1104 mat=0.0000
+  batch 160/329 | loss=0.0859 light=0.0859 mat=0.0000
+  batch 170/329 | loss=0.0819 light=0.0819 mat=0.0000
+  batch 180/329 | loss=0.0847 light=0.0847 mat=0.0000
+  batch 190/329 | loss=0.0735 light=0.0735 mat=0.0000
+  batch 200/329 | loss=0.1019 light=0.1019 mat=0.0000
+  batch 210/329 | loss=0.0879 light=0.0879 mat=0.0000
+  batch 220/329 | loss=0.0631 light=0.0631 mat=0.0000
+  batch 230/329 | loss=0.0739 light=0.0739 mat=0.0000
+  batch 240/329 | loss=0.0811 light=0.0811 mat=0.0000
+  batch 250/329 | loss=0.0861 light=0.0861 mat=0.0000
+  batch 260/329 | loss=0.0837 light=0.0837 mat=0.0000
+  batch 270/329 | loss=0.1229 light=0.1229 mat=0.0000
+  batch 280/329 | loss=0.0701 light=0.0701 mat=0.0000
+  batch 290/329 | loss=0.0975 light=0.0975 mat=0.0000
+  batch 300/329 | loss=0.0805 light=0.0805 mat=0.0000
+  batch 310/329 | loss=0.0985 light=0.0985 mat=0.0000
+  batch 320/329 | loss=0.0670 light=0.0670 mat=0.0000
+  train | loss=0.0835 light=0.0835 mat=0.0000
+  val   | loss=0.1292 light=0.1292 mat=0.0000
+
+Epoch 45/50
+  batch 10/329 | loss=0.0771 light=0.0771 mat=0.0000
+  batch 20/329 | loss=0.0772 light=0.0772 mat=0.0000
+  batch 30/329 | loss=0.0759 light=0.0759 mat=0.0000
+  batch 40/329 | loss=0.0770 light=0.0770 mat=0.0000
+  batch 50/329 | loss=0.0905 light=0.0905 mat=0.0000
+  batch 60/329 | loss=0.0712 light=0.0712 mat=0.0000
+  batch 70/329 | loss=0.0791 light=0.0791 mat=0.0000
+  batch 80/329 | loss=0.0930 light=0.0930 mat=0.0000
+  batch 90/329 | loss=0.0601 light=0.0601 mat=0.0000
+  batch 100/329 | loss=0.0937 light=0.0937 mat=0.0000
+  batch 110/329 | loss=0.0678 light=0.0678 mat=0.0000
+  batch 120/329 | loss=0.1160 light=0.1160 mat=0.0000
+  batch 130/329 | loss=0.0762 light=0.0762 mat=0.0000
+  batch 140/329 | loss=0.0630 light=0.0630 mat=0.0000
+  batch 150/329 | loss=0.0638 light=0.0638 mat=0.0000
+  batch 160/329 | loss=0.0750 light=0.0750 mat=0.0000
+  batch 170/329 | loss=0.0657 light=0.0657 mat=0.0000
+  batch 180/329 | loss=0.0950 light=0.0950 mat=0.0000
+  batch 190/329 | loss=0.1182 light=0.1182 mat=0.0000
+  batch 200/329 | loss=0.1045 light=0.1045 mat=0.0000
+  batch 210/329 | loss=0.0689 light=0.0689 mat=0.0000
+  batch 220/329 | loss=0.1609 light=0.1609 mat=0.0000
+  batch 230/329 | loss=0.0734 light=0.0734 mat=0.0000
+  batch 240/329 | loss=0.0916 light=0.0916 mat=0.0000
+  batch 250/329 | loss=0.0922 light=0.0922 mat=0.0000
+  batch 260/329 | loss=0.0654 light=0.0654 mat=0.0000
+  batch 270/329 | loss=0.0789 light=0.0789 mat=0.0000
+  batch 280/329 | loss=0.0686 light=0.0686 mat=0.0000
+  batch 290/329 | loss=0.0783 light=0.0783 mat=0.0000
+  batch 300/329 | loss=0.1119 light=0.1119 mat=0.0000
+  batch 310/329 | loss=0.0912 light=0.0912 mat=0.0000
+  batch 320/329 | loss=0.0810 light=0.0810 mat=0.0000
+  train | loss=0.0840 light=0.0840 mat=0.0000
+  val   | loss=0.1295 light=0.1295 mat=0.0000
+
+Epoch 46/50
+  batch 10/329 | loss=0.0771 light=0.0771 mat=0.0000
+  batch 20/329 | loss=0.0711 light=0.0711 mat=0.0000
+  batch 30/329 | loss=0.0560 light=0.0560 mat=0.0000
+  batch 40/329 | loss=0.0763 light=0.0763 mat=0.0000
+  batch 50/329 | loss=0.0682 light=0.0682 mat=0.0000
+  batch 60/329 | loss=0.0872 light=0.0872 mat=0.0000
+  batch 70/329 | loss=0.0952 light=0.0952 mat=0.0000
+  batch 80/329 | loss=0.0642 light=0.0642 mat=0.0000
+  batch 90/329 | loss=0.0710 light=0.0710 mat=0.0000
+  batch 100/329 | loss=0.0844 light=0.0844 mat=0.0000
+  batch 110/329 | loss=0.1070 light=0.1070 mat=0.0000
+  batch 120/329 | loss=0.0829 light=0.0829 mat=0.0000
+  batch 130/329 | loss=0.1007 light=0.1007 mat=0.0000
+  batch 140/329 | loss=0.0916 light=0.0916 mat=0.0000
+  batch 150/329 | loss=0.0816 light=0.0816 mat=0.0000
+  batch 160/329 | loss=0.0821 light=0.0821 mat=0.0000
+  batch 170/329 | loss=0.0916 light=0.0916 mat=0.0000
+  batch 180/329 | loss=0.0749 light=0.0749 mat=0.0000
+  batch 190/329 | loss=0.0841 light=0.0841 mat=0.0000
+  batch 200/329 | loss=0.0861 light=0.0861 mat=0.0000
+  batch 210/329 | loss=0.0837 light=0.0837 mat=0.0000
+  batch 220/329 | loss=0.0745 light=0.0745 mat=0.0000
+  batch 230/329 | loss=0.0692 light=0.0692 mat=0.0000
+  batch 240/329 | loss=0.1057 light=0.1057 mat=0.0000
+  batch 250/329 | loss=0.0703 light=0.0703 mat=0.0000
+  batch 260/329 | loss=0.0665 light=0.0665 mat=0.0000
+  batch 270/329 | loss=0.0702 light=0.0702 mat=0.0000
+  batch 280/329 | loss=0.0639 light=0.0639 mat=0.0000
+  batch 290/329 | loss=0.0791 light=0.0791 mat=0.0000
+  batch 300/329 | loss=0.0713 light=0.0713 mat=0.0000
+  batch 310/329 | loss=0.0684 light=0.0684 mat=0.0000
+  batch 320/329 | loss=0.1124 light=0.1124 mat=0.0000
+  train | loss=0.0834 light=0.0834 mat=0.0000
+  val   | loss=0.1304 light=0.1304 mat=0.0000
+
+Epoch 47/50
+  batch 10/329 | loss=0.0638 light=0.0638 mat=0.0000
+  batch 20/329 | loss=0.0889 light=0.0889 mat=0.0000
+  batch 30/329 | loss=0.0857 light=0.0857 mat=0.0000
+  batch 40/329 | loss=0.0849 light=0.0849 mat=0.0000
+  batch 50/329 | loss=0.0811 light=0.0811 mat=0.0000
+  batch 60/329 | loss=0.0937 light=0.0937 mat=0.0000
+  batch 70/329 | loss=0.0816 light=0.0816 mat=0.0000
+  batch 80/329 | loss=0.0689 light=0.0689 mat=0.0000
+  batch 90/329 | loss=0.1136 light=0.1136 mat=0.0000
+  batch 100/329 | loss=0.0759 light=0.0759 mat=0.0000
+  batch 110/329 | loss=0.0669 light=0.0669 mat=0.0000
+  batch 120/329 | loss=0.0777 light=0.0777 mat=0.0000
+  batch 130/329 | loss=0.0826 light=0.0826 mat=0.0000
+  batch 140/329 | loss=0.0981 light=0.0981 mat=0.0000
+  batch 150/329 | loss=0.0989 light=0.0989 mat=0.0000
+  batch 160/329 | loss=0.0584 light=0.0584 mat=0.0000
+  batch 170/329 | loss=0.0946 light=0.0946 mat=0.0000
+  batch 180/329 | loss=0.0694 light=0.0694 mat=0.0000
+  batch 190/329 | loss=0.0840 light=0.0840 mat=0.0000
+  batch 200/329 | loss=0.0802 light=0.0802 mat=0.0000
+  batch 210/329 | loss=0.1084 light=0.1084 mat=0.0000
+  batch 220/329 | loss=0.0799 light=0.0799 mat=0.0000
+  batch 230/329 | loss=0.0568 light=0.0568 mat=0.0000
+  batch 240/329 | loss=0.0949 light=0.0949 mat=0.0000
+  batch 250/329 | loss=0.0631 light=0.0631 mat=0.0000
+  batch 260/329 | loss=0.1118 light=0.1118 mat=0.0000
+  batch 270/329 | loss=0.0738 light=0.0738 mat=0.0000
+  batch 280/329 | loss=0.0749 light=0.0749 mat=0.0000
+  batch 290/329 | loss=0.0679 light=0.0679 mat=0.0000
+  batch 300/329 | loss=0.0801 light=0.0801 mat=0.0000
+  batch 310/329 | loss=0.1162 light=0.1162 mat=0.0000
+  batch 320/329 | loss=0.0953 light=0.0953 mat=0.0000
+  train | loss=0.0831 light=0.0831 mat=0.0000
+  val   | loss=0.1292 light=0.1292 mat=0.0000
+
+Epoch 48/50
+  batch 10/329 | loss=0.0689 light=0.0689 mat=0.0000
+  batch 20/329 | loss=0.1004 light=0.1004 mat=0.0000
+  batch 30/329 | loss=0.1177 light=0.1177 mat=0.0000
+  batch 40/329 | loss=0.0971 light=0.0971 mat=0.0000
+  batch 50/329 | loss=0.0693 light=0.0693 mat=0.0000
+  batch 60/329 | loss=0.0660 light=0.0660 mat=0.0000
+  batch 70/329 | loss=0.1185 light=0.1185 mat=0.0000
+  batch 80/329 | loss=0.0903 light=0.0903 mat=0.0000
+  batch 90/329 | loss=0.0754 light=0.0754 mat=0.0000
+  batch 100/329 | loss=0.0818 light=0.0818 mat=0.0000
+  batch 110/329 | loss=0.0617 light=0.0617 mat=0.0000
+  batch 120/329 | loss=0.0900 light=0.0900 mat=0.0000
+  batch 130/329 | loss=0.1196 light=0.1196 mat=0.0000
+  batch 140/329 | loss=0.1025 light=0.1025 mat=0.0000
+  batch 150/329 | loss=0.1074 light=0.1074 mat=0.0000
+  batch 160/329 | loss=0.0759 light=0.0759 mat=0.0000
+  batch 170/329 | loss=0.0871 light=0.0871 mat=0.0000
+  batch 180/329 | loss=0.0826 light=0.0826 mat=0.0000
+  batch 190/329 | loss=0.0901 light=0.0901 mat=0.0000
+  batch 200/329 | loss=0.0796 light=0.0796 mat=0.0000
+  batch 210/329 | loss=0.0836 light=0.0836 mat=0.0000
+  batch 220/329 | loss=0.0775 light=0.0775 mat=0.0000
+  batch 230/329 | loss=0.0969 light=0.0969 mat=0.0000
+  batch 240/329 | loss=0.0766 light=0.0766 mat=0.0000
+  batch 250/329 | loss=0.0603 light=0.0603 mat=0.0000
+  batch 260/329 | loss=0.0691 light=0.0691 mat=0.0000
+  batch 270/329 | loss=0.0898 light=0.0898 mat=0.0000
+  batch 280/329 | loss=0.0959 light=0.0959 mat=0.0000
+  batch 290/329 | loss=0.0991 light=0.0991 mat=0.0000
+  batch 300/329 | loss=0.0826 light=0.0826 mat=0.0000
+  batch 310/329 | loss=0.0882 light=0.0882 mat=0.0000
+  batch 320/329 | loss=0.0752 light=0.0752 mat=0.0000
+  train | loss=0.0832 light=0.0832 mat=0.0000
+  val   | loss=0.1301 light=0.1301 mat=0.0000
+
+Epoch 49/50
+  batch 10/329 | loss=0.0633 light=0.0633 mat=0.0000
+  batch 20/329 | loss=0.0804 light=0.0804 mat=0.0000
+  batch 30/329 | loss=0.0943 light=0.0943 mat=0.0000
+  batch 40/329 | loss=0.0785 light=0.0785 mat=0.0000
+  batch 50/329 | loss=0.0751 light=0.0751 mat=0.0000
+  batch 60/329 | loss=0.0771 light=0.0771 mat=0.0000
+  batch 70/329 | loss=0.0627 light=0.0627 mat=0.0000
+  batch 80/329 | loss=0.0925 light=0.0925 mat=0.0000
+  batch 90/329 | loss=0.0861 light=0.0861 mat=0.0000
+  batch 100/329 | loss=0.0728 light=0.0728 mat=0.0000
+  batch 110/329 | loss=0.0929 light=0.0929 mat=0.0000
+  batch 120/329 | loss=0.0541 light=0.0541 mat=0.0000
+  batch 130/329 | loss=0.0696 light=0.0696 mat=0.0000
+  batch 140/329 | loss=0.0960 light=0.0960 mat=0.0000
+  batch 150/329 | loss=0.0816 light=0.0816 mat=0.0000
+  batch 160/329 | loss=0.0907 light=0.0907 mat=0.0000
+  batch 170/329 | loss=0.1036 light=0.1036 mat=0.0000
+  batch 180/329 | loss=0.1173 light=0.1173 mat=0.0000
+  batch 190/329 | loss=0.0728 light=0.0728 mat=0.0000
+  batch 200/329 | loss=0.0854 light=0.0854 mat=0.0000
+  batch 210/329 | loss=0.0731 light=0.0731 mat=0.0000
+  batch 220/329 | loss=0.0797 light=0.0797 mat=0.0000
+  batch 230/329 | loss=0.0602 light=0.0602 mat=0.0000
+  batch 240/329 | loss=0.0621 light=0.0621 mat=0.0000
+  batch 250/329 | loss=0.0623 light=0.0623 mat=0.0000
+  batch 260/329 | loss=0.1182 light=0.1182 mat=0.0000
+  batch 270/329 | loss=0.0567 light=0.0567 mat=0.0000
+  batch 280/329 | loss=0.0768 light=0.0768 mat=0.0000
+  batch 290/329 | loss=0.0787 light=0.0787 mat=0.0000
+  batch 300/329 | loss=0.0952 light=0.0952 mat=0.0000
+  batch 310/329 | loss=0.0827 light=0.0827 mat=0.0000
+  batch 320/329 | loss=0.0824 light=0.0824 mat=0.0000
+  train | loss=0.0829 light=0.0829 mat=0.0000
+  val   | loss=0.1290 light=0.1290 mat=0.0000
+
+Epoch 50/50
+  batch 10/329 | loss=0.0813 light=0.0813 mat=0.0000
+  batch 20/329 | loss=0.0714 light=0.0714 mat=0.0000
+  batch 30/329 | loss=0.0735 light=0.0735 mat=0.0000
+  batch 40/329 | loss=0.0676 light=0.0676 mat=0.0000
+  batch 50/329 | loss=0.0776 light=0.0776 mat=0.0000
+  batch 60/329 | loss=0.0690 light=0.0690 mat=0.0000
+  batch 70/329 | loss=0.1076 light=0.1076 mat=0.0000
+  batch 80/329 | loss=0.0633 light=0.0633 mat=0.0000
+  batch 90/329 | loss=0.0571 light=0.0571 mat=0.0000
+  batch 100/329 | loss=0.0791 light=0.0791 mat=0.0000
+  batch 110/329 | loss=0.0775 light=0.0775 mat=0.0000
+  batch 120/329 | loss=0.0665 light=0.0665 mat=0.0000
+  batch 130/329 | loss=0.0837 light=0.0837 mat=0.0000
+  batch 140/329 | loss=0.0864 light=0.0864 mat=0.0000
+  batch 150/329 | loss=0.0915 light=0.0915 mat=0.0000
+  batch 160/329 | loss=0.1026 light=0.1026 mat=0.0000
+  batch 170/329 | loss=0.0734 light=0.0734 mat=0.0000
+  batch 180/329 | loss=0.0693 light=0.0693 mat=0.0000
+  batch 190/329 | loss=0.0765 light=0.0765 mat=0.0000
+  batch 200/329 | loss=0.0783 light=0.0783 mat=0.0000
+  batch 210/329 | loss=0.0574 light=0.0574 mat=0.0000
+  batch 220/329 | loss=0.0985 light=0.0985 mat=0.0000
+  batch 230/329 | loss=0.1042 light=0.1042 mat=0.0000
+  batch 240/329 | loss=0.0516 light=0.0516 mat=0.0000
+  batch 250/329 | loss=0.0758 light=0.0758 mat=0.0000
+  batch 260/329 | loss=0.0735 light=0.0735 mat=0.0000
+  batch 270/329 | loss=0.0850 light=0.0850 mat=0.0000
+  batch 280/329 | loss=0.0643 light=0.0643 mat=0.0000
+  batch 290/329 | loss=0.0766 light=0.0766 mat=0.0000
+  batch 300/329 | loss=0.0596 light=0.0596 mat=0.0000
+  batch 310/329 | loss=0.0763 light=0.0763 mat=0.0000
+  batch 320/329 | loss=0.0832 light=0.0832 mat=0.0000
+  train | loss=0.0836 light=0.0836 mat=0.0000
+  val   | loss=0.1294 light=0.1294 mat=0.0000
+
+  Training curves saved to ./models\seed_sweep_106_baseline_curves.png
+
+============================================================
+Training multitask model (resnet50)
+============================================================
+
+Epoch 1/50
+  batch 10/329 | loss=0.7054 light=0.6970 mat=0.0844
+  batch 20/329 | loss=0.6339 light=0.6265 mat=0.0738
+  batch 30/329 | loss=0.4729 light=0.4638 mat=0.0914
+  batch 40/329 | loss=0.4260 light=0.4201 mat=0.0592
+  batch 50/329 | loss=0.4203 light=0.4144 mat=0.0587
+  batch 60/329 | loss=0.4884 light=0.4822 mat=0.0620
+  batch 70/329 | loss=0.4997 light=0.4953 mat=0.0442
+  batch 80/329 | loss=0.4188 light=0.4130 mat=0.0579
+  batch 90/329 | loss=0.4236 light=0.4181 mat=0.0551
+  batch 100/329 | loss=0.3923 light=0.3882 mat=0.0407
+  batch 110/329 | loss=0.3567 light=0.3525 mat=0.0424
+  batch 120/329 | loss=0.2826 light=0.2791 mat=0.0351
+  batch 130/329 | loss=0.3513 light=0.3471 mat=0.0416
+  batch 140/329 | loss=0.3505 light=0.3461 mat=0.0435
+  batch 150/329 | loss=0.2669 light=0.2633 mat=0.0359
+  batch 160/329 | loss=0.5551 light=0.5487 mat=0.0644
+  batch 170/329 | loss=0.3344 light=0.3307 mat=0.0363
+  batch 180/329 | loss=0.3531 light=0.3495 mat=0.0352
+  batch 190/329 | loss=0.4050 light=0.4009 mat=0.0411
+  batch 200/329 | loss=0.5221 light=0.5163 mat=0.0586
+  batch 210/329 | loss=0.5045 light=0.5018 mat=0.0271
+  batch 220/329 | loss=0.3420 light=0.3365 mat=0.0550
+  batch 230/329 | loss=0.3631 light=0.3604 mat=0.0271
+  batch 240/329 | loss=0.4110 light=0.4070 mat=0.0401
+  batch 250/329 | loss=0.3950 light=0.3913 mat=0.0366
+  batch 260/329 | loss=0.4962 light=0.4911 mat=0.0513
+  batch 270/329 | loss=0.2523 light=0.2501 mat=0.0224
+  batch 280/329 | loss=0.3075 light=0.3050 mat=0.0252
+  batch 290/329 | loss=0.3759 light=0.3734 mat=0.0253
+  batch 300/329 | loss=0.4202 light=0.4159 mat=0.0424
+  batch 310/329 | loss=0.5088 light=0.5057 mat=0.0309
+  batch 320/329 | loss=0.3019 light=0.3002 mat=0.0174
+  train | loss=0.4425 light=0.4379 mat=0.0459
+  val   | loss=0.3720 light=0.3694 mat=0.0260 mat_mae=0.0950
+  -> new best model (val_loss=0.3720)
+
+Epoch 2/50
+  batch 10/329 | loss=0.3345 light=0.3316 mat=0.0285
+  batch 20/329 | loss=0.4043 light=0.4018 mat=0.0245
+  batch 30/329 | loss=0.2881 light=0.2838 mat=0.0432
+  batch 40/329 | loss=0.3234 light=0.3220 mat=0.0132
+  batch 50/329 | loss=0.3089 light=0.3046 mat=0.0435
+  batch 60/329 | loss=0.3428 light=0.3399 mat=0.0289
+  batch 70/329 | loss=0.3113 light=0.3082 mat=0.0317
+  batch 80/329 | loss=0.2679 light=0.2646 mat=0.0324
+  batch 90/329 | loss=0.3982 light=0.3942 mat=0.0404
+  batch 100/329 | loss=0.4238 light=0.4214 mat=0.0244
+  batch 110/329 | loss=0.3735 light=0.3721 mat=0.0141
+  batch 120/329 | loss=0.3001 light=0.2980 mat=0.0213
+  batch 130/329 | loss=0.3097 light=0.3040 mat=0.0575
+  batch 140/329 | loss=0.3103 light=0.3080 mat=0.0229
+  batch 150/329 | loss=0.3312 light=0.3296 mat=0.0157
+  batch 160/329 | loss=0.4039 light=0.4017 mat=0.0219
+  batch 170/329 | loss=0.3738 light=0.3710 mat=0.0277
+  batch 180/329 | loss=0.3179 light=0.3151 mat=0.0278
+  batch 190/329 | loss=0.3964 light=0.3938 mat=0.0267
+  batch 200/329 | loss=0.2825 light=0.2807 mat=0.0183
+  batch 210/329 | loss=0.3943 light=0.3922 mat=0.0216
+  batch 220/329 | loss=0.3369 light=0.3353 mat=0.0158
+  batch 230/329 | loss=0.2502 light=0.2478 mat=0.0238
+  batch 240/329 | loss=0.3140 light=0.3119 mat=0.0209
+  batch 250/329 | loss=0.2562 light=0.2535 mat=0.0273
+  batch 260/329 | loss=0.3276 light=0.3250 mat=0.0256
+  batch 270/329 | loss=0.4773 light=0.4742 mat=0.0312
+  batch 280/329 | loss=0.3216 light=0.3194 mat=0.0217
+  batch 290/329 | loss=0.2373 light=0.2343 mat=0.0303
+  batch 300/329 | loss=0.2968 light=0.2943 mat=0.0256
+  batch 310/329 | loss=0.3588 light=0.3560 mat=0.0287
+  batch 320/329 | loss=0.3069 light=0.3041 mat=0.0279
+  train | loss=0.3584 light=0.3559 mat=0.0250
+  val   | loss=0.3498 light=0.3479 mat=0.0189 mat_mae=0.0718
+  -> new best model (val_loss=0.3498)
+
+Epoch 3/50
+  batch 10/329 | loss=0.4409 light=0.4387 mat=0.0220
+  batch 20/329 | loss=0.2681 light=0.2661 mat=0.0194
+  batch 30/329 | loss=0.3818 light=0.3803 mat=0.0156
+  batch 40/329 | loss=0.3423 light=0.3412 mat=0.0115
+  batch 50/329 | loss=0.2935 light=0.2913 mat=0.0221
+  batch 60/329 | loss=0.3036 light=0.3016 mat=0.0197
+  batch 70/329 | loss=0.3203 light=0.3181 mat=0.0214
+  batch 80/329 | loss=0.3099 light=0.3087 mat=0.0122
+  batch 90/329 | loss=0.3415 light=0.3365 mat=0.0495
+  batch 100/329 | loss=0.2745 light=0.2729 mat=0.0159
+  batch 110/329 | loss=0.3835 light=0.3815 mat=0.0194
+  batch 120/329 | loss=0.3406 light=0.3387 mat=0.0190
+  batch 130/329 | loss=0.3300 light=0.3274 mat=0.0257
+  batch 140/329 | loss=0.6313 light=0.6296 mat=0.0170
+  batch 150/329 | loss=0.3926 light=0.3914 mat=0.0120
+  batch 160/329 | loss=0.2836 light=0.2815 mat=0.0206
+  batch 170/329 | loss=0.3504 light=0.3478 mat=0.0262
+  batch 180/329 | loss=0.3405 light=0.3395 mat=0.0101
+  batch 190/329 | loss=0.2886 light=0.2869 mat=0.0170
+  batch 200/329 | loss=0.2823 light=0.2812 mat=0.0108
+  batch 210/329 | loss=0.4527 light=0.4507 mat=0.0193
+  batch 220/329 | loss=0.3036 light=0.3017 mat=0.0188
+  batch 230/329 | loss=0.3018 light=0.2994 mat=0.0241
+  batch 240/329 | loss=0.2976 light=0.2960 mat=0.0163
+  batch 250/329 | loss=0.3445 light=0.3424 mat=0.0212
+  batch 260/329 | loss=0.3136 light=0.3128 mat=0.0080
+  batch 270/329 | loss=0.2872 light=0.2850 mat=0.0218
+  batch 280/329 | loss=0.2463 light=0.2426 mat=0.0367
+  batch 290/329 | loss=0.3523 light=0.3514 mat=0.0093
+  batch 300/329 | loss=0.4181 light=0.4154 mat=0.0271
+  batch 310/329 | loss=0.3019 light=0.3004 mat=0.0152
+  batch 320/329 | loss=0.4262 light=0.4240 mat=0.0217
+  train | loss=0.3277 light=0.3258 mat=0.0193
+  val   | loss=0.3251 light=0.3234 mat=0.0169 mat_mae=0.0687
+  -> new best model (val_loss=0.3251)
+
+Epoch 4/50
+  batch 10/329 | loss=0.2788 light=0.2762 mat=0.0263
+  batch 20/329 | loss=0.2951 light=0.2940 mat=0.0111
+  batch 30/329 | loss=0.2571 light=0.2549 mat=0.0223
+  batch 40/329 | loss=0.3094 light=0.3082 mat=0.0126
+  batch 50/329 | loss=0.2625 light=0.2594 mat=0.0305
+  batch 60/329 | loss=0.3490 light=0.3473 mat=0.0165
+  batch 70/329 | loss=0.4147 light=0.4135 mat=0.0125
+  batch 80/329 | loss=0.4756 light=0.4746 mat=0.0100
+  batch 90/329 | loss=0.3205 light=0.3186 mat=0.0187
+  batch 100/329 | loss=0.3232 light=0.3217 mat=0.0146
+  batch 110/329 | loss=0.2473 light=0.2458 mat=0.0150
+  batch 120/329 | loss=0.3313 light=0.3299 mat=0.0138
+  batch 130/329 | loss=0.2391 light=0.2375 mat=0.0158
+  batch 140/329 | loss=0.2263 light=0.2252 mat=0.0103
+  batch 150/329 | loss=0.3324 light=0.3302 mat=0.0221
+  batch 160/329 | loss=0.2002 light=0.1992 mat=0.0093
+  batch 170/329 | loss=0.3309 light=0.3295 mat=0.0137
+  batch 180/329 | loss=0.3878 light=0.3863 mat=0.0151
+  batch 190/329 | loss=0.2685 light=0.2670 mat=0.0143
+  batch 200/329 | loss=0.2392 light=0.2379 mat=0.0131
+  batch 210/329 | loss=0.3576 light=0.3554 mat=0.0218
+  batch 220/329 | loss=0.2272 light=0.2251 mat=0.0217
+  batch 230/329 | loss=0.2788 light=0.2763 mat=0.0256
+  batch 240/329 | loss=0.2908 light=0.2897 mat=0.0105
+  batch 250/329 | loss=0.3018 light=0.3002 mat=0.0165
+  batch 260/329 | loss=0.2439 light=0.2421 mat=0.0184
+  batch 270/329 | loss=0.2751 light=0.2735 mat=0.0160
+  batch 280/329 | loss=0.3248 light=0.3238 mat=0.0099
+  batch 290/329 | loss=0.2653 light=0.2640 mat=0.0121
+  batch 300/329 | loss=0.2691 light=0.2686 mat=0.0045
+  batch 310/329 | loss=0.3643 light=0.3625 mat=0.0181
+  batch 320/329 | loss=0.3381 light=0.3354 mat=0.0271
+  train | loss=0.3056 light=0.3039 mat=0.0171
+  val   | loss=0.3158 light=0.3144 mat=0.0136 mat_mae=0.0579
+  -> new best model (val_loss=0.3158)
+
+Epoch 5/50
+  batch 10/329 | loss=0.2715 light=0.2685 mat=0.0307
+  batch 20/329 | loss=0.2455 light=0.2443 mat=0.0117
+  batch 30/329 | loss=0.2786 light=0.2766 mat=0.0198
+  batch 40/329 | loss=0.2513 light=0.2487 mat=0.0259
+  batch 50/329 | loss=0.2524 light=0.2512 mat=0.0113
+  batch 60/329 | loss=0.2759 light=0.2736 mat=0.0223
+  batch 70/329 | loss=0.2377 light=0.2369 mat=0.0079
+  batch 80/329 | loss=0.2236 light=0.2221 mat=0.0151
+  batch 90/329 | loss=0.2801 light=0.2781 mat=0.0202
+  batch 100/329 | loss=0.2932 light=0.2916 mat=0.0160
+  batch 110/329 | loss=0.2668 light=0.2658 mat=0.0096
+  batch 120/329 | loss=0.3065 light=0.3046 mat=0.0190
+  batch 130/329 | loss=0.2614 light=0.2599 mat=0.0156
+  batch 140/329 | loss=0.3538 light=0.3526 mat=0.0120
+  batch 150/329 | loss=0.2286 light=0.2274 mat=0.0117
+  batch 160/329 | loss=0.4269 light=0.4258 mat=0.0105
+  batch 170/329 | loss=0.2719 light=0.2708 mat=0.0115
+  batch 180/329 | loss=0.3441 light=0.3424 mat=0.0166
+  batch 190/329 | loss=0.2259 light=0.2242 mat=0.0179
+  batch 200/329 | loss=0.2543 light=0.2537 mat=0.0057
+  batch 210/329 | loss=0.4328 light=0.4311 mat=0.0170
+  batch 220/329 | loss=0.2037 light=0.2023 mat=0.0137
+  batch 230/329 | loss=0.2190 light=0.2170 mat=0.0199
+  batch 240/329 | loss=0.3265 light=0.3255 mat=0.0106
+  batch 250/329 | loss=0.2801 light=0.2781 mat=0.0196
+  batch 260/329 | loss=0.2525 light=0.2506 mat=0.0184
+  batch 270/329 | loss=0.2367 light=0.2351 mat=0.0161
+  batch 280/329 | loss=0.2455 light=0.2440 mat=0.0149
+  batch 290/329 | loss=0.2649 light=0.2629 mat=0.0198
+  batch 300/329 | loss=0.2835 light=0.2820 mat=0.0147
+  batch 310/329 | loss=0.3252 light=0.3239 mat=0.0134
+  batch 320/329 | loss=0.2567 light=0.2558 mat=0.0091
+  train | loss=0.2874 light=0.2859 mat=0.0148
+  val   | loss=0.3042 light=0.3026 mat=0.0155 mat_mae=0.0625
+  -> new best model (val_loss=0.3042)
+
+Epoch 6/50
+  batch 10/329 | loss=0.2656 light=0.2639 mat=0.0164
+  batch 20/329 | loss=0.2012 light=0.2001 mat=0.0102
+  batch 30/329 | loss=0.2956 light=0.2943 mat=0.0130
+  batch 40/329 | loss=0.3410 light=0.3397 mat=0.0133
+  batch 50/329 | loss=0.2904 light=0.2897 mat=0.0073
+  batch 60/329 | loss=0.3173 light=0.3165 mat=0.0073
+  batch 70/329 | loss=0.2636 light=0.2628 mat=0.0086
+  batch 80/329 | loss=0.2980 light=0.2969 mat=0.0112
+  batch 90/329 | loss=0.2715 light=0.2705 mat=0.0101
+  batch 100/329 | loss=0.2243 light=0.2227 mat=0.0158
+  batch 110/329 | loss=0.2482 light=0.2474 mat=0.0074
+  batch 120/329 | loss=0.2249 light=0.2235 mat=0.0140
+  batch 130/329 | loss=0.3178 light=0.3171 mat=0.0074
+  batch 140/329 | loss=0.2120 light=0.2106 mat=0.0143
+  batch 150/329 | loss=0.2365 light=0.2351 mat=0.0140
+  batch 160/329 | loss=0.2694 light=0.2687 mat=0.0067
+  batch 170/329 | loss=0.2703 light=0.2694 mat=0.0092
+  batch 180/329 | loss=0.2441 light=0.2430 mat=0.0114
+  batch 190/329 | loss=0.2581 light=0.2571 mat=0.0100
+  batch 200/329 | loss=0.3178 light=0.3168 mat=0.0100
+  batch 210/329 | loss=0.2438 light=0.2423 mat=0.0145
+  batch 220/329 | loss=0.2281 light=0.2256 mat=0.0243
+  batch 230/329 | loss=0.2096 light=0.2086 mat=0.0103
+  batch 240/329 | loss=0.2201 light=0.2189 mat=0.0118
+  batch 250/329 | loss=0.2418 light=0.2401 mat=0.0165
+  batch 260/329 | loss=0.3303 light=0.3290 mat=0.0139
+  batch 270/329 | loss=0.1831 light=0.1816 mat=0.0143
+  batch 280/329 | loss=0.2937 light=0.2920 mat=0.0170
+  batch 290/329 | loss=0.4099 light=0.4084 mat=0.0146
+  batch 300/329 | loss=0.2634 light=0.2628 mat=0.0062
+  batch 310/329 | loss=0.2755 light=0.2738 mat=0.0173
+  batch 320/329 | loss=0.3146 light=0.3134 mat=0.0120
+  train | loss=0.2747 light=0.2734 mat=0.0132
+  val   | loss=0.3000 light=0.2989 mat=0.0118 mat_mae=0.0513
+  -> new best model (val_loss=0.3000)
+
+Epoch 7/50
+  batch 10/329 | loss=0.2381 light=0.2373 mat=0.0087
+  batch 20/329 | loss=0.2145 light=0.2127 mat=0.0179
+  batch 30/329 | loss=0.2975 light=0.2951 mat=0.0236
+  batch 40/329 | loss=0.2446 light=0.2428 mat=0.0181
+  batch 50/329 | loss=0.2220 light=0.2211 mat=0.0091
+  batch 60/329 | loss=0.2967 light=0.2962 mat=0.0048
+  batch 70/329 | loss=0.3400 light=0.3396 mat=0.0044
+  batch 80/329 | loss=0.2046 light=0.2039 mat=0.0075
+  batch 90/329 | loss=0.2036 light=0.2028 mat=0.0074
+  batch 100/329 | loss=0.3077 light=0.3067 mat=0.0095
+  batch 110/329 | loss=0.1924 light=0.1913 mat=0.0110
+  batch 120/329 | loss=0.3052 light=0.3044 mat=0.0081
+  batch 130/329 | loss=0.2445 light=0.2424 mat=0.0210
+  batch 140/329 | loss=0.2081 light=0.2073 mat=0.0080
+  batch 150/329 | loss=0.2469 light=0.2457 mat=0.0116
+  batch 160/329 | loss=0.2425 light=0.2417 mat=0.0085
+  batch 170/329 | loss=0.1974 light=0.1966 mat=0.0071
+  batch 180/329 | loss=0.1894 light=0.1889 mat=0.0050
+  batch 190/329 | loss=0.2364 light=0.2349 mat=0.0147
+  batch 200/329 | loss=0.2412 light=0.2392 mat=0.0203
+  batch 210/329 | loss=0.2419 light=0.2414 mat=0.0043
+  batch 220/329 | loss=0.2400 light=0.2388 mat=0.0116
+  batch 230/329 | loss=0.2290 light=0.2264 mat=0.0258
+  batch 240/329 | loss=0.2953 light=0.2931 mat=0.0223
+  batch 250/329 | loss=0.2043 light=0.2030 mat=0.0128
+  batch 260/329 | loss=0.2912 light=0.2895 mat=0.0169
+  batch 270/329 | loss=0.2417 light=0.2403 mat=0.0142
+  batch 280/329 | loss=0.2348 light=0.2338 mat=0.0097
+  batch 290/329 | loss=0.2110 light=0.2103 mat=0.0070
+  batch 300/329 | loss=0.3149 light=0.3127 mat=0.0221
+  batch 310/329 | loss=0.2457 light=0.2441 mat=0.0163
+  batch 320/329 | loss=0.2241 light=0.2219 mat=0.0217
+  train | loss=0.2655 light=0.2643 mat=0.0127
+  val   | loss=0.2817 light=0.2804 mat=0.0134 mat_mae=0.0545
+  -> new best model (val_loss=0.2817)
+
+Epoch 8/50
+  batch 10/329 | loss=0.2693 light=0.2686 mat=0.0078
+  batch 20/329 | loss=0.1862 light=0.1849 mat=0.0130
+  batch 30/329 | loss=0.2647 light=0.2641 mat=0.0056
+  batch 40/329 | loss=0.2179 light=0.2168 mat=0.0108
+  batch 50/329 | loss=0.2361 light=0.2355 mat=0.0051
+  batch 60/329 | loss=0.2147 light=0.2138 mat=0.0091
+  batch 70/329 | loss=0.2614 light=0.2596 mat=0.0184
+  batch 80/329 | loss=0.2776 light=0.2762 mat=0.0142
+  batch 90/329 | loss=0.2460 light=0.2452 mat=0.0087
+  batch 100/329 | loss=0.2482 light=0.2466 mat=0.0159
+  batch 110/329 | loss=0.3210 light=0.3200 mat=0.0098
+  batch 120/329 | loss=0.2485 light=0.2476 mat=0.0090
+  batch 130/329 | loss=0.2235 light=0.2220 mat=0.0142
+  batch 140/329 | loss=0.2010 light=0.2000 mat=0.0101
+  batch 150/329 | loss=0.4186 light=0.4178 mat=0.0079
+  batch 160/329 | loss=0.2398 light=0.2388 mat=0.0100
+  batch 170/329 | loss=0.3409 light=0.3398 mat=0.0114
+  batch 180/329 | loss=0.2058 light=0.2016 mat=0.0417
+  batch 190/329 | loss=0.2413 light=0.2407 mat=0.0059
+  batch 200/329 | loss=0.2394 light=0.2379 mat=0.0149
+  batch 210/329 | loss=0.2504 light=0.2483 mat=0.0213
+  batch 220/329 | loss=0.2487 light=0.2479 mat=0.0077
+  batch 230/329 | loss=0.2297 light=0.2281 mat=0.0158
+  batch 240/329 | loss=0.2541 light=0.2534 mat=0.0068
+  batch 250/329 | loss=0.2344 light=0.2327 mat=0.0177
+  batch 260/329 | loss=0.2378 light=0.2364 mat=0.0145
+  batch 270/329 | loss=0.2025 light=0.2018 mat=0.0075
+  batch 280/329 | loss=0.2702 light=0.2689 mat=0.0126
+  batch 290/329 | loss=0.1771 light=0.1750 mat=0.0217
+  batch 300/329 | loss=0.2614 light=0.2600 mat=0.0141
+  batch 310/329 | loss=0.3190 light=0.3178 mat=0.0117
+  batch 320/329 | loss=0.1988 light=0.1981 mat=0.0062
+  train | loss=0.2528 light=0.2516 mat=0.0116
+  val   | loss=0.2781 light=0.2770 mat=0.0113 mat_mae=0.0471
+  -> new best model (val_loss=0.2781)
+
+Epoch 9/50
+  batch 10/329 | loss=0.3309 light=0.3298 mat=0.0105
+  batch 20/329 | loss=0.2191 light=0.2186 mat=0.0058
+  batch 30/329 | loss=0.2619 light=0.2604 mat=0.0152
+  batch 40/329 | loss=0.2047 light=0.2037 mat=0.0099
+  batch 50/329 | loss=0.2540 light=0.2534 mat=0.0055
+  batch 60/329 | loss=0.2386 light=0.2371 mat=0.0151
+  batch 70/329 | loss=0.2241 light=0.2232 mat=0.0089
+  batch 80/329 | loss=0.3020 light=0.3010 mat=0.0096
+  batch 90/329 | loss=0.2476 light=0.2468 mat=0.0074
+  batch 100/329 | loss=0.1865 light=0.1855 mat=0.0098
+  batch 110/329 | loss=0.1948 light=0.1942 mat=0.0054
+  batch 120/329 | loss=0.2666 light=0.2655 mat=0.0107
+  batch 130/329 | loss=0.2246 light=0.2235 mat=0.0111
+  batch 140/329 | loss=0.2572 light=0.2559 mat=0.0129
+  batch 150/329 | loss=0.2029 light=0.2018 mat=0.0111
+  batch 160/329 | loss=0.1927 light=0.1916 mat=0.0116
+  batch 170/329 | loss=0.1902 light=0.1893 mat=0.0088
+  batch 180/329 | loss=0.2567 light=0.2549 mat=0.0183
+  batch 190/329 | loss=0.2639 light=0.2631 mat=0.0074
+  batch 200/329 | loss=0.3310 light=0.3304 mat=0.0060
+  batch 210/329 | loss=0.2131 light=0.2115 mat=0.0156
+  batch 220/329 | loss=0.1957 light=0.1944 mat=0.0133
+  batch 230/329 | loss=0.2273 light=0.2258 mat=0.0149
+  batch 240/329 | loss=0.2035 light=0.2028 mat=0.0067
+  batch 250/329 | loss=0.2402 light=0.2385 mat=0.0174
+  batch 260/329 | loss=0.2317 light=0.2309 mat=0.0073
+  batch 270/329 | loss=0.2917 light=0.2911 mat=0.0064
+  batch 280/329 | loss=0.2372 light=0.2357 mat=0.0148
+  batch 290/329 | loss=0.2464 light=0.2447 mat=0.0172
+  batch 300/329 | loss=0.2090 light=0.2059 mat=0.0312
+  batch 310/329 | loss=0.1876 light=0.1868 mat=0.0075
+  batch 320/329 | loss=0.2485 light=0.2477 mat=0.0074
+  train | loss=0.2457 light=0.2444 mat=0.0121
+  val   | loss=0.2655 light=0.2644 mat=0.0108 mat_mae=0.0483
+  -> new best model (val_loss=0.2655)
+
+Epoch 10/50
+  batch 10/329 | loss=0.3574 light=0.3563 mat=0.0107
+  batch 20/329 | loss=0.3073 light=0.3063 mat=0.0098
+  batch 30/329 | loss=0.2364 light=0.2360 mat=0.0039
+  batch 40/329 | loss=0.2679 light=0.2667 mat=0.0115
+  batch 50/329 | loss=0.1975 light=0.1959 mat=0.0158
+  batch 60/329 | loss=0.2926 light=0.2917 mat=0.0096
+  batch 70/329 | loss=0.2196 light=0.2178 mat=0.0176
+  batch 80/329 | loss=0.2596 light=0.2588 mat=0.0085
+  batch 90/329 | loss=0.2546 light=0.2528 mat=0.0184
+  batch 100/329 | loss=0.2502 light=0.2477 mat=0.0254
+  batch 110/329 | loss=0.2402 light=0.2382 mat=0.0197
+  batch 120/329 | loss=0.2669 light=0.2654 mat=0.0146
+  batch 130/329 | loss=0.1608 light=0.1599 mat=0.0092
+  batch 140/329 | loss=0.2412 light=0.2400 mat=0.0123
+  batch 150/329 | loss=0.1900 light=0.1893 mat=0.0070
+  batch 160/329 | loss=0.2198 light=0.2191 mat=0.0063
+  batch 170/329 | loss=0.1879 light=0.1872 mat=0.0072
+  batch 180/329 | loss=0.4065 light=0.4050 mat=0.0146
+  batch 190/329 | loss=0.3125 light=0.3107 mat=0.0176
+  batch 200/329 | loss=0.2817 light=0.2813 mat=0.0041
+  batch 210/329 | loss=0.2330 light=0.2313 mat=0.0174
+  batch 220/329 | loss=0.1909 light=0.1898 mat=0.0106
+  batch 230/329 | loss=0.2242 light=0.2232 mat=0.0097
+  batch 240/329 | loss=0.2637 light=0.2630 mat=0.0071
+  batch 250/329 | loss=0.2062 light=0.2057 mat=0.0053
+  batch 260/329 | loss=0.2204 light=0.2200 mat=0.0046
+  batch 270/329 | loss=0.2321 light=0.2305 mat=0.0156
+  batch 280/329 | loss=0.1758 light=0.1748 mat=0.0100
+  batch 290/329 | loss=0.2877 light=0.2873 mat=0.0046
+  batch 300/329 | loss=0.2108 light=0.2100 mat=0.0084
+  batch 310/329 | loss=0.2129 light=0.2115 mat=0.0145
+  batch 320/329 | loss=0.2100 light=0.2092 mat=0.0076
+  train | loss=0.2386 light=0.2375 mat=0.0111
+  val   | loss=0.2656 light=0.2646 mat=0.0103 mat_mae=0.0474
+
+Epoch 11/50
+  batch 10/329 | loss=0.1699 light=0.1693 mat=0.0066
+  batch 20/329 | loss=0.2950 light=0.2946 mat=0.0046
+  batch 30/329 | loss=0.2804 light=0.2797 mat=0.0070
+  batch 40/329 | loss=0.2200 light=0.2189 mat=0.0106
+  batch 50/329 | loss=0.1832 light=0.1824 mat=0.0077
+  batch 60/329 | loss=0.2363 light=0.2354 mat=0.0089
+  batch 70/329 | loss=0.3015 light=0.3007 mat=0.0080
+  batch 80/329 | loss=0.1960 light=0.1946 mat=0.0143
+  batch 90/329 | loss=0.2373 light=0.2363 mat=0.0100
+  batch 100/329 | loss=0.1801 light=0.1793 mat=0.0079
+  batch 110/329 | loss=0.2064 light=0.2059 mat=0.0048
+  batch 120/329 | loss=0.2239 light=0.2230 mat=0.0091
+  batch 130/329 | loss=0.2209 light=0.2199 mat=0.0096
+  batch 140/329 | loss=0.2913 light=0.2906 mat=0.0068
+  batch 150/329 | loss=0.2044 light=0.2036 mat=0.0080
+  batch 160/329 | loss=0.2840 light=0.2832 mat=0.0081
+  batch 170/329 | loss=0.2609 light=0.2592 mat=0.0175
+  batch 180/329 | loss=0.2127 light=0.2110 mat=0.0169
+  batch 190/329 | loss=0.2010 light=0.2001 mat=0.0082
+  batch 200/329 | loss=0.2189 light=0.2178 mat=0.0105
+  batch 210/329 | loss=0.2910 light=0.2897 mat=0.0134
+  batch 220/329 | loss=0.2559 light=0.2551 mat=0.0082
+  batch 230/329 | loss=0.2436 light=0.2422 mat=0.0137
+  batch 240/329 | loss=0.2785 light=0.2776 mat=0.0093
+  batch 250/329 | loss=0.2263 light=0.2254 mat=0.0095
+  batch 260/329 | loss=0.3308 light=0.3295 mat=0.0130
+  batch 270/329 | loss=0.2070 light=0.2046 mat=0.0240
+  batch 280/329 | loss=0.2148 light=0.2127 mat=0.0211
+  batch 290/329 | loss=0.1976 light=0.1961 mat=0.0154
+  batch 300/329 | loss=0.2419 light=0.2408 mat=0.0109
+  batch 310/329 | loss=0.2651 light=0.2643 mat=0.0080
+  batch 320/329 | loss=0.2225 light=0.2218 mat=0.0064
+  train | loss=0.2294 light=0.2285 mat=0.0099
+  val   | loss=0.2597 light=0.2588 mat=0.0096 mat_mae=0.0428
+  -> new best model (val_loss=0.2597)
+
+Epoch 12/50
+  batch 10/329 | loss=0.2155 light=0.2142 mat=0.0132
+  batch 20/329 | loss=0.1750 light=0.1733 mat=0.0171
+  batch 30/329 | loss=0.1882 light=0.1872 mat=0.0098
+  batch 40/329 | loss=0.2447 light=0.2442 mat=0.0052
+  batch 50/329 | loss=0.1612 light=0.1601 mat=0.0116
+  batch 60/329 | loss=0.1713 light=0.1708 mat=0.0057
+  batch 70/329 | loss=0.2219 light=0.2213 mat=0.0058
+  batch 80/329 | loss=0.1852 light=0.1839 mat=0.0122
+  batch 90/329 | loss=0.1594 light=0.1587 mat=0.0072
+  batch 100/329 | loss=0.2345 light=0.2335 mat=0.0092
+  batch 110/329 | loss=0.2332 light=0.2323 mat=0.0085
+  batch 120/329 | loss=0.2888 light=0.2873 mat=0.0157
+  batch 130/329 | loss=0.2068 light=0.2061 mat=0.0077
+  batch 140/329 | loss=0.2545 light=0.2529 mat=0.0152
+  batch 150/329 | loss=0.2083 light=0.2075 mat=0.0075
+  batch 160/329 | loss=0.1868 light=0.1862 mat=0.0061
+  batch 170/329 | loss=0.3370 light=0.3352 mat=0.0178
+  batch 180/329 | loss=0.1731 light=0.1728 mat=0.0028
+  batch 190/329 | loss=0.1784 light=0.1777 mat=0.0069
+  batch 200/329 | loss=0.3762 light=0.3753 mat=0.0098
+  batch 210/329 | loss=0.2556 light=0.2546 mat=0.0105
+  batch 220/329 | loss=0.2618 light=0.2601 mat=0.0170
+  batch 230/329 | loss=0.1495 light=0.1489 mat=0.0064
+  batch 240/329 | loss=0.2709 light=0.2704 mat=0.0055
+  batch 250/329 | loss=0.2577 light=0.2571 mat=0.0058
+  batch 260/329 | loss=0.3267 light=0.3251 mat=0.0162
+  batch 270/329 | loss=0.2321 light=0.2315 mat=0.0064
+  batch 280/329 | loss=0.1470 light=0.1465 mat=0.0049
+  batch 290/329 | loss=0.2656 light=0.2648 mat=0.0084
+  batch 300/329 | loss=0.1897 light=0.1885 mat=0.0118
+  batch 310/329 | loss=0.1994 light=0.1985 mat=0.0090
+  batch 320/329 | loss=0.1950 light=0.1935 mat=0.0153
+  train | loss=0.2209 light=0.2200 mat=0.0092
+  val   | loss=0.2572 light=0.2562 mat=0.0097 mat_mae=0.0427
+  -> new best model (val_loss=0.2572)
+
+Epoch 13/50
+  batch 10/329 | loss=0.1778 light=0.1773 mat=0.0048
+  batch 20/329 | loss=0.2674 light=0.2656 mat=0.0173
+  batch 30/329 | loss=0.1676 light=0.1666 mat=0.0107
+  batch 40/329 | loss=0.2756 light=0.2750 mat=0.0066
+  batch 50/329 | loss=0.1945 light=0.1936 mat=0.0086
+  batch 60/329 | loss=0.2856 light=0.2849 mat=0.0071
+  batch 70/329 | loss=0.1635 light=0.1628 mat=0.0071
+  batch 80/329 | loss=0.2096 light=0.2090 mat=0.0056
+  batch 90/329 | loss=0.2838 light=0.2834 mat=0.0041
+  batch 100/329 | loss=0.2347 light=0.2340 mat=0.0064
+  batch 110/329 | loss=0.2251 light=0.2238 mat=0.0133
+  batch 120/329 | loss=0.1948 light=0.1944 mat=0.0042
+  batch 130/329 | loss=0.2639 light=0.2630 mat=0.0085
+  batch 140/329 | loss=0.1861 light=0.1852 mat=0.0089
+  batch 150/329 | loss=0.2279 light=0.2257 mat=0.0220
+  batch 160/329 | loss=0.2238 light=0.2228 mat=0.0102
+  batch 170/329 | loss=0.2523 light=0.2515 mat=0.0077
+  batch 180/329 | loss=0.1958 light=0.1947 mat=0.0112
+  batch 190/329 | loss=0.1558 light=0.1549 mat=0.0087
+  batch 200/329 | loss=0.2505 light=0.2486 mat=0.0194
+  batch 210/329 | loss=0.1949 light=0.1943 mat=0.0062
+  batch 220/329 | loss=0.1979 light=0.1972 mat=0.0062
+  batch 230/329 | loss=0.1560 light=0.1548 mat=0.0122
+  batch 240/329 | loss=0.2738 light=0.2732 mat=0.0064
+  batch 250/329 | loss=0.2996 light=0.2987 mat=0.0092
+  batch 260/329 | loss=0.2194 light=0.2183 mat=0.0110
+  batch 270/329 | loss=0.1941 light=0.1935 mat=0.0060
+  batch 280/329 | loss=0.2786 light=0.2779 mat=0.0062
+  batch 290/329 | loss=0.1882 light=0.1873 mat=0.0093
+  batch 300/329 | loss=0.1871 light=0.1863 mat=0.0083
+  batch 310/329 | loss=0.2218 light=0.2211 mat=0.0073
+  batch 320/329 | loss=0.1728 light=0.1715 mat=0.0136
+  train | loss=0.2166 light=0.2156 mat=0.0098
+  val   | loss=0.2527 light=0.2517 mat=0.0098 mat_mae=0.0446
+  -> new best model (val_loss=0.2527)
+
+Epoch 14/50
+  batch 10/329 | loss=0.1733 light=0.1701 mat=0.0317
+  batch 20/329 | loss=0.1794 light=0.1780 mat=0.0140
+  batch 30/329 | loss=0.2035 light=0.2026 mat=0.0084
+  batch 40/329 | loss=0.2761 light=0.2753 mat=0.0082
+  batch 50/329 | loss=0.2046 light=0.2022 mat=0.0246
+  batch 60/329 | loss=0.2178 light=0.2171 mat=0.0066
+  batch 70/329 | loss=0.2330 light=0.2323 mat=0.0073
+  batch 80/329 | loss=0.1948 light=0.1942 mat=0.0065
+  batch 90/329 | loss=0.2117 light=0.2108 mat=0.0086
+  batch 100/329 | loss=0.1827 light=0.1813 mat=0.0141
+  batch 110/329 | loss=0.1740 light=0.1732 mat=0.0080
+  batch 120/329 | loss=0.2595 light=0.2585 mat=0.0099
+  batch 130/329 | loss=0.2046 light=0.2033 mat=0.0123
+  batch 140/329 | loss=0.1542 light=0.1535 mat=0.0066
+  batch 150/329 | loss=0.1946 light=0.1937 mat=0.0090
+  batch 160/329 | loss=0.2701 light=0.2693 mat=0.0082
+  batch 170/329 | loss=0.2202 light=0.2196 mat=0.0060
+  batch 180/329 | loss=0.1772 light=0.1765 mat=0.0073
+  batch 190/329 | loss=0.2581 light=0.2562 mat=0.0182
+  batch 200/329 | loss=0.2098 light=0.2088 mat=0.0107
+  batch 210/329 | loss=0.2165 light=0.2162 mat=0.0028
+  batch 220/329 | loss=0.1617 light=0.1606 mat=0.0104
+  batch 230/329 | loss=0.2496 light=0.2488 mat=0.0087
+  batch 240/329 | loss=0.2363 light=0.2354 mat=0.0091
+  batch 250/329 | loss=0.1782 light=0.1772 mat=0.0103
+  batch 260/329 | loss=0.1175 light=0.1172 mat=0.0036
+  batch 270/329 | loss=0.2736 light=0.2728 mat=0.0076
+  batch 280/329 | loss=0.1453 light=0.1443 mat=0.0099
+  batch 290/329 | loss=0.1792 light=0.1786 mat=0.0055
+  batch 300/329 | loss=0.2188 light=0.2180 mat=0.0084
+  batch 310/329 | loss=0.1947 light=0.1942 mat=0.0055
+  batch 320/329 | loss=0.2820 light=0.2810 mat=0.0100
+  train | loss=0.2129 light=0.2119 mat=0.0100
+  val   | loss=0.2522 light=0.2512 mat=0.0099 mat_mae=0.0429
+  -> new best model (val_loss=0.2522)
+
+Epoch 15/50
+  batch 10/329 | loss=0.2061 light=0.2029 mat=0.0319
+  batch 20/329 | loss=0.2038 light=0.2023 mat=0.0152
+  batch 30/329 | loss=0.1821 light=0.1807 mat=0.0148
+  batch 40/329 | loss=0.2262 light=0.2256 mat=0.0057
+  batch 50/329 | loss=0.1898 light=0.1891 mat=0.0064
+  batch 60/329 | loss=0.2060 light=0.2054 mat=0.0063
+  batch 70/329 | loss=0.1443 light=0.1431 mat=0.0120
+  batch 80/329 | loss=0.2037 light=0.2032 mat=0.0050
+  batch 90/329 | loss=0.1847 light=0.1839 mat=0.0084
+  batch 100/329 | loss=0.1676 light=0.1670 mat=0.0060
+  batch 110/329 | loss=0.2307 light=0.2300 mat=0.0067
+  batch 120/329 | loss=0.2606 light=0.2598 mat=0.0087
+  batch 130/329 | loss=0.2848 light=0.2838 mat=0.0099
+  batch 140/329 | loss=0.1928 light=0.1907 mat=0.0211
+  batch 150/329 | loss=0.3089 light=0.3085 mat=0.0038
+  batch 160/329 | loss=0.2424 light=0.2415 mat=0.0082
+  batch 170/329 | loss=0.2134 light=0.2112 mat=0.0217
+  batch 180/329 | loss=0.3101 light=0.3088 mat=0.0133
+  batch 190/329 | loss=0.2021 light=0.2013 mat=0.0083
+  batch 200/329 | loss=0.2182 light=0.2175 mat=0.0069
+  batch 210/329 | loss=0.2536 light=0.2531 mat=0.0046
+  batch 220/329 | loss=0.2464 light=0.2456 mat=0.0072
+  batch 230/329 | loss=0.2040 light=0.2030 mat=0.0105
+  batch 240/329 | loss=0.2004 light=0.1992 mat=0.0116
+  batch 250/329 | loss=0.2354 light=0.2343 mat=0.0111
+  batch 260/329 | loss=0.1535 light=0.1524 mat=0.0108
+  batch 270/329 | loss=0.1822 light=0.1815 mat=0.0076
+  batch 280/329 | loss=0.1230 light=0.1215 mat=0.0153
+  batch 290/329 | loss=0.2313 light=0.2309 mat=0.0044
+  batch 300/329 | loss=0.2119 light=0.2115 mat=0.0040
+  batch 310/329 | loss=0.1764 light=0.1756 mat=0.0082
+  batch 320/329 | loss=0.1952 light=0.1941 mat=0.0110C:\Program Files\Python314\Lib\site-packages\torchvision\models\_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+C:\Program Files\Python314\Lib\site-packages\torchvision\models\_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=AlexNet_Weights.IMAGENET1K_V1`. You can also use `weights=AlexNet_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+
+  train | loss=0.2075 light=0.2065 mat=0.0100
+  val   | loss=0.2460 light=0.2451 mat=0.0090 mat_mae=0.0431
+  -> new best model (val_loss=0.2460)
+
+Epoch 16/50
+  batch 10/329 | loss=0.2586 light=0.2565 mat=0.0211
+  batch 20/329 | loss=0.1316 light=0.1307 mat=0.0091
+  batch 30/329 | loss=0.2166 light=0.2155 mat=0.0111
+  batch 40/329 | loss=0.1290 light=0.1283 mat=0.0064
+  batch 50/329 | loss=0.1442 light=0.1437 mat=0.0055
+  batch 60/329 | loss=0.1655 light=0.1648 mat=0.0071
+  batch 70/329 | loss=0.1911 light=0.1904 mat=0.0073
+  batch 80/329 | loss=0.1748 light=0.1742 mat=0.0064
+  batch 90/329 | loss=0.2290 light=0.2283 mat=0.0071
+  batch 100/329 | loss=0.1610 light=0.1603 mat=0.0067
+  batch 110/329 | loss=0.2365 light=0.2360 mat=0.0045
+  batch 120/329 | loss=0.1938 light=0.1933 mat=0.0046
+  batch 130/329 | loss=0.1397 light=0.1392 mat=0.0054
+  batch 140/329 | loss=0.2018 light=0.2011 mat=0.0070
+  batch 150/329 | loss=0.2666 light=0.2658 mat=0.0076
+  batch 160/329 | loss=0.2724 light=0.2714 mat=0.0107
+  batch 170/329 | loss=0.2516 light=0.2506 mat=0.0103
+  batch 180/329 | loss=0.3150 light=0.3147 mat=0.0022
+  batch 190/329 | loss=0.2748 light=0.2742 mat=0.0061
+  batch 200/329 | loss=0.1771 light=0.1763 mat=0.0080
+  batch 210/329 | loss=0.1401 light=0.1394 mat=0.0065
+  batch 220/329 | loss=0.2347 light=0.2338 mat=0.0093
+  batch 230/329 | loss=0.1299 light=0.1285 mat=0.0134
+  batch 240/329 | loss=0.1602 light=0.1596 mat=0.0067
+  batch 250/329 | loss=0.1887 light=0.1882 mat=0.0050
+  batch 260/329 | loss=0.2445 light=0.2439 mat=0.0061
+  batch 270/329 | loss=0.2801 light=0.2793 mat=0.0085
+  batch 280/329 | loss=0.2304 light=0.2294 mat=0.0099
+  batch 290/329 | loss=0.1461 light=0.1450 mat=0.0114
+  batch 300/329 | loss=0.1694 light=0.1688 mat=0.0059
+  batch 310/329 | loss=0.2581 light=0.2574 mat=0.0066
+  batch 320/329 | loss=0.1662 light=0.1657 mat=0.0056
+  train | loss=0.2012 light=0.2003 mat=0.0088
+  val   | loss=0.2421 light=0.2412 mat=0.0091 mat_mae=0.0419
+  -> new best model (val_loss=0.2421)
+
+Epoch 17/50
+  batch 10/329 | loss=0.1976 light=0.1968 mat=0.0073
+  batch 20/329 | loss=0.1873 light=0.1863 mat=0.0102
+  batch 30/329 | loss=0.1794 light=0.1785 mat=0.0085
+  batch 40/329 | loss=0.1978 light=0.1973 mat=0.0045
+  batch 50/329 | loss=0.2065 light=0.2056 mat=0.0088
+  batch 60/329 | loss=0.1862 light=0.1859 mat=0.0034
+  batch 70/329 | loss=0.2011 light=0.1996 mat=0.0148
+  batch 80/329 | loss=0.1852 light=0.1846 mat=0.0063
+  batch 90/329 | loss=0.1571 light=0.1565 mat=0.0054
+  batch 100/329 | loss=0.1334 light=0.1325 mat=0.0087
+  batch 110/329 | loss=0.1788 light=0.1777 mat=0.0108
+  batch 120/329 | loss=0.1370 light=0.1362 mat=0.0074
+  batch 130/329 | loss=0.1747 light=0.1738 mat=0.0082
+  batch 140/329 | loss=0.2060 light=0.2046 mat=0.0148
+  batch 150/329 | loss=0.1797 light=0.1790 mat=0.0070
+  batch 160/329 | loss=0.2664 light=0.2655 mat=0.0096
+  batch 170/329 | loss=0.1808 light=0.1799 mat=0.0095
+  batch 180/329 | loss=0.2248 light=0.2244 mat=0.0038
+  batch 190/329 | loss=0.1957 light=0.1953 mat=0.0039
+  batch 200/329 | loss=0.1603 light=0.1599 mat=0.0045
+  batch 210/329 | loss=0.1946 light=0.1941 mat=0.0052
+  batch 220/329 | loss=0.1595 light=0.1588 mat=0.0071
+  batch 230/329 | loss=0.1654 light=0.1645 mat=0.0084
+  batch 240/329 | loss=0.2122 light=0.2119 mat=0.0035
+  batch 250/329 | loss=0.2042 light=0.2034 mat=0.0076
+  batch 260/329 | loss=0.1747 light=0.1736 mat=0.0114
+  batch 270/329 | loss=0.1870 light=0.1859 mat=0.0104
+  batch 280/329 | loss=0.1431 light=0.1423 mat=0.0083
+  batch 290/329 | loss=0.1905 light=0.1896 mat=0.0088
+  batch 300/329 | loss=0.2922 light=0.2909 mat=0.0133
+  batch 310/329 | loss=0.1645 light=0.1640 mat=0.0054
+  batch 320/329 | loss=0.2101 light=0.2096 mat=0.0048
+  train | loss=0.1946 light=0.1938 mat=0.0078
+  val   | loss=0.2451 light=0.2442 mat=0.0098 mat_mae=0.0411
+
+Epoch 18/50
+  batch 10/329 | loss=0.2124 light=0.2116 mat=0.0080
+  batch 20/329 | loss=0.2060 light=0.2057 mat=0.0036
+  batch 30/329 | loss=0.1680 light=0.1669 mat=0.0109
+  batch 40/329 | loss=0.2257 light=0.2247 mat=0.0093
+  batch 50/329 | loss=0.1695 light=0.1684 mat=0.0112
+  batch 60/329 | loss=0.1524 light=0.1517 mat=0.0075
+  batch 70/329 | loss=0.2183 light=0.2179 mat=0.0042
+  batch 80/329 | loss=0.2461 light=0.2451 mat=0.0100
+  batch 90/329 | loss=0.2402 light=0.2394 mat=0.0082
+  batch 100/329 | loss=0.1265 light=0.1258 mat=0.0070
+  batch 110/329 | loss=0.1935 light=0.1924 mat=0.0105
+  batch 120/329 | loss=0.2712 light=0.2709 mat=0.0035
+  batch 130/329 | loss=0.1615 light=0.1600 mat=0.0156
+  batch 140/329 | loss=0.2111 light=0.2105 mat=0.0057
+  batch 150/329 | loss=0.1538 light=0.1533 mat=0.0057
+  batch 160/329 | loss=0.1947 light=0.1940 mat=0.0075
+  batch 170/329 | loss=0.2056 light=0.2049 mat=0.0071
+  batch 180/329 | loss=0.1749 light=0.1741 mat=0.0083
+  batch 190/329 | loss=0.1972 light=0.1965 mat=0.0076
+  batch 200/329 | loss=0.1559 light=0.1551 mat=0.0077
+  batch 210/329 | loss=0.1415 light=0.1410 mat=0.0058
+  batch 220/329 | loss=0.1956 light=0.1950 mat=0.0061
+  batch 230/329 | loss=0.2141 light=0.2134 mat=0.0065
+  batch 240/329 | loss=0.2477 light=0.2468 mat=0.0087
+  batch 250/329 | loss=0.1691 light=0.1684 mat=0.0062
+  batch 260/329 | loss=0.1865 light=0.1853 mat=0.0118
+  batch 270/329 | loss=0.1878 light=0.1871 mat=0.0073
+  batch 280/329 | loss=0.2042 light=0.2032 mat=0.0103
+  batch 290/329 | loss=0.2171 light=0.2143 mat=0.0284
+  batch 300/329 | loss=0.1650 light=0.1644 mat=0.0064
+  batch 310/329 | loss=0.2283 light=0.2279 mat=0.0045
+  batch 320/329 | loss=0.2258 light=0.2248 mat=0.0095
+  train | loss=0.1934 light=0.1926 mat=0.0080
+  val   | loss=0.2435 light=0.2425 mat=0.0099 mat_mae=0.0440
+
+Epoch 19/50
+  batch 10/329 | loss=0.1976 light=0.1973 mat=0.0027
+  batch 20/329 | loss=0.1578 light=0.1568 mat=0.0101
+  batch 30/329 | loss=0.1645 light=0.1640 mat=0.0049
+  batch 40/329 | loss=0.2019 light=0.2011 mat=0.0084
+  batch 50/329 | loss=0.2249 light=0.2240 mat=0.0093
+  batch 60/329 | loss=0.2184 light=0.2174 mat=0.0102
+  batch 70/329 | loss=0.1728 light=0.1706 mat=0.0223
+  batch 80/329 | loss=0.2475 light=0.2466 mat=0.0090
+  batch 90/329 | loss=0.1436 light=0.1424 mat=0.0118
+  batch 100/329 | loss=0.1581 light=0.1569 mat=0.0123
+  batch 110/329 | loss=0.1705 light=0.1700 mat=0.0048
+  batch 120/329 | loss=0.1758 light=0.1753 mat=0.0056
+  batch 130/329 | loss=0.1776 light=0.1762 mat=0.0139
+  batch 140/329 | loss=0.2390 light=0.2382 mat=0.0080
+  batch 150/329 | loss=0.1955 light=0.1945 mat=0.0101
+  batch 160/329 | loss=0.2155 light=0.2139 mat=0.0160
+  batch 170/329 | loss=0.1722 light=0.1712 mat=0.0096
+  batch 180/329 | loss=0.1508 light=0.1500 mat=0.0086
+  batch 190/329 | loss=0.1952 light=0.1948 mat=0.0040
+  batch 200/329 | loss=0.1351 light=0.1345 mat=0.0061
+  batch 210/329 | loss=0.1522 light=0.1516 mat=0.0061
+  batch 220/329 | loss=0.1166 light=0.1159 mat=0.0071
+  batch 230/329 | loss=0.2321 light=0.2314 mat=0.0068
+  batch 240/329 | loss=0.1581 light=0.1575 mat=0.0059
+  batch 250/329 | loss=0.1442 light=0.1435 mat=0.0065
+  batch 260/329 | loss=0.1966 light=0.1956 mat=0.0092
+  batch 270/329 | loss=0.1839 light=0.1834 mat=0.0042
+  batch 280/329 | loss=0.1528 light=0.1517 mat=0.0109
+  batch 290/329 | loss=0.2690 light=0.2681 mat=0.0081
+  batch 300/329 | loss=0.1670 light=0.1663 mat=0.0066
+  batch 310/329 | loss=0.1250 light=0.1242 mat=0.0084
+  batch 320/329 | loss=0.2894 light=0.2884 mat=0.0093
+  train | loss=0.1898 light=0.1891 mat=0.0079
+  val   | loss=0.2411 light=0.2402 mat=0.0087 mat_mae=0.0406
+  -> new best model (val_loss=0.2411)
+
+Epoch 20/50
+  batch 10/329 | loss=0.1872 light=0.1863 mat=0.0094
+  batch 20/329 | loss=0.1614 light=0.1604 mat=0.0101
+  batch 30/329 | loss=0.1665 light=0.1658 mat=0.0072
+  batch 40/329 | loss=0.1432 light=0.1424 mat=0.0080
+  batch 50/329 | loss=0.2341 light=0.2333 mat=0.0080
+  batch 60/329 | loss=0.1480 light=0.1477 mat=0.0025
+  batch 70/329 | loss=0.1989 light=0.1985 mat=0.0033
+  batch 80/329 | loss=0.1780 light=0.1776 mat=0.0042
+  batch 90/329 | loss=0.2089 light=0.2072 mat=0.0168
+  batch 100/329 | loss=0.2434 light=0.2427 mat=0.0070
+  batch 110/329 | loss=0.1595 light=0.1578 mat=0.0170
+  batch 120/329 | loss=0.2275 light=0.2266 mat=0.0096
+  batch 130/329 | loss=0.2139 light=0.2133 mat=0.0060
+  batch 140/329 | loss=0.1248 light=0.1241 mat=0.0068
+  batch 150/329 | loss=0.1602 light=0.1596 mat=0.0051
+  batch 160/329 | loss=0.2122 light=0.2112 mat=0.0093
+  batch 170/329 | loss=0.1852 light=0.1846 mat=0.0059
+  batch 180/329 | loss=0.1444 light=0.1441 mat=0.0033
+  batch 190/329 | loss=0.1927 light=0.1918 mat=0.0093
+  batch 200/329 | loss=0.1619 light=0.1612 mat=0.0069
+  batch 210/329 | loss=0.2106 light=0.2098 mat=0.0080
+  batch 220/329 | loss=0.1541 light=0.1536 mat=0.0056
+  batch 230/329 | loss=0.1784 light=0.1778 mat=0.0053
+  batch 240/329 | loss=0.2067 light=0.2049 mat=0.0181
+  batch 250/329 | loss=0.1954 light=0.1950 mat=0.0031
+  batch 260/329 | loss=0.1359 light=0.1354 mat=0.0054
+  batch 270/329 | loss=0.1648 light=0.1640 mat=0.0084
+  batch 280/329 | loss=0.1435 light=0.1429 mat=0.0056
+  batch 290/329 | loss=0.3065 light=0.3058 mat=0.0067
+  batch 300/329 | loss=0.2160 light=0.2146 mat=0.0138
+  batch 310/329 | loss=0.1622 light=0.1615 mat=0.0071
+  batch 320/329 | loss=0.1870 light=0.1860 mat=0.0105
+  train | loss=0.1848 light=0.1840 mat=0.0076
+  val   | loss=0.2383 light=0.2374 mat=0.0088 mat_mae=0.0401
+  -> new best model (val_loss=0.2383)
+
+Epoch 21/50
+  batch 10/329 | loss=0.1990 light=0.1983 mat=0.0070
+  batch 20/329 | loss=0.2049 light=0.2041 mat=0.0080
+  batch 30/329 | loss=0.2151 light=0.2143 mat=0.0082
+  batch 40/329 | loss=0.1930 light=0.1922 mat=0.0078
+  batch 50/329 | loss=0.1444 light=0.1439 mat=0.0050
+  batch 60/329 | loss=0.1711 light=0.1706 mat=0.0051
+  batch 70/329 | loss=0.2182 light=0.2166 mat=0.0152
+  batch 80/329 | loss=0.1924 light=0.1918 mat=0.0058
+  batch 90/329 | loss=0.1452 light=0.1443 mat=0.0089
+  batch 100/329 | loss=0.1836 light=0.1826 mat=0.0099
+  batch 110/329 | loss=0.1903 light=0.1896 mat=0.0071
+  batch 120/329 | loss=0.1978 light=0.1972 mat=0.0062
+  batch 130/329 | loss=0.1870 light=0.1864 mat=0.0059
+  batch 140/329 | loss=0.1776 light=0.1772 mat=0.0048
+  batch 150/329 | loss=0.2019 light=0.2011 mat=0.0079
+  batch 160/329 | loss=0.2110 light=0.2104 mat=0.0063
+  batch 170/329 | loss=0.1527 light=0.1513 mat=0.0138
+  batch 180/329 | loss=0.1670 light=0.1663 mat=0.0072
+  batch 190/329 | loss=0.1503 light=0.1497 mat=0.0053
+  batch 200/329 | loss=0.1835 light=0.1826 mat=0.0089
+  batch 210/329 | loss=0.1877 light=0.1869 mat=0.0075
+  batch 220/329 | loss=0.1642 light=0.1625 mat=0.0173
+  batch 230/329 | loss=0.1733 light=0.1730 mat=0.0039
+  batch 240/329 | loss=0.1826 light=0.1813 mat=0.0132
+  batch 250/329 | loss=0.1747 light=0.1741 mat=0.0064
+  batch 260/329 | loss=0.1813 light=0.1806 mat=0.0067
+  batch 270/329 | loss=0.1454 light=0.1450 mat=0.0042
+  batch 280/329 | loss=0.1612 light=0.1599 mat=0.0130
+  batch 290/329 | loss=0.2282 light=0.2276 mat=0.0062
+  batch 300/329 | loss=0.1329 light=0.1321 mat=0.0075
+  batch 310/329 | loss=0.2316 light=0.2311 mat=0.0045
+  batch 320/329 | loss=0.1523 light=0.1504 mat=0.0194
+  train | loss=0.1805 light=0.1798 mat=0.0076
+  val   | loss=0.2388 light=0.2380 mat=0.0088 mat_mae=0.0396
+
+Epoch 22/50
+  batch 10/329 | loss=0.1956 light=0.1941 mat=0.0156
+  batch 20/329 | loss=0.1632 light=0.1626 mat=0.0065
+  batch 30/329 | loss=0.2158 light=0.2151 mat=0.0067
+  batch 40/329 | loss=0.1489 light=0.1483 mat=0.0063
+  batch 50/329 | loss=0.1771 light=0.1764 mat=0.0069
+  batch 60/329 | loss=0.1892 light=0.1882 mat=0.0101
+  batch 70/329 | loss=0.2006 light=0.1993 mat=0.0128
+  batch 80/329 | loss=0.2344 light=0.2337 mat=0.0070
+  batch 90/329 | loss=0.1777 light=0.1771 mat=0.0051
+  batch 100/329 | loss=0.1982 light=0.1979 mat=0.0026
+  batch 110/329 | loss=0.2102 light=0.2097 mat=0.0043
+  batch 120/329 | loss=0.1565 light=0.1558 mat=0.0075
+  batch 130/329 | loss=0.1566 light=0.1562 mat=0.0039
+  batch 140/329 | loss=0.1705 light=0.1681 mat=0.0233
+  batch 150/329 | loss=0.1649 light=0.1642 mat=0.0066
+  batch 160/329 | loss=0.1795 light=0.1789 mat=0.0060
+  batch 170/329 | loss=0.1945 light=0.1928 mat=0.0174
+  batch 180/329 | loss=0.2021 light=0.2011 mat=0.0097
+  batch 190/329 | loss=0.1700 light=0.1695 mat=0.0043
+  batch 200/329 | loss=0.1413 light=0.1407 mat=0.0060
+  batch 210/329 | loss=0.1508 light=0.1504 mat=0.0049
+  batch 220/329 | loss=0.1668 light=0.1663 mat=0.0057
+  batch 230/329 | loss=0.2562 light=0.2553 mat=0.0089
+  batch 240/329 | loss=0.2375 light=0.2367 mat=0.0074
+  batch 250/329 | loss=0.1618 light=0.1609 mat=0.0082
+  batch 260/329 | loss=0.1953 light=0.1947 mat=0.0058
+  batch 270/329 | loss=0.1778 light=0.1771 mat=0.0069
+  batch 280/329 | loss=0.1304 light=0.1299 mat=0.0045
+  batch 290/329 | loss=0.2281 light=0.2278 mat=0.0034
+  batch 300/329 | loss=0.1552 light=0.1532 mat=0.0201
+  batch 310/329 | loss=0.1759 light=0.1752 mat=0.0070
+  batch 320/329 | loss=0.2140 light=0.2133 mat=0.0070
+  train | loss=0.1785 light=0.1777 mat=0.0079
+  val   | loss=0.2321 light=0.2312 mat=0.0093 mat_mae=0.0403
+  -> new best model (val_loss=0.2321)
+
+Epoch 23/50
+  batch 10/329 | loss=0.1696 light=0.1691 mat=0.0051
+  batch 20/329 | loss=0.1303 light=0.1294 mat=0.0082
+  batch 30/329 | loss=0.1930 light=0.1915 mat=0.0144
+  batch 40/329 | loss=0.1770 light=0.1767 mat=0.0037
+  batch 50/329 | loss=0.1413 light=0.1401 mat=0.0126
+  batch 60/329 | loss=0.1602 light=0.1597 mat=0.0051
+  batch 70/329 | loss=0.1618 light=0.1609 mat=0.0092
+  batch 80/329 | loss=0.1291 light=0.1283 mat=0.0085
+  batch 90/329 | loss=0.1980 light=0.1973 mat=0.0070
+  batch 100/329 | loss=0.1811 light=0.1806 mat=0.0055
+  batch 110/329 | loss=0.1205 light=0.1199 mat=0.0060
+  batch 120/329 | loss=0.1565 light=0.1559 mat=0.0062
+  batch 130/329 | loss=0.1490 light=0.1483 mat=0.0068
+  batch 140/329 | loss=0.2156 light=0.2151 mat=0.0045
+  batch 150/329 | loss=0.1980 light=0.1974 mat=0.0062
+  batch 160/329 | loss=0.2156 light=0.2148 mat=0.0074
+  batch 170/329 | loss=0.1581 light=0.1574 mat=0.0069
+  batch 180/329 | loss=0.1696 light=0.1692 mat=0.0045
+  batch 190/329 | loss=0.1906 light=0.1892 mat=0.0134
+  batch 200/329 | loss=0.1958 light=0.1953 mat=0.0046
+  batch 210/329 | loss=0.1471 light=0.1461 mat=0.0097
+  batch 220/329 | loss=0.1457 light=0.1451 mat=0.0062
+  batch 230/329 | loss=0.1562 light=0.1547 mat=0.0144
+  batch 240/329 | loss=0.1760 light=0.1749 mat=0.0105
+  batch 250/329 | loss=0.1870 light=0.1864 mat=0.0063
+  batch 260/329 | loss=0.2316 light=0.2311 mat=0.0044
+  batch 270/329 | loss=0.1858 light=0.1847 mat=0.0107
+  batch 280/329 | loss=0.1919 light=0.1914 mat=0.0052
+  batch 290/329 | loss=0.1004 light=0.0999 mat=0.0046
+  batch 300/329 | loss=0.1827 light=0.1819 mat=0.0079
+  batch 310/329 | loss=0.1273 light=0.1270 mat=0.0031
+  batch 320/329 | loss=0.1180 light=0.1177 mat=0.0029
+  train | loss=0.1751 light=0.1744 mat=0.0069
+  val   | loss=0.2331 light=0.2322 mat=0.0089 mat_mae=0.0396
+
+Epoch 24/50
+  batch 10/329 | loss=0.1597 light=0.1587 mat=0.0095
+  batch 20/329 | loss=0.1853 light=0.1845 mat=0.0080
+  batch 30/329 | loss=0.1469 light=0.1454 mat=0.0151
+  batch 40/329 | loss=0.1496 light=0.1491 mat=0.0047
+  batch 50/329 | loss=0.2088 light=0.2081 mat=0.0074
+  batch 60/329 | loss=0.1572 light=0.1565 mat=0.0063
+  batch 70/329 | loss=0.1591 light=0.1578 mat=0.0133
+  batch 80/329 | loss=0.1548 light=0.1536 mat=0.0114
+  batch 90/329 | loss=0.1594 light=0.1585 mat=0.0085
+  batch 100/329 | loss=0.1567 light=0.1560 mat=0.0072
+  batch 110/329 | loss=0.1458 light=0.1456 mat=0.0025
+  batch 120/329 | loss=0.1480 light=0.1471 mat=0.0090
+  batch 130/329 | loss=0.1600 light=0.1595 mat=0.0053
+  batch 140/329 | loss=0.2379 light=0.2371 mat=0.0078
+  batch 150/329 | loss=0.1666 light=0.1656 mat=0.0096
+  batch 160/329 | loss=0.1862 light=0.1856 mat=0.0056
+  batch 170/329 | loss=0.1101 light=0.1097 mat=0.0038
+  batch 180/329 | loss=0.1418 light=0.1413 mat=0.0056
+  batch 190/329 | loss=0.2122 light=0.2115 mat=0.0072
+  batch 200/329 | loss=0.1936 light=0.1930 mat=0.0052
+  batch 210/329 | loss=0.1687 light=0.1683 mat=0.0036
+  batch 220/329 | loss=0.1852 light=0.1846 mat=0.0055
+  batch 230/329 | loss=0.1656 light=0.1651 mat=0.0051
+  batch 240/329 | loss=0.1652 light=0.1639 mat=0.0134
+  batch 250/329 | loss=0.1231 light=0.1221 mat=0.0093
+  batch 260/329 | loss=0.1344 light=0.1338 mat=0.0063
+  batch 270/329 | loss=0.1748 light=0.1743 mat=0.0054
+  batch 280/329 | loss=0.1577 light=0.1573 mat=0.0045
+  batch 290/329 | loss=0.1972 light=0.1960 mat=0.0114
+  batch 300/329 | loss=0.1391 light=0.1383 mat=0.0084
+  batch 310/329 | loss=0.1374 light=0.1361 mat=0.0134
+  batch 320/329 | loss=0.1171 light=0.1165 mat=0.0060
+  train | loss=0.1701 light=0.1694 mat=0.0067
+  val   | loss=0.2315 light=0.2306 mat=0.0088 mat_mae=0.0386
+  -> new best model (val_loss=0.2315)
+
+Epoch 25/50
+  batch 10/329 | loss=0.1769 light=0.1764 mat=0.0044
+  batch 20/329 | loss=0.1538 light=0.1533 mat=0.0048
+  batch 30/329 | loss=0.1263 light=0.1258 mat=0.0050
+  batch 40/329 | loss=0.1233 light=0.1225 mat=0.0086
+  batch 50/329 | loss=0.1732 light=0.1724 mat=0.0081
+  batch 60/329 | loss=0.1806 light=0.1802 mat=0.0044
+  batch 70/329 | loss=0.1249 light=0.1239 mat=0.0099
+  batch 80/329 | loss=0.1862 light=0.1855 mat=0.0067
+  batch 90/329 | loss=0.1530 light=0.1521 mat=0.0090
+  batch 100/329 | loss=0.1775 light=0.1769 mat=0.0061
+  batch 110/329 | loss=0.1685 light=0.1679 mat=0.0055
+  batch 120/329 | loss=0.1565 light=0.1559 mat=0.0055
+  batch 130/329 | loss=0.1836 light=0.1832 mat=0.0041
+  batch 140/329 | loss=0.1707 light=0.1703 mat=0.0039
+  batch 150/329 | loss=0.1974 light=0.1968 mat=0.0052
+  batch 160/329 | loss=0.2395 light=0.2392 mat=0.0032
+  batch 170/329 | loss=0.1310 light=0.1304 mat=0.0064
+  batch 180/329 | loss=0.1711 light=0.1705 mat=0.0061
+  batch 190/329 | loss=0.2482 light=0.2473 mat=0.0089
+  batch 200/329 | loss=0.1415 light=0.1406 mat=0.0091
+  batch 210/329 | loss=0.1650 light=0.1645 mat=0.0052
+  batch 220/329 | loss=0.1852 light=0.1844 mat=0.0074
+  batch 230/329 | loss=0.1063 light=0.1041 mat=0.0215
+  batch 240/329 | loss=0.1577 light=0.1572 mat=0.0053
+  batch 250/329 | loss=0.1774 light=0.1771 mat=0.0030
+  batch 260/329 | loss=0.2014 light=0.2010 mat=0.0047
+  batch 270/329 | loss=0.1922 light=0.1912 mat=0.0105
+  batch 280/329 | loss=0.1956 light=0.1951 mat=0.0049
+  batch 290/329 | loss=0.1701 light=0.1693 mat=0.0076
+  batch 300/329 | loss=0.1236 light=0.1230 mat=0.0065
+  batch 310/329 | loss=0.1292 light=0.1289 mat=0.0032
+  batch 320/329 | loss=0.1207 light=0.1201 mat=0.0062
+  train | loss=0.1675 light=0.1669 mat=0.0068
+  val   | loss=0.2327 light=0.2319 mat=0.0085 mat_mae=0.0376
+
+Epoch 26/50
+  batch 10/329 | loss=0.1188 light=0.1180 mat=0.0083
+  batch 20/329 | loss=0.1329 light=0.1324 mat=0.0050
+  batch 30/329 | loss=0.1732 light=0.1727 mat=0.0057
+  batch 40/329 | loss=0.1209 light=0.1200 mat=0.0085
+  batch 50/329 | loss=0.2837 light=0.2830 mat=0.0068
+  batch 60/329 | loss=0.1796 light=0.1791 mat=0.0052
+  batch 70/329 | loss=0.1834 light=0.1827 mat=0.0065
+  batch 80/329 | loss=0.1412 light=0.1407 mat=0.0051
+  batch 90/329 | loss=0.1188 light=0.1185 mat=0.0032
+  batch 100/329 | loss=0.2158 light=0.2151 mat=0.0071
+  batch 110/329 | loss=0.1821 light=0.1816 mat=0.0058
+  batch 120/329 | loss=0.1803 light=0.1795 mat=0.0073
+  batch 130/329 | loss=0.1333 light=0.1328 mat=0.0054
+  batch 140/329 | loss=0.2022 light=0.2015 mat=0.0072
+  batch 150/329 | loss=0.1855 light=0.1849 mat=0.0057
+  batch 160/329 | loss=0.2265 light=0.2256 mat=0.0096
+  batch 170/329 | loss=0.1657 light=0.1649 mat=0.0078
+  batch 180/329 | loss=0.2229 light=0.2221 mat=0.0075
+  batch 190/329 | loss=0.1763 light=0.1760 mat=0.0031
+  batch 200/329 | loss=0.1734 light=0.1728 mat=0.0063
+  batch 210/329 | loss=0.1219 light=0.1213 mat=0.0061
+  batch 220/329 | loss=0.2153 light=0.2145 mat=0.0083
+  batch 230/329 | loss=0.1113 light=0.1112 mat=0.0014
+  batch 240/329 | loss=0.1393 light=0.1383 mat=0.0100
+  batch 250/329 | loss=0.0995 light=0.0987 mat=0.0080
+  batch 260/329 | loss=0.1634 light=0.1631 mat=0.0034
+  batch 270/329 | loss=0.2242 light=0.2236 mat=0.0068
+  batch 280/329 | loss=0.1395 light=0.1391 mat=0.0037
+  batch 290/329 | loss=0.1820 light=0.1814 mat=0.0061
+  batch 300/329 | loss=0.1356 light=0.1351 mat=0.0047
+  batch 310/329 | loss=0.1608 light=0.1601 mat=0.0074
+  batch 320/329 | loss=0.1209 light=0.1198 mat=0.0106
+  train | loss=0.1662 light=0.1654 mat=0.0073
+  val   | loss=0.2279 light=0.2271 mat=0.0080 mat_mae=0.0379
+  -> new best model (val_loss=0.2279)
+
+Epoch 27/50
+  batch 10/329 | loss=0.1198 light=0.1192 mat=0.0065
+  batch 20/329 | loss=0.1942 light=0.1939 mat=0.0038
+  batch 30/329 | loss=0.1139 light=0.1132 mat=0.0066
+  batch 40/329 | loss=0.1341 light=0.1337 mat=0.0042
+  batch 50/329 | loss=0.1204 light=0.1199 mat=0.0057
+  batch 60/329 | loss=0.1521 light=0.1513 mat=0.0076
+  batch 70/329 | loss=0.1193 light=0.1189 mat=0.0041
+  batch 80/329 | loss=0.1332 light=0.1327 mat=0.0055
+  batch 90/329 | loss=0.1800 light=0.1796 mat=0.0041
+  batch 100/329 | loss=0.1668 light=0.1663 mat=0.0047
+  batch 110/329 | loss=0.1347 light=0.1340 mat=0.0076
+  batch 120/329 | loss=0.1927 light=0.1917 mat=0.0100
+  batch 130/329 | loss=0.1539 light=0.1534 mat=0.0048
+  batch 140/329 | loss=0.1860 light=0.1853 mat=0.0069
+  batch 150/329 | loss=0.1359 light=0.1353 mat=0.0065
+  batch 160/329 | loss=0.1913 light=0.1902 mat=0.0111
+  batch 170/329 | loss=0.1383 light=0.1377 mat=0.0063
+  batch 180/329 | loss=0.2105 light=0.2096 mat=0.0090
+  batch 190/329 | loss=0.1549 light=0.1544 mat=0.0059
+  batch 200/329 | loss=0.1823 light=0.1814 mat=0.0094
+  batch 210/329 | loss=0.2383 light=0.2377 mat=0.0066
+  batch 220/329 | loss=0.1313 light=0.1309 mat=0.0040
+  batch 230/329 | loss=0.1591 light=0.1588 mat=0.0039
+  batch 240/329 | loss=0.1623 light=0.1617 mat=0.0066
+  batch 250/329 | loss=0.1567 light=0.1554 mat=0.0122
+  batch 260/329 | loss=0.1710 light=0.1703 mat=0.0063
+  batch 270/329 | loss=0.2379 light=0.2374 mat=0.0056
+  batch 280/329 | loss=0.2427 light=0.2423 mat=0.0046
+  batch 290/329 | loss=0.1232 light=0.1227 mat=0.0051
+  batch 300/329 | loss=0.1863 light=0.1857 mat=0.0055
+  batch 310/329 | loss=0.1921 light=0.1917 mat=0.0042
+  batch 320/329 | loss=0.1505 light=0.1502 mat=0.0031
+  train | loss=0.1625 light=0.1618 mat=0.0063
+  val   | loss=0.2307 light=0.2299 mat=0.0080 mat_mae=0.0373
+
+Epoch 28/50
+  batch 10/329 | loss=0.1453 light=0.1444 mat=0.0087
+  batch 20/329 | loss=0.1181 light=0.1173 mat=0.0079
+  batch 30/329 | loss=0.1368 light=0.1363 mat=0.0048
+  batch 40/329 | loss=0.1236 light=0.1230 mat=0.0068
+  batch 50/329 | loss=0.1629 light=0.1625 mat=0.0034
+  batch 60/329 | loss=0.1586 light=0.1583 mat=0.0032
+  batch 70/329 | loss=0.2015 light=0.2008 mat=0.0071
+  batch 80/329 | loss=0.1290 light=0.1287 mat=0.0038
+  batch 90/329 | loss=0.1984 light=0.1979 mat=0.0049
+  batch 100/329 | loss=0.1505 light=0.1497 mat=0.0078
+  batch 110/329 | loss=0.1712 light=0.1703 mat=0.0091
+  batch 120/329 | loss=0.1497 light=0.1492 mat=0.0045
+  batch 130/329 | loss=0.1390 light=0.1387 mat=0.0027
+  batch 140/329 | loss=0.1949 light=0.1943 mat=0.0063
+  batch 150/329 | loss=0.1474 light=0.1466 mat=0.0082
+  batch 160/329 | loss=0.1340 light=0.1335 mat=0.0047
+  batch 170/329 | loss=0.2078 light=0.2073 mat=0.0050
+  batch 180/329 | loss=0.1712 light=0.1703 mat=0.0088
+  batch 190/329 | loss=0.2081 light=0.2075 mat=0.0064
+  batch 200/329 | loss=0.1188 light=0.1180 mat=0.0076
+  batch 210/329 | loss=0.1487 light=0.1482 mat=0.0053
+  batch 220/329 | loss=0.1855 light=0.1847 mat=0.0074
+  batch 230/329 | loss=0.1216 light=0.1211 mat=0.0050
+  batch 240/329 | loss=0.1383 light=0.1379 mat=0.0045
+  batch 250/329 | loss=0.1535 light=0.1531 mat=0.0038
+  batch 260/329 | loss=0.1765 light=0.1758 mat=0.0069
+  batch 270/329 | loss=0.1204 light=0.1191 mat=0.0130
+  batch 280/329 | loss=0.1788 light=0.1784 mat=0.0041
+  batch 290/329 | loss=0.1470 light=0.1466 mat=0.0047
+  batch 300/329 | loss=0.1453 light=0.1446 mat=0.0064
+  batch 310/329 | loss=0.1446 light=0.1440 mat=0.0063
+  batch 320/329 | loss=0.1897 light=0.1888 mat=0.0093
+  train | loss=0.1590 light=0.1583 mat=0.0063
+  val   | loss=0.2305 light=0.2297 mat=0.0079 mat_mae=0.0370
+
+Epoch 29/50
+  batch 10/329 | loss=0.2311 light=0.2302 mat=0.0082
+  batch 20/329 | loss=0.2098 light=0.2091 mat=0.0073
+  batch 30/329 | loss=0.1981 light=0.1971 mat=0.0100
+  batch 40/329 | loss=0.1845 light=0.1840 mat=0.0059
+  batch 50/329 | loss=0.1408 light=0.1401 mat=0.0063
+  batch 60/329 | loss=0.1554 light=0.1545 mat=0.0089
+  batch 70/329 | loss=0.2475 light=0.2467 mat=0.0079
+  batch 80/329 | loss=0.1692 light=0.1686 mat=0.0052
+  batch 90/329 | loss=0.1285 light=0.1280 mat=0.0051
+  batch 100/329 | loss=0.1355 light=0.1352 mat=0.0031
+  batch 110/329 | loss=0.1948 light=0.1943 mat=0.0051
+  batch 120/329 | loss=0.1547 light=0.1545 mat=0.0019
+  batch 130/329 | loss=0.1458 light=0.1452 mat=0.0058
+  batch 140/329 | loss=0.1176 light=0.1165 mat=0.0112
+  batch 150/329 | loss=0.1409 light=0.1405 mat=0.0048
+  batch 160/329 | loss=0.1629 light=0.1625 mat=0.0039
+  batch 170/329 | loss=0.1439 light=0.1433 mat=0.0052
+  batch 180/329 | loss=0.1665 light=0.1661 mat=0.0041
+  batch 190/329 | loss=0.1548 light=0.1542 mat=0.0055
+  batch 200/329 | loss=0.1432 light=0.1427 mat=0.0045
+  batch 210/329 | loss=0.1333 light=0.1327 mat=0.0059
+  batch 220/329 | loss=0.1896 light=0.1888 mat=0.0074
+  batch 230/329 | loss=0.1957 light=0.1952 mat=0.0055
+  batch 240/329 | loss=0.1598 light=0.1593 mat=0.0043
+  batch 250/329 | loss=0.1351 light=0.1345 mat=0.0057
+  batch 260/329 | loss=0.1875 light=0.1869 mat=0.0063
+  batch 270/329 | loss=0.1481 light=0.1475 mat=0.0055
+  batch 280/329 | loss=0.1798 light=0.1788 mat=0.0094
+  batch 290/329 | loss=0.1838 light=0.1832 mat=0.0058
+  batch 300/329 | loss=0.1467 light=0.1461 mat=0.0064
+  batch 310/329 | loss=0.1287 light=0.1277 mat=0.0097
+  batch 320/329 | loss=0.2259 light=0.2254 mat=0.0051
+  train | loss=0.1569 light=0.1562 mat=0.0064
+  val   | loss=0.2268 light=0.2260 mat=0.0083 mat_mae=0.0369
+  -> new best model (val_loss=0.2268)
+
+Epoch 30/50
+  batch 10/329 | loss=0.1190 light=0.1183 mat=0.0063
+  batch 20/329 | loss=0.2184 light=0.2179 mat=0.0046
+  batch 30/329 | loss=0.1743 light=0.1737 mat=0.0059
+  batch 40/329 | loss=0.1550 light=0.1546 mat=0.0037
+  batch 50/329 | loss=0.1369 light=0.1364 mat=0.0052
+  batch 60/329 | loss=0.1120 light=0.1115 mat=0.0047
+  batch 70/329 | loss=0.1836 light=0.1830 mat=0.0060
+  batch 80/329 | loss=0.1443 light=0.1435 mat=0.0072
+  batch 90/329 | loss=0.1433 light=0.1426 mat=0.0071
+  batch 100/329 | loss=0.1633 light=0.1627 mat=0.0059
+  batch 110/329 | loss=0.1625 light=0.1617 mat=0.0073
+  batch 120/329 | loss=0.1292 light=0.1286 mat=0.0057
+  batch 130/329 | loss=0.1158 light=0.1150 mat=0.0078
+  batch 140/329 | loss=0.2016 light=0.2007 mat=0.0087
+  batch 150/329 | loss=0.1707 light=0.1701 mat=0.0066
+  batch 160/329 | loss=0.1656 light=0.1648 mat=0.0079
+  batch 170/329 | loss=0.1418 light=0.1412 mat=0.0057
+  batch 180/329 | loss=0.1871 light=0.1867 mat=0.0038
+  batch 190/329 | loss=0.1186 light=0.1181 mat=0.0054
+  batch 200/329 | loss=0.1379 light=0.1375 mat=0.0036
+  batch 210/329 | loss=0.1992 light=0.1986 mat=0.0065
+  batch 220/329 | loss=0.1812 light=0.1806 mat=0.0066
+  batch 230/329 | loss=0.0856 light=0.0851 mat=0.0053
+  batch 240/329 | loss=0.1809 light=0.1807 mat=0.0026
+  batch 250/329 | loss=0.1416 light=0.1411 mat=0.0050
+  batch 260/329 | loss=0.1786 light=0.1781 mat=0.0051
+  batch 270/329 | loss=0.1540 light=0.1531 mat=0.0090
+  batch 280/329 | loss=0.1299 light=0.1293 mat=0.0065
+  batch 290/329 | loss=0.1497 light=0.1492 mat=0.0043
+  batch 300/329 | loss=0.1545 light=0.1539 mat=0.0067
+  batch 310/329 | loss=0.1830 light=0.1825 mat=0.0056
+  batch 320/329 | loss=0.1371 light=0.1367 mat=0.0033
+  train | loss=0.1537 light=0.1531 mat=0.0063
+  val   | loss=0.2265 light=0.2257 mat=0.0082 mat_mae=0.0371
+  -> new best model (val_loss=0.2265)
+
+Epoch 31/50
+  batch 10/329 | loss=0.1665 light=0.1649 mat=0.0164
+  batch 20/329 | loss=0.2085 light=0.2081 mat=0.0038
+  batch 30/329 | loss=0.1464 light=0.1457 mat=0.0071
+  batch 40/329 | loss=0.1618 light=0.1614 mat=0.0044
+  batch 50/329 | loss=0.1224 light=0.1219 mat=0.0047
+  batch 60/329 | loss=0.1704 light=0.1698 mat=0.0058
+  batch 70/329 | loss=0.1334 light=0.1328 mat=0.0066
+  batch 80/329 | loss=0.1378 light=0.1373 mat=0.0047
+  batch 90/329 | loss=0.1155 light=0.1152 mat=0.0026
+  batch 100/329 | loss=0.1076 light=0.1072 mat=0.0035
+  batch 110/329 | loss=0.1451 light=0.1444 mat=0.0067
+  batch 120/329 | loss=0.1360 light=0.1358 mat=0.0024
+  batch 130/329 | loss=0.1541 light=0.1534 mat=0.0062
+  batch 140/329 | loss=0.1378 light=0.1375 mat=0.0031
+  batch 150/329 | loss=0.1622 light=0.1614 mat=0.0074
+  batch 160/329 | loss=0.1350 light=0.1343 mat=0.0072
+  batch 170/329 | loss=0.1168 light=0.1163 mat=0.0057
+  batch 180/329 | loss=0.2852 light=0.2846 mat=0.0059
+  batch 190/329 | loss=0.1984 light=0.1979 mat=0.0048
+  batch 200/329 | loss=0.1875 light=0.1872 mat=0.0025
+  batch 210/329 | loss=0.1309 light=0.1304 mat=0.0049
+  batch 220/329 | loss=0.1461 light=0.1456 mat=0.0045
+  batch 230/329 | loss=0.1597 light=0.1592 mat=0.0052
+  batch 240/329 | loss=0.1561 light=0.1557 mat=0.0037
+  batch 250/329 | loss=0.1452 light=0.1445 mat=0.0065
+  batch 260/329 | loss=0.1269 light=0.1263 mat=0.0062
+  batch 270/329 | loss=0.1647 light=0.1636 mat=0.0103
+  batch 280/329 | loss=0.1196 light=0.1189 mat=0.0070
+  batch 290/329 | loss=0.1374 light=0.1368 mat=0.0061
+  batch 300/329 | loss=0.1343 light=0.1336 mat=0.0075
+  batch 310/329 | loss=0.1638 light=0.1629 mat=0.0088
+  batch 320/329 | loss=0.1566 light=0.1559 mat=0.0071
+  train | loss=0.1509 light=0.1503 mat=0.0060
+  val   | loss=0.2229 light=0.2222 mat=0.0076 mat_mae=0.0365
+  -> new best model (val_loss=0.2229)
+
+Epoch 32/50
+  batch 10/329 | loss=0.1264 light=0.1257 mat=0.0070
+  batch 20/329 | loss=0.1385 light=0.1377 mat=0.0080
+  batch 30/329 | loss=0.1155 light=0.1147 mat=0.0082
+  batch 40/329 | loss=0.1671 light=0.1665 mat=0.0064
+  batch 50/329 | loss=0.1092 light=0.1084 mat=0.0076
+  batch 60/329 | loss=0.1408 light=0.1404 mat=0.0041
+  batch 70/329 | loss=0.1456 light=0.1450 mat=0.0062
+  batch 80/329 | loss=0.1112 light=0.1107 mat=0.0052
+  batch 90/329 | loss=0.1258 light=0.1254 mat=0.0044
+  batch 100/329 | loss=0.1187 light=0.1183 mat=0.0045
+  batch 110/329 | loss=0.1207 light=0.1199 mat=0.0080
+  batch 120/329 | loss=0.1159 light=0.1156 mat=0.0034
+  batch 130/329 | loss=0.1485 light=0.1481 mat=0.0036
+  batch 140/329 | loss=0.2163 light=0.2160 mat=0.0033
+  batch 150/329 | loss=0.1278 light=0.1275 mat=0.0035
+  batch 160/329 | loss=0.2183 light=0.2178 mat=0.0051
+  batch 170/329 | loss=0.1631 light=0.1623 mat=0.0081
+  batch 180/329 | loss=0.1448 light=0.1443 mat=0.0050
+  batch 190/329 | loss=0.1586 light=0.1580 mat=0.0065
+  batch 200/329 | loss=0.1199 light=0.1195 mat=0.0042
+  batch 210/329 | loss=0.1022 light=0.1017 mat=0.0049
+  batch 220/329 | loss=0.1366 light=0.1361 mat=0.0052
+  batch 230/329 | loss=0.1197 light=0.1192 mat=0.0050
+  batch 240/329 | loss=0.1328 light=0.1322 mat=0.0054
+  batch 250/329 | loss=0.1551 light=0.1546 mat=0.0051
+  batch 260/329 | loss=0.1285 light=0.1280 mat=0.0056
+  batch 270/329 | loss=0.1447 light=0.1444 mat=0.0035
+  batch 280/329 | loss=0.1208 light=0.1203 mat=0.0052
+  batch 290/329 | loss=0.2331 light=0.2325 mat=0.0065
+  batch 300/329 | loss=0.1453 light=0.1447 mat=0.0053
+  batch 310/329 | loss=0.1582 light=0.1576 mat=0.0060
+  batch 320/329 | loss=0.1172 light=0.1169 mat=0.0029
+  train | loss=0.1491 light=0.1485 mat=0.0061
+  val   | loss=0.2217 light=0.2210 mat=0.0077 mat_mae=0.0361
+  -> new best model (val_loss=0.2217)
+
+Epoch 33/50
+  batch 10/329 | loss=0.1506 light=0.1503 mat=0.0022
+  batch 20/329 | loss=0.1527 light=0.1523 mat=0.0036
+  batch 30/329 | loss=0.1590 light=0.1584 mat=0.0052
+  batch 40/329 | loss=0.1450 light=0.1441 mat=0.0088
+  batch 50/329 | loss=0.1268 light=0.1259 mat=0.0088
+  batch 60/329 | loss=0.1474 light=0.1469 mat=0.0044
+  batch 70/329 | loss=0.1422 light=0.1417 mat=0.0050
+  batch 80/329 | loss=0.1102 light=0.1096 mat=0.0061
+  batch 90/329 | loss=0.1164 light=0.1158 mat=0.0053
+  batch 100/329 | loss=0.1901 light=0.1890 mat=0.0113
+  batch 110/329 | loss=0.0753 light=0.0749 mat=0.0034
+  batch 120/329 | loss=0.1199 light=0.1194 mat=0.0056
+  batch 130/329 | loss=0.1527 light=0.1523 mat=0.0039
+  batch 140/329 | loss=0.1291 light=0.1285 mat=0.0064
+  batch 150/329 | loss=0.1518 light=0.1513 mat=0.0051
+  batch 160/329 | loss=0.0874 light=0.0869 mat=0.0055
+  batch 170/329 | loss=0.1340 light=0.1332 mat=0.0085
+  batch 180/329 | loss=0.1958 light=0.1950 mat=0.0076
+  batch 190/329 | loss=0.0947 light=0.0938 mat=0.0090
+  batch 200/329 | loss=0.1280 light=0.1275 mat=0.0051
+  batch 210/329 | loss=0.1160 light=0.1156 mat=0.0047
+  batch 220/329 | loss=0.1370 light=0.1362 mat=0.0080
+  batch 230/329 | loss=0.1374 light=0.1369 mat=0.0047
+  batch 240/329 | loss=0.1356 light=0.1348 mat=0.0084
+  batch 250/329 | loss=0.1898 light=0.1890 mat=0.0075
+  batch 260/329 | loss=0.1124 light=0.1121 mat=0.0023
+  batch 270/329 | loss=0.1270 light=0.1264 mat=0.0058
+  batch 280/329 | loss=0.1175 light=0.1169 mat=0.0063
+  batch 290/329 | loss=0.1783 light=0.1777 mat=0.0062
+  batch 300/329 | loss=0.1321 light=0.1317 mat=0.0042
+  batch 310/329 | loss=0.1728 light=0.1721 mat=0.0070
+  batch 320/329 | loss=0.1291 light=0.1283 mat=0.0076
+  train | loss=0.1475 light=0.1469 mat=0.0059
+  val   | loss=0.2201 light=0.2193 mat=0.0084 mat_mae=0.0376
+  -> new best model (val_loss=0.2201)
+
+Epoch 34/50
+  batch 10/329 | loss=0.1437 light=0.1423 mat=0.0136
+  batch 20/329 | loss=0.1905 light=0.1897 mat=0.0083
+  batch 30/329 | loss=0.1084 light=0.1078 mat=0.0060
+  batch 40/329 | loss=0.1094 light=0.1089 mat=0.0050
+  batch 50/329 | loss=0.2223 light=0.2217 mat=0.0064
+  batch 60/329 | loss=0.1198 light=0.1195 mat=0.0031
+  batch 70/329 | loss=0.1703 light=0.1699 mat=0.0036
+  batch 80/329 | loss=0.1450 light=0.1438 mat=0.0120
+  batch 90/329 | loss=0.1158 light=0.1153 mat=0.0046
+  batch 100/329 | loss=0.1789 light=0.1782 mat=0.0063
+  batch 110/329 | loss=0.1601 light=0.1596 mat=0.0045
+  batch 120/329 | loss=0.1155 light=0.1147 mat=0.0071
+  batch 130/329 | loss=0.1574 light=0.1568 mat=0.0065
+  batch 140/329 | loss=0.1716 light=0.1712 mat=0.0036
+  batch 150/329 | loss=0.1265 light=0.1260 mat=0.0048
+  batch 160/329 | loss=0.2308 light=0.2304 mat=0.0037
+  batch 170/329 | loss=0.0917 light=0.0915 mat=0.0025
+  batch 180/329 | loss=0.1032 light=0.1026 mat=0.0060
+  batch 190/329 | loss=0.1618 light=0.1612 mat=0.0060
+  batch 200/329 | loss=0.1654 light=0.1645 mat=0.0089
+  batch 210/329 | loss=0.1185 light=0.1181 mat=0.0038
+  batch 220/329 | loss=0.1506 light=0.1499 mat=0.0071
+  batch 230/329 | loss=0.1649 light=0.1644 mat=0.0050
+  batch 240/329 | loss=0.1119 light=0.1114 mat=0.0050
+  batch 250/329 | loss=0.1151 light=0.1146 mat=0.0051
+  batch 260/329 | loss=0.1133 light=0.1128 mat=0.0048
+  batch 270/329 | loss=0.1495 light=0.1489 mat=0.0061
+  batch 280/329 | loss=0.0975 light=0.0971 mat=0.0041
+  batch 290/329 | loss=0.1711 light=0.1706 mat=0.0051
+  batch 300/329 | loss=0.1143 light=0.1140 mat=0.0030
+  batch 310/329 | loss=0.1149 light=0.1143 mat=0.0061
+  batch 320/329 | loss=0.1080 light=0.1077 mat=0.0032
+  train | loss=0.1458 light=0.1452 mat=0.0057
+  val   | loss=0.2219 light=0.2211 mat=0.0080 mat_mae=0.0363
+
+Epoch 35/50
+  batch 10/329 | loss=0.1514 light=0.1508 mat=0.0056
+  batch 20/329 | loss=0.1262 light=0.1255 mat=0.0072
+  batch 30/329 | loss=0.1772 light=0.1767 mat=0.0045
+  batch 40/329 | loss=0.1140 light=0.1133 mat=0.0067
+  batch 50/329 | loss=0.1324 light=0.1316 mat=0.0075
+  batch 60/329 | loss=0.1044 light=0.1042 mat=0.0028
+  batch 70/329 | loss=0.1405 light=0.1398 mat=0.0075
+  batch 80/329 | loss=0.1430 light=0.1424 mat=0.0062
+  batch 90/329 | loss=0.1065 light=0.1058 mat=0.0071
+  batch 100/329 | loss=0.1266 light=0.1261 mat=0.0047
+  batch 110/329 | loss=0.1233 light=0.1226 mat=0.0069
+  batch 120/329 | loss=0.1515 light=0.1510 mat=0.0051
+  batch 130/329 | loss=0.1882 light=0.1877 mat=0.0055
+  batch 140/329 | loss=0.1605 light=0.1599 mat=0.0062
+  batch 150/329 | loss=0.1279 light=0.1273 mat=0.0064
+  batch 160/329 | loss=0.1357 light=0.1355 mat=0.0026
+  batch 170/329 | loss=0.1481 light=0.1476 mat=0.0046
+  batch 180/329 | loss=0.1942 light=0.1935 mat=0.0077
+  batch 190/329 | loss=0.1755 light=0.1750 mat=0.0051
+  batch 200/329 | loss=0.1546 light=0.1540 mat=0.0056
+  batch 210/329 | loss=0.1357 light=0.1354 mat=0.0028
+  batch 220/329 | loss=0.1275 light=0.1271 mat=0.0039
+  batch 230/329 | loss=0.1556 light=0.1551 mat=0.0043
+  batch 240/329 | loss=0.1498 light=0.1491 mat=0.0066
+  batch 250/329 | loss=0.1011 light=0.1007 mat=0.0039
+  batch 260/329 | loss=0.1751 light=0.1748 mat=0.0031
+  batch 270/329 | loss=0.1271 light=0.1258 mat=0.0128
+  batch 280/329 | loss=0.1422 light=0.1416 mat=0.0058
+  batch 290/329 | loss=0.1318 light=0.1316 mat=0.0025
+  batch 300/329 | loss=0.1461 light=0.1454 mat=0.0068
+  batch 310/329 | loss=0.1439 light=0.1434 mat=0.0049
+  batch 320/329 | loss=0.1759 light=0.1755 mat=0.0045
+  train | loss=0.1435 light=0.1429 mat=0.0060
+  val   | loss=0.2218 light=0.2210 mat=0.0075 mat_mae=0.0356
+
+Epoch 36/50
+  batch 10/329 | loss=0.1609 light=0.1603 mat=0.0062
+  batch 20/329 | loss=0.1625 light=0.1621 mat=0.0037
+  batch 30/329 | loss=0.1256 light=0.1252 mat=0.0036
+  batch 40/329 | loss=0.1616 light=0.1612 mat=0.0047
+  batch 50/329 | loss=0.1852 light=0.1843 mat=0.0091
+  batch 60/329 | loss=0.1237 light=0.1232 mat=0.0056
+  batch 70/329 | loss=0.1470 light=0.1465 mat=0.0054
+  batch 80/329 | loss=0.1285 light=0.1278 mat=0.0061
+  batch 90/329 | loss=0.1278 light=0.1269 mat=0.0082
+  batch 100/329 | loss=0.1242 light=0.1233 mat=0.0091
+  batch 110/329 | loss=0.1393 light=0.1386 mat=0.0072
+  batch 120/329 | loss=0.1422 light=0.1413 mat=0.0095
+  batch 130/329 | loss=0.1465 light=0.1459 mat=0.0052
+  batch 140/329 | loss=0.1508 light=0.1503 mat=0.0043
+  batch 150/329 | loss=0.1759 light=0.1754 mat=0.0048
+  batch 160/329 | loss=0.1421 light=0.1415 mat=0.0060
+  batch 170/329 | loss=0.1088 light=0.1079 mat=0.0095
+  batch 180/329 | loss=0.1310 light=0.1308 mat=0.0024
+  batch 190/329 | loss=0.0989 light=0.0984 mat=0.0052
+  batch 200/329 | loss=0.1139 light=0.1137 mat=0.0029
+  batch 210/329 | loss=0.1848 light=0.1843 mat=0.0047
+  batch 220/329 | loss=0.0926 light=0.0921 mat=0.0054
+  batch 230/329 | loss=0.1344 light=0.1339 mat=0.0050
+  batch 240/329 | loss=0.1578 light=0.1572 mat=0.0057
+  batch 250/329 | loss=0.1836 light=0.1833 mat=0.0032
+  batch 260/329 | loss=0.1518 light=0.1511 mat=0.0061
+  batch 270/329 | loss=0.0799 light=0.0792 mat=0.0069
+  batch 280/329 | loss=0.0818 light=0.0816 mat=0.0020
+  batch 290/329 | loss=0.2217 light=0.2214 mat=0.0033
+  batch 300/329 | loss=0.1037 light=0.1029 mat=0.0074
+  batch 310/329 | loss=0.1403 light=0.1397 mat=0.0056
+  batch 320/329 | loss=0.0771 light=0.0764 mat=0.0065
+  train | loss=0.1418 light=0.1412 mat=0.0057
+  val   | loss=0.2212 light=0.2204 mat=0.0082 mat_mae=0.0358
+
+Epoch 37/50
+  batch 10/329 | loss=0.0980 light=0.0977 mat=0.0036
+  batch 20/329 | loss=0.1825 light=0.1818 mat=0.0067
+  batch 30/329 | loss=0.1251 light=0.1246 mat=0.0050
+  batch 40/329 | loss=0.1210 light=0.1203 mat=0.0063
+  batch 50/329 | loss=0.0994 light=0.0988 mat=0.0056
+  batch 60/329 | loss=0.0818 light=0.0815 mat=0.0023
+  batch 70/329 | loss=0.1114 light=0.1108 mat=0.0067
+  batch 80/329 | loss=0.1190 light=0.1178 mat=0.0117
+  batch 90/329 | loss=0.1457 light=0.1452 mat=0.0056
+  batch 100/329 | loss=0.1536 light=0.1531 mat=0.0043
+  batch 110/329 | loss=0.1147 light=0.1136 mat=0.0114
+  batch 120/329 | loss=0.1107 light=0.1102 mat=0.0048
+  batch 130/329 | loss=0.1899 light=0.1892 mat=0.0074
+  batch 140/329 | loss=0.1477 light=0.1472 mat=0.0051
+  batch 150/329 | loss=0.1859 light=0.1855 mat=0.0036
+  batch 160/329 | loss=0.1557 light=0.1551 mat=0.0058
+  batch 170/329 | loss=0.1268 light=0.1264 mat=0.0045
+  batch 180/329 | loss=0.1795 light=0.1791 mat=0.0042
+  batch 190/329 | loss=0.1281 light=0.1278 mat=0.0035
+  batch 200/329 | loss=0.1393 light=0.1389 mat=0.0045
+  batch 210/329 | loss=0.1829 light=0.1827 mat=0.0024
+  batch 220/329 | loss=0.2144 light=0.2140 mat=0.0039
+  batch 230/329 | loss=0.1315 light=0.1309 mat=0.0060
+  batch 240/329 | loss=0.1247 light=0.1238 mat=0.0091
+  batch 250/329 | loss=0.1252 light=0.1249 mat=0.0030
+  batch 260/329 | loss=0.0936 light=0.0930 mat=0.0053
+  batch 270/329 | loss=0.1323 light=0.1316 mat=0.0065
+  batch 280/329 | loss=0.1673 light=0.1666 mat=0.0072
+  batch 290/329 | loss=0.0912 light=0.0907 mat=0.0043
+  batch 300/329 | loss=0.1393 light=0.1386 mat=0.0068
+  batch 310/329 | loss=0.1445 light=0.1439 mat=0.0054
+  batch 320/329 | loss=0.1980 light=0.1976 mat=0.0041
+  train | loss=0.1410 light=0.1404 mat=0.0057
+  val   | loss=0.2195 light=0.2188 mat=0.0075 mat_mae=0.0350
+  -> new best model (val_loss=0.2195)
+
+Epoch 38/50
+  batch 10/329 | loss=0.1323 light=0.1314 mat=0.0082
+  batch 20/329 | loss=0.1583 light=0.1581 mat=0.0026
+  batch 30/329 | loss=0.1242 light=0.1237 mat=0.0044
+  batch 40/329 | loss=0.1313 light=0.1311 mat=0.0019
+  batch 50/329 | loss=0.1678 light=0.1670 mat=0.0083
+  batch 60/329 | loss=0.1765 light=0.1760 mat=0.0054
+  batch 70/329 | loss=0.1580 light=0.1572 mat=0.0075
+  batch 80/329 | loss=0.1479 light=0.1475 mat=0.0039
+  batch 90/329 | loss=0.1337 light=0.1332 mat=0.0048
+  batch 100/329 | loss=0.1327 light=0.1321 mat=0.0067
+  batch 110/329 | loss=0.1043 light=0.1030 mat=0.0128
+  batch 120/329 | loss=0.1539 light=0.1532 mat=0.0070
+  batch 130/329 | loss=0.1315 light=0.1309 mat=0.0059
+  batch 140/329 | loss=0.1159 light=0.1153 mat=0.0062
+  batch 150/329 | loss=0.1954 light=0.1948 mat=0.0054
+  batch 160/329 | loss=0.1969 light=0.1965 mat=0.0045
+  batch 170/329 | loss=0.1397 light=0.1391 mat=0.0062
+  batch 180/329 | loss=0.0858 light=0.0841 mat=0.0172
+  batch 190/329 | loss=0.0906 light=0.0900 mat=0.0062
+  batch 200/329 | loss=0.1305 light=0.1299 mat=0.0063
+  batch 210/329 | loss=0.1342 light=0.1336 mat=0.0052
+  batch 220/329 | loss=0.1649 light=0.1643 mat=0.0055
+  batch 230/329 | loss=0.1562 light=0.1557 mat=0.0059
+  batch 240/329 | loss=0.1045 light=0.1040 mat=0.0056
+  batch 250/329 | loss=0.1272 light=0.1267 mat=0.0054
+  batch 260/329 | loss=0.1144 light=0.1141 mat=0.0034
+  batch 270/329 | loss=0.1412 light=0.1407 mat=0.0046
+  batch 280/329 | loss=0.1394 light=0.1390 mat=0.0039
+  batch 290/329 | loss=0.1799 light=0.1795 mat=0.0044
+  batch 300/329 | loss=0.1099 light=0.1097 mat=0.0023
+  batch 310/329 | loss=0.1204 light=0.1199 mat=0.0050
+  batch 320/329 | loss=0.1854 light=0.1849 mat=0.0052
+  train | loss=0.1391 light=0.1385 mat=0.0055
+  val   | loss=0.2216 light=0.2209 mat=0.0076 mat_mae=0.0353
+
+Epoch 39/50
+  batch 10/329 | loss=0.1303 light=0.1298 mat=0.0051
+  batch 20/329 | loss=0.1553 light=0.1546 mat=0.0074
+  batch 30/329 | loss=0.1888 light=0.1879 mat=0.0087
+  batch 40/329 | loss=0.1406 light=0.1400 mat=0.0060
+  batch 50/329 | loss=0.1054 light=0.1049 mat=0.0054
+  batch 60/329 | loss=0.1077 light=0.1071 mat=0.0064
+  batch 70/329 | loss=0.1440 light=0.1429 mat=0.0102
+  batch 80/329 | loss=0.1655 light=0.1652 mat=0.0031
+  batch 90/329 | loss=0.1100 light=0.1093 mat=0.0062
+  batch 100/329 | loss=0.1096 light=0.1087 mat=0.0089
+  batch 110/329 | loss=0.1495 light=0.1487 mat=0.0075
+  batch 120/329 | loss=0.1228 light=0.1224 mat=0.0034
+  batch 130/329 | loss=0.1769 light=0.1767 mat=0.0029
+  batch 140/329 | loss=0.1650 light=0.1646 mat=0.0043
+  batch 150/329 | loss=0.0964 light=0.0958 mat=0.0062
+  batch 160/329 | loss=0.1108 light=0.1104 mat=0.0043
+  batch 170/329 | loss=0.0972 light=0.0969 mat=0.0032
+  batch 180/329 | loss=0.1551 light=0.1547 mat=0.0040
+  batch 190/329 | loss=0.0979 light=0.0970 mat=0.0090
+  batch 200/329 | loss=0.0942 light=0.0933 mat=0.0092
+  batch 210/329 | loss=0.1436 light=0.1429 mat=0.0072
+  batch 220/329 | loss=0.0859 light=0.0856 mat=0.0036
+  batch 230/329 | loss=0.1331 light=0.1326 mat=0.0049
+  batch 240/329 | loss=0.1749 light=0.1745 mat=0.0043
+  batch 250/329 | loss=0.1880 light=0.1876 mat=0.0033
+  batch 260/329 | loss=0.1032 light=0.1028 mat=0.0046
+  batch 270/329 | loss=0.1539 light=0.1530 mat=0.0083
+  batch 280/329 | loss=0.0902 light=0.0898 mat=0.0042
+  batch 290/329 | loss=0.2028 light=0.2021 mat=0.0072
+  batch 300/329 | loss=0.1263 light=0.1260 mat=0.0033
+  batch 310/329 | loss=0.1339 light=0.1330 mat=0.0095
+  batch 320/329 | loss=0.1180 light=0.1173 mat=0.0066
+  train | loss=0.1375 light=0.1370 mat=0.0054
+  val   | loss=0.2219 light=0.2212 mat=0.0074 mat_mae=0.0352
+
+Epoch 40/50
+  batch 10/329 | loss=0.1035 light=0.1027 mat=0.0085
+  batch 20/329 | loss=0.1208 light=0.1201 mat=0.0069
+  batch 30/329 | loss=0.1589 light=0.1585 mat=0.0031
+  batch 40/329 | loss=0.1210 light=0.1203 mat=0.0076
+  batch 50/329 | loss=0.1146 light=0.1141 mat=0.0046
+  batch 60/329 | loss=0.1617 light=0.1614 mat=0.0037
+  batch 70/329 | loss=0.1850 light=0.1844 mat=0.0059
+  batch 80/329 | loss=0.1782 light=0.1779 mat=0.0023
+  batch 90/329 | loss=0.0832 light=0.0824 mat=0.0080
+  batch 100/329 | loss=0.1379 light=0.1374 mat=0.0045
+  batch 110/329 | loss=0.1299 light=0.1291 mat=0.0076
+  batch 120/329 | loss=0.1243 light=0.1239 mat=0.0036
+  batch 130/329 | loss=0.1319 light=0.1315 mat=0.0045
+  batch 140/329 | loss=0.0795 light=0.0787 mat=0.0085
+  batch 150/329 | loss=0.1601 light=0.1595 mat=0.0067
+  batch 160/329 | loss=0.2072 light=0.2063 mat=0.0084
+  batch 170/329 | loss=0.1082 light=0.1076 mat=0.0064
+  batch 180/329 | loss=0.0970 light=0.0963 mat=0.0073
+  batch 190/329 | loss=0.1456 light=0.1449 mat=0.0068
+  batch 200/329 | loss=0.1455 light=0.1446 mat=0.0088
+  batch 210/329 | loss=0.1222 light=0.1209 mat=0.0125
+  batch 220/329 | loss=0.1504 light=0.1500 mat=0.0040
+  batch 230/329 | loss=0.1465 light=0.1461 mat=0.0039
+  batch 240/329 | loss=0.1284 light=0.1279 mat=0.0048
+  batch 250/329 | loss=0.1177 light=0.1170 mat=0.0068
+  batch 260/329 | loss=0.1176 light=0.1173 mat=0.0038
+  batch 270/329 | loss=0.1100 light=0.1095 mat=0.0047
+  batch 280/329 | loss=0.1786 light=0.1781 mat=0.0055
+  batch 290/329 | loss=0.1236 light=0.1232 mat=0.0044
+  batch 300/329 | loss=0.1399 light=0.1393 mat=0.0060
+  batch 310/329 | loss=0.1314 light=0.1310 mat=0.0039
+  batch 320/329 | loss=0.1489 light=0.1485 mat=0.0040
+  train | loss=0.1365 light=0.1360 mat=0.0055
+  val   | loss=0.2220 light=0.2212 mat=0.0076 mat_mae=0.0353
+
+Epoch 41/50
+  batch 10/329 | loss=0.1207 light=0.1203 mat=0.0037
+  batch 20/329 | loss=0.1878 light=0.1870 mat=0.0083
+  batch 30/329 | loss=0.1468 light=0.1462 mat=0.0058
+  batch 40/329 | loss=0.1384 light=0.1378 mat=0.0053
+  batch 50/329 | loss=0.1228 light=0.1221 mat=0.0068
+  batch 60/329 | loss=0.1374 light=0.1370 mat=0.0039
+  batch 70/329 | loss=0.1308 light=0.1298 mat=0.0103
+  batch 80/329 | loss=0.1184 light=0.1179 mat=0.0049
+  batch 90/329 | loss=0.1609 light=0.1602 mat=0.0067
+  batch 100/329 | loss=0.1183 light=0.1181 mat=0.0021
+  batch 110/329 | loss=0.1027 light=0.1020 mat=0.0072
+  batch 120/329 | loss=0.1389 light=0.1386 mat=0.0035
+  batch 130/329 | loss=0.1123 light=0.1117 mat=0.0055
+  batch 140/329 | loss=0.1411 light=0.1405 mat=0.0062
+  batch 150/329 | loss=0.1362 light=0.1357 mat=0.0045
+  batch 160/329 | loss=0.1131 light=0.1120 mat=0.0108
+  batch 170/329 | loss=0.1142 light=0.1138 mat=0.0040
+  batch 180/329 | loss=0.2031 light=0.2027 mat=0.0034
+  batch 190/329 | loss=0.1653 light=0.1650 mat=0.0033
+  batch 200/329 | loss=0.1141 light=0.1135 mat=0.0060
+  batch 210/329 | loss=0.0922 light=0.0919 mat=0.0031
+  batch 220/329 | loss=0.0976 light=0.0969 mat=0.0078
+  batch 230/329 | loss=0.1530 light=0.1523 mat=0.0063
+  batch 240/329 | loss=0.1342 light=0.1336 mat=0.0064
+  batch 250/329 | loss=0.1248 light=0.1244 mat=0.0042
+  batch 260/329 | loss=0.1160 light=0.1155 mat=0.0050
+  batch 270/329 | loss=0.1824 light=0.1821 mat=0.0026
+  batch 280/329 | loss=0.1428 light=0.1425 mat=0.0029
+  batch 290/329 | loss=0.1558 light=0.1550 mat=0.0076
+  batch 300/329 | loss=0.1435 light=0.1430 mat=0.0041
+  batch 310/329 | loss=0.1005 light=0.0998 mat=0.0068
+  batch 320/329 | loss=0.1511 light=0.1509 mat=0.0025
+  train | loss=0.1356 light=0.1351 mat=0.0056
+  val   | loss=0.2208 light=0.2200 mat=0.0080 mat_mae=0.0354
+
+Epoch 42/50
+  batch 10/329 | loss=0.1214 light=0.1207 mat=0.0070
+  batch 20/329 | loss=0.1960 light=0.1955 mat=0.0047
+  batch 30/329 | loss=0.0767 light=0.0759 mat=0.0078
+  batch 40/329 | loss=0.2052 light=0.2049 mat=0.0026
+  batch 50/329 | loss=0.1067 light=0.1063 mat=0.0041
+  batch 60/329 | loss=0.1104 light=0.1099 mat=0.0046
+  batch 70/329 | loss=0.1813 light=0.1809 mat=0.0040
+  batch 80/329 | loss=0.1443 light=0.1436 mat=0.0062
+  batch 90/329 | loss=0.0981 light=0.0977 mat=0.0042
+  batch 100/329 | loss=0.1033 light=0.1027 mat=0.0057
+  batch 110/329 | loss=0.1738 light=0.1733 mat=0.0048
+  batch 120/329 | loss=0.1569 light=0.1563 mat=0.0054
+  batch 130/329 | loss=0.1424 light=0.1420 mat=0.0041
+  batch 140/329 | loss=0.1048 light=0.1043 mat=0.0051
+  batch 150/329 | loss=0.1485 light=0.1482 mat=0.0037
+  batch 160/329 | loss=0.1308 light=0.1303 mat=0.0048
+  batch 170/329 | loss=0.1220 light=0.1215 mat=0.0048
+  batch 180/329 | loss=0.1133 light=0.1128 mat=0.0057
+  batch 190/329 | loss=0.1110 light=0.1104 mat=0.0063
+  batch 200/329 | loss=0.1333 light=0.1331 mat=0.0028
+  batch 210/329 | loss=0.1396 light=0.1393 mat=0.0028
+  batch 220/329 | loss=0.1208 light=0.1202 mat=0.0063
+  batch 230/329 | loss=0.1600 light=0.1596 mat=0.0043
+  batch 240/329 | loss=0.1002 light=0.0994 mat=0.0078
+  batch 250/329 | loss=0.1553 light=0.1549 mat=0.0041
+  batch 260/329 | loss=0.1164 light=0.1157 mat=0.0072
+  batch 270/329 | loss=0.1358 light=0.1355 mat=0.0035
+  batch 280/329 | loss=0.1323 light=0.1318 mat=0.0049
+  batch 290/329 | loss=0.1436 light=0.1432 mat=0.0039
+  batch 300/329 | loss=0.1059 light=0.1055 mat=0.0037
+  batch 310/329 | loss=0.0939 light=0.0932 mat=0.0071
+  batch 320/329 | loss=0.1206 light=0.1200 mat=0.0061
+  train | loss=0.1348 light=0.1343 mat=0.0054
+  val   | loss=0.2211 light=0.2203 mat=0.0077 mat_mae=0.0356
+
+Epoch 43/50
+  batch 10/329 | loss=0.0720 light=0.0715 mat=0.0046
+  batch 20/329 | loss=0.1033 light=0.1027 mat=0.0054
+  batch 30/329 | loss=0.1341 light=0.1333 mat=0.0080
+  batch 40/329 | loss=0.1304 light=0.1297 mat=0.0066
+  batch 50/329 | loss=0.1688 light=0.1678 mat=0.0095
+  batch 60/329 | loss=0.1289 light=0.1286 mat=0.0034
+  batch 70/329 | loss=0.1383 light=0.1375 mat=0.0075
+  batch 80/329 | loss=0.0844 light=0.0842 mat=0.0024
+  batch 90/329 | loss=0.1576 light=0.1572 mat=0.0044
+  batch 100/329 | loss=0.1108 light=0.1103 mat=0.0052
+  batch 110/329 | loss=0.1081 light=0.1074 mat=0.0073
+  batch 120/329 | loss=0.1553 light=0.1547 mat=0.0058
+  batch 130/329 | loss=0.1619 light=0.1615 mat=0.0041
+  batch 140/329 | loss=0.1242 light=0.1237 mat=0.0044
+  batch 150/329 | loss=0.1185 light=0.1176 mat=0.0090
+  batch 160/329 | loss=0.1760 light=0.1755 mat=0.0047
+  batch 170/329 | loss=0.1144 light=0.1139 mat=0.0049
+  batch 180/329 | loss=0.1385 light=0.1381 mat=0.0037
+  batch 190/329 | loss=0.1642 light=0.1639 mat=0.0027
+  batch 200/329 | loss=0.1105 light=0.1100 mat=0.0049
+  batch 210/329 | loss=0.1229 light=0.1226 mat=0.0031
+  batch 220/329 | loss=0.1105 light=0.1102 mat=0.0032
+  batch 230/329 | loss=0.0878 light=0.0872 mat=0.0059
+  batch 240/329 | loss=0.1556 light=0.1547 mat=0.0088
+  batch 250/329 | loss=0.1101 light=0.1097 mat=0.0038
+  batch 260/329 | loss=0.1480 light=0.1472 mat=0.0074
+  batch 270/329 | loss=0.0765 light=0.0762 mat=0.0028
+  batch 280/329 | loss=0.1349 light=0.1342 mat=0.0070
+  batch 290/329 | loss=0.1239 light=0.1234 mat=0.0059
+  batch 300/329 | loss=0.1142 light=0.1133 mat=0.0095
+  batch 310/329 | loss=0.1238 light=0.1233 mat=0.0048
+  batch 320/329 | loss=0.1228 light=0.1222 mat=0.0057
+  train | loss=0.1344 light=0.1338 mat=0.0053
+  val   | loss=0.2210 light=0.2202 mat=0.0079 mat_mae=0.0352
+
+Epoch 44/50
+  batch 10/329 | loss=0.1482 light=0.1478 mat=0.0043
+  batch 20/329 | loss=0.0800 light=0.0795 mat=0.0050
+  batch 30/329 | loss=0.1569 light=0.1566 mat=0.0024
+  batch 40/329 | loss=0.1397 light=0.1393 mat=0.0044
+  batch 50/329 | loss=0.1321 light=0.1312 mat=0.0088
+  batch 60/329 | loss=0.1899 light=0.1889 mat=0.0098
+  batch 70/329 | loss=0.1080 light=0.1072 mat=0.0074
+  batch 80/329 | loss=0.1560 light=0.1556 mat=0.0040
+  batch 90/329 | loss=0.1853 light=0.1850 mat=0.0037
+  batch 100/329 | loss=0.1438 light=0.1429 mat=0.0088
+  batch 110/329 | loss=0.1157 light=0.1153 mat=0.0047
+  batch 120/329 | loss=0.1123 light=0.1118 mat=0.0045
+  batch 130/329 | loss=0.1238 light=0.1232 mat=0.0067
+  batch 140/329 | loss=0.0987 light=0.0979 mat=0.0076
+  batch 150/329 | loss=0.1430 light=0.1425 mat=0.0042
+  batch 160/329 | loss=0.1546 light=0.1539 mat=0.0070
+  batch 170/329 | loss=0.1949 light=0.1944 mat=0.0050
+  batch 180/329 | loss=0.2166 light=0.2164 mat=0.0021
+  batch 190/329 | loss=0.1476 light=0.1469 mat=0.0069
+  batch 200/329 | loss=0.1693 light=0.1690 mat=0.0034
+  batch 210/329 | loss=0.1560 light=0.1554 mat=0.0063
+  batch 220/329 | loss=0.1156 light=0.1151 mat=0.0050
+  batch 230/329 | loss=0.1115 light=0.1109 mat=0.0061
+  batch 240/329 | loss=0.0775 light=0.0771 mat=0.0045
+  batch 250/329 | loss=0.1379 light=0.1374 mat=0.0053
+  batch 260/329 | loss=0.1275 light=0.1261 mat=0.0140
+  batch 270/329 | loss=0.1369 light=0.1364 mat=0.0049
+  batch 280/329 | loss=0.1903 light=0.1897 mat=0.0062
+  batch 290/329 | loss=0.1802 light=0.1795 mat=0.0071
+  batch 300/329 | loss=0.1198 light=0.1193 mat=0.0053
+  batch 310/329 | loss=0.1410 light=0.1404 mat=0.0059
+  batch 320/329 | loss=0.1111 light=0.1109 mat=0.0028
+  train | loss=0.1336 light=0.1330 mat=0.0057
+  val   | loss=0.2204 light=0.2196 mat=0.0081 mat_mae=0.0354
+
+Epoch 45/50
+  batch 10/329 | loss=0.1375 light=0.1370 mat=0.0053
+  batch 20/329 | loss=0.1237 light=0.1233 mat=0.0042
+  batch 30/329 | loss=0.1889 light=0.1881 mat=0.0073
+  batch 40/329 | loss=0.1099 light=0.1094 mat=0.0051
+  batch 50/329 | loss=0.1581 light=0.1577 mat=0.0044
+  batch 60/329 | loss=0.1343 light=0.1338 mat=0.0048
+  batch 70/329 | loss=0.1685 light=0.1683 mat=0.0020
+  batch 80/329 | loss=0.1252 light=0.1245 mat=0.0066
+  batch 90/329 | loss=0.1331 light=0.1324 mat=0.0072
+  batch 100/329 | loss=0.0719 light=0.0714 mat=0.0049
+  batch 110/329 | loss=0.1766 light=0.1755 mat=0.0110
+  batch 120/329 | loss=0.0822 light=0.0818 mat=0.0043
+  batch 130/329 | loss=0.1076 light=0.1071 mat=0.0047
+  batch 140/329 | loss=0.0991 light=0.0987 mat=0.0035
+  batch 150/329 | loss=0.1494 light=0.1488 mat=0.0061
+  batch 160/329 | loss=0.1907 light=0.1903 mat=0.0042
+  batch 170/329 | loss=0.1251 light=0.1244 mat=0.0067
+  batch 180/329 | loss=0.1167 light=0.1160 mat=0.0062
+  batch 190/329 | loss=0.1441 light=0.1438 mat=0.0032
+  batch 200/329 | loss=0.1186 light=0.1181 mat=0.0056
+  batch 210/329 | loss=0.1297 light=0.1292 mat=0.0053
+  batch 220/329 | loss=0.1104 light=0.1096 mat=0.0074
+  batch 230/329 | loss=0.1579 light=0.1572 mat=0.0075
+  batch 240/329 | loss=0.1254 light=0.1249 mat=0.0050
+  batch 250/329 | loss=0.1230 light=0.1225 mat=0.0057
+  batch 260/329 | loss=0.1240 light=0.1234 mat=0.0062
+  batch 270/329 | loss=0.0930 light=0.0926 mat=0.0042
+  batch 280/329 | loss=0.1637 light=0.1633 mat=0.0037
+  batch 290/329 | loss=0.1410 light=0.1407 mat=0.0026
+  batch 300/329 | loss=0.1154 light=0.1150 mat=0.0042
+  batch 310/329 | loss=0.1328 light=0.1322 mat=0.0058
+  batch 320/329 | loss=0.1364 light=0.1358 mat=0.0059
+  train | loss=0.1334 light=0.1328 mat=0.0054
+  val   | loss=0.2215 light=0.2207 mat=0.0081 mat_mae=0.0353
+
+Epoch 46/50
+  batch 10/329 | loss=0.1798 light=0.1795 mat=0.0038
+  batch 20/329 | loss=0.1434 light=0.1429 mat=0.0052
+  batch 30/329 | loss=0.1212 light=0.1205 mat=0.0071
+  batch 40/329 | loss=0.1388 light=0.1376 mat=0.0122
+  batch 50/329 | loss=0.1064 light=0.1058 mat=0.0067
+  batch 60/329 | loss=0.1420 light=0.1414 mat=0.0062
+  batch 70/329 | loss=0.1318 light=0.1315 mat=0.0027
+  batch 80/329 | loss=0.1099 light=0.1093 mat=0.0059
+  batch 90/329 | loss=0.1407 light=0.1404 mat=0.0030
+  batch 100/329 | loss=0.2209 light=0.2204 mat=0.0042
+  batch 110/329 | loss=0.1086 light=0.1081 mat=0.0044
+  batch 120/329 | loss=0.1157 light=0.1151 mat=0.0065
+  batch 130/329 | loss=0.1273 light=0.1269 mat=0.0042
+  batch 140/329 | loss=0.1161 light=0.1157 mat=0.0040
+  batch 150/329 | loss=0.1202 light=0.1197 mat=0.0053
+  batch 160/329 | loss=0.1246 light=0.1241 mat=0.0045
+  batch 170/329 | loss=0.1966 light=0.1961 mat=0.0045
+  batch 180/329 | loss=0.1845 light=0.1838 mat=0.0064
+  batch 190/329 | loss=0.1204 light=0.1197 mat=0.0071
+  batch 200/329 | loss=0.1417 light=0.1412 mat=0.0050
+  batch 210/329 | loss=0.1147 light=0.1140 mat=0.0069
+  batch 220/329 | loss=0.1159 light=0.1152 mat=0.0067
+  batch 230/329 | loss=0.1507 light=0.1500 mat=0.0074
+  batch 240/329 | loss=0.1476 light=0.1471 mat=0.0049
+  batch 250/329 | loss=0.1350 light=0.1348 mat=0.0022
+  batch 260/329 | loss=0.0897 light=0.0891 mat=0.0054
+  batch 270/329 | loss=0.1170 light=0.1168 mat=0.0029
+  batch 280/329 | loss=0.1393 light=0.1391 mat=0.0028
+  batch 290/329 | loss=0.1464 light=0.1457 mat=0.0069
+  batch 300/329 | loss=0.1460 light=0.1455 mat=0.0045
+  batch 310/329 | loss=0.1213 light=0.1206 mat=0.0061
+  batch 320/329 | loss=0.1863 light=0.1859 mat=0.0045
+  train | loss=0.1328 light=0.1323 mat=0.0053
+  val   | loss=0.2213 light=0.2206 mat=0.0076 mat_mae=0.0347
+
+Epoch 47/50
+  batch 10/329 | loss=0.2343 light=0.2338 mat=0.0048
+  batch 20/329 | loss=0.1211 light=0.1207 mat=0.0043
+  batch 30/329 | loss=0.0997 light=0.0993 mat=0.0042
+  batch 40/329 | loss=0.1636 light=0.1630 mat=0.0061
+  batch 50/329 | loss=0.1094 light=0.1089 mat=0.0055
+  batch 60/329 | loss=0.1255 light=0.1250 mat=0.0045
+  batch 70/329 | loss=0.1637 light=0.1630 mat=0.0065
+  batch 80/329 | loss=0.1321 light=0.1317 mat=0.0046
+  batch 90/329 | loss=0.1600 light=0.1595 mat=0.0056
+  batch 100/329 | loss=0.1135 light=0.1130 mat=0.0057
+  batch 110/329 | loss=0.1117 light=0.1112 mat=0.0048
+  batch 120/329 | loss=0.1340 light=0.1335 mat=0.0050
+  batch 130/329 | loss=0.1900 light=0.1893 mat=0.0061
+  batch 140/329 | loss=0.1072 light=0.1067 mat=0.0050
+  batch 150/329 | loss=0.1067 light=0.1061 mat=0.0066
+  batch 160/329 | loss=0.0955 light=0.0951 mat=0.0044
+  batch 170/329 | loss=0.0960 light=0.0956 mat=0.0049
+  batch 180/329 | loss=0.1835 light=0.1830 mat=0.0053
+  batch 190/329 | loss=0.1160 light=0.1158 mat=0.0021
+  batch 200/329 | loss=0.1528 light=0.1522 mat=0.0057
+  batch 210/329 | loss=0.1010 light=0.1005 mat=0.0047
+  batch 220/329 | loss=0.1704 light=0.1700 mat=0.0047
+  batch 230/329 | loss=0.1007 light=0.0999 mat=0.0073
+  batch 240/329 | loss=0.0868 light=0.0866 mat=0.0023
+  batch 250/329 | loss=0.1413 light=0.1408 mat=0.0044
+  batch 260/329 | loss=0.1480 light=0.1476 mat=0.0041
+  batch 270/329 | loss=0.1368 light=0.1362 mat=0.0056
+  batch 280/329 | loss=0.1502 light=0.1497 mat=0.0048
+  batch 290/329 | loss=0.1262 light=0.1259 mat=0.0032
+  batch 300/329 | loss=0.1196 light=0.1190 mat=0.0055
+  batch 310/329 | loss=0.1134 light=0.1130 mat=0.0044
+  batch 320/329 | loss=0.1331 light=0.1328 mat=0.0032
+  train | loss=0.1333 light=0.1328 mat=0.0052
+  val   | loss=0.2235 light=0.2227 mat=0.0077 mat_mae=0.0346
+
+Epoch 48/50
+  batch 10/329 | loss=0.1444 light=0.1438 mat=0.0059
+  batch 20/329 | loss=0.1344 light=0.1340 mat=0.0041
+  batch 30/329 | loss=0.1325 light=0.1315 mat=0.0101
+  batch 40/329 | loss=0.1319 light=0.1315 mat=0.0039
+  batch 50/329 | loss=0.1214 light=0.1213 mat=0.0017
+  batch 60/329 | loss=0.1157 light=0.1153 mat=0.0043
+  batch 70/329 | loss=0.1440 light=0.1436 mat=0.0040
+  batch 80/329 | loss=0.1354 light=0.1349 mat=0.0048
+  batch 90/329 | loss=0.1378 light=0.1374 mat=0.0040
+  batch 100/329 | loss=0.1929 light=0.1925 mat=0.0043
+  batch 110/329 | loss=0.1139 light=0.1134 mat=0.0047
+  batch 120/329 | loss=0.1030 light=0.1022 mat=0.0077
+  batch 130/329 | loss=0.1084 light=0.1076 mat=0.0080
+  batch 140/329 | loss=0.0929 light=0.0924 mat=0.0051
+  batch 150/329 | loss=0.1096 light=0.1089 mat=0.0062
+  batch 160/329 | loss=0.1588 light=0.1577 mat=0.0115
+  batch 170/329 | loss=0.1027 light=0.1022 mat=0.0054
+  batch 180/329 | loss=0.1263 light=0.1252 mat=0.0108
+  batch 190/329 | loss=0.1231 light=0.1224 mat=0.0073
+  batch 200/329 | loss=0.1149 light=0.1139 mat=0.0102
+  batch 210/329 | loss=0.1576 light=0.1571 mat=0.0053
+  batch 220/329 | loss=0.1380 light=0.1375 mat=0.0056
+  batch 230/329 | loss=0.1476 light=0.1471 mat=0.0049
+  batch 240/329 | loss=0.1211 light=0.1208 mat=0.0035
+  batch 250/329 | loss=0.0836 light=0.0833 mat=0.0028
+  batch 260/329 | loss=0.1363 light=0.1358 mat=0.0045
+  batch 270/329 | loss=0.1016 light=0.1009 mat=0.0063
+  batch 280/329 | loss=0.1638 light=0.1631 mat=0.0066
+  batch 290/329 | loss=0.1212 light=0.1207 mat=0.0049
+  batch 300/329 | loss=0.1025 light=0.1020 mat=0.0050
+  batch 310/329 | loss=0.1307 light=0.1299 mat=0.0078
+  batch 320/329 | loss=0.1212 light=0.1203 mat=0.0087
+  train | loss=0.1321 light=0.1315 mat=0.0055
+  val   | loss=0.2228 light=0.2220 mat=0.0076 mat_mae=0.0350
+
+Epoch 49/50
+  batch 10/329 | loss=0.0987 light=0.0981 mat=0.0062
+  batch 20/329 | loss=0.1185 light=0.1181 mat=0.0044
+  batch 30/329 | loss=0.1189 light=0.1185 mat=0.0039
+  batch 40/329 | loss=0.1116 light=0.1109 mat=0.0073
+  batch 50/329 | loss=0.1091 light=0.1087 mat=0.0037
+  batch 60/329 | loss=0.1290 light=0.1283 mat=0.0068
+  batch 70/329 | loss=0.1062 light=0.1056 mat=0.0062
+  batch 80/329 | loss=0.1636 light=0.1632 mat=0.0038
+  batch 90/329 | loss=0.1639 light=0.1630 mat=0.0091
+  batch 100/329 | loss=0.1165 light=0.1158 mat=0.0075
+  batch 110/329 | loss=0.1270 light=0.1267 mat=0.0031
+  batch 120/329 | loss=0.1317 light=0.1312 mat=0.0041
+  batch 130/329 | loss=0.1899 light=0.1893 mat=0.0057
+  batch 140/329 | loss=0.1171 light=0.1169 mat=0.0026
+  batch 150/329 | loss=0.0930 light=0.0925 mat=0.0043
+  batch 160/329 | loss=0.0930 light=0.0926 mat=0.0043
+  batch 170/329 | loss=0.1159 light=0.1155 mat=0.0045
+  batch 180/329 | loss=0.1463 light=0.1459 mat=0.0038
+  batch 190/329 | loss=0.0995 light=0.0990 mat=0.0045
+  batch 200/329 | loss=0.1174 light=0.1172 mat=0.0022
+  batch 210/329 | loss=0.1369 light=0.1357 mat=0.0117
+  batch 220/329 | loss=0.0944 light=0.0938 mat=0.0060
+  batch 230/329 | loss=0.1211 light=0.1205 mat=0.0063
+  batch 240/329 | loss=0.1245 light=0.1240 mat=0.0049
+  batch 250/329 | loss=0.1701 light=0.1696 mat=0.0052
+  batch 260/329 | loss=0.1449 light=0.1441 mat=0.0082
+  batch 270/329 | loss=0.1248 light=0.1243 mat=0.0052
+  batch 280/329 | loss=0.1130 light=0.1126 mat=0.0042
+  batch 290/329 | loss=0.0958 light=0.0954 mat=0.0037
+  batch 300/329 | loss=0.1090 light=0.1081 mat=0.0085
+  batch 310/329 | loss=0.1030 light=0.1026 mat=0.0045
+  batch 320/329 | loss=0.1240 light=0.1239 mat=0.0017
+  train | loss=0.1322 light=0.1317 mat=0.0054
+  val   | loss=0.2228 light=0.2220 mat=0.0078 mat_mae=0.0352
+
+Epoch 50/50
+  batch 10/329 | loss=0.1438 light=0.1430 mat=0.0078
+  batch 20/329 | loss=0.0899 light=0.0893 mat=0.0057
+  batch 30/329 | loss=0.1443 light=0.1436 mat=0.0066
+  batch 40/329 | loss=0.1057 light=0.1051 mat=0.0055
+  batch 50/329 | loss=0.1352 light=0.1348 mat=0.0039
+  batch 60/329 | loss=0.1278 light=0.1273 mat=0.0045
+  batch 70/329 | loss=0.1216 light=0.1211 mat=0.0047
+  batch 80/329 | loss=0.0987 light=0.0983 mat=0.0039
+  batch 90/329 | loss=0.0882 light=0.0876 mat=0.0059
+  batch 100/329 | loss=0.1332 light=0.1327 mat=0.0046
+  batch 110/329 | loss=0.1168 light=0.1161 mat=0.0072
+  batch 120/329 | loss=0.1125 light=0.1114 mat=0.0104
+  batch 130/329 | loss=0.1577 light=0.1575 mat=0.0022
+  batch 140/329 | loss=0.0868 light=0.0864 mat=0.0047
+  batch 150/329 | loss=0.1294 light=0.1290 mat=0.0040
+  batch 160/329 | loss=0.1188 light=0.1182 mat=0.0067
+  batch 170/329 | loss=0.1045 light=0.1043 mat=0.0024
+  batch 180/329 | loss=0.1101 light=0.1097 mat=0.0041
+  batch 190/329 | loss=0.1610 light=0.1605 mat=0.0051
+  batch 200/329 | loss=0.1539 light=0.1535 mat=0.0040
+  batch 210/329 | loss=0.1773 light=0.1767 mat=0.0057
+  batch 220/329 | loss=0.1564 light=0.1558 mat=0.0057
+  batch 230/329 | loss=0.1365 light=0.1359 mat=0.0053
+  batch 240/329 | loss=0.1075 light=0.1069 mat=0.0061
+  batch 250/329 | loss=0.1938 light=0.1932 mat=0.0065
+  batch 260/329 | loss=0.0888 light=0.0882 mat=0.0063
+  batch 270/329 | loss=0.1566 light=0.1562 mat=0.0036
+  batch 280/329 | loss=0.0965 light=0.0961 mat=0.0046
+  batch 290/329 | loss=0.1031 light=0.1026 mat=0.0051
+  batch 300/329 | loss=0.1773 light=0.1770 mat=0.0032
+  batch 310/329 | loss=0.1023 light=0.1017 mat=0.0058
+  batch 320/329 | loss=0.1363 light=0.1359 mat=0.0041
+  train | loss=0.1322 light=0.1317 mat=0.0055
+  val   | loss=0.2212 light=0.2204 mat=0.0078 mat_mae=0.0352
+
+  Training curves saved to ./models\seed_sweep_106_multitask_curves.png
+
+============================================================
+Evaluating on test set
+============================================================
+
+==============================================================================
+Metric                                          Baseline            Multitask
+------------------------------------------------------------------------------
+  log_mse (mean ± 95% CI)                0.0980 ± 0.0054      0.1004 ± 0.0057
+  LPIPS (mean ± 95% CI)                  0.4092 ± 0.0062      0.4051 ± 0.0061
+  material_param_mae (mean)                          N/A               0.0338
+
+Paired t-test (baseline - multitask) on per-sample log_mse:
+  n              = 2250
+  mean diff      = -0.0025 (95% CI ± 0.0013) — baseline better
+  std of diffs   = 0.0313
+  t-statistic    = -3.7498
+  p-value (two-sided, normal approx) = 0.000177
+
+Paired t-test (baseline - multitask) on per-sample LPIPS:
+  n              = 2250
+  mean diff      = +0.0041 (95% CI ± 0.0017) — multitask better
+  t-statistic    = +4.7692
+  p-value (two-sided, normal approx) = 1.849e-06
+
+Per-material log_mse (mean ± 95% CI):
+  Material                         Baseline            Multitask      Delta
+  ---------------------------------------------------------------------------
+  diffuse                   0.1335 ± 0.0169      0.1359 ± 0.0179    +0.0024
+  glossy                    0.0789 ± 0.0090      0.0821 ± 0.0102    +0.0033
+  metallic                  0.0828 ± 0.0086      0.0881 ± 0.0097    +0.0052
+  rough_metallic            0.1028 ± 0.0133      0.1033 ± 0.0129    +0.0005
+  dielectric                0.0918 ± 0.0099      0.0928 ± 0.0102    +0.0010
+
+Per-parameter-bucket log_mse (mean ± 95% CI):
+  Bucket                           Baseline            Multitask      Delta
+  ---------------------------------------------------------------------------
+  metallic_yes              0.0929 ± 0.0079      0.0957 ± 0.0081    +0.0028  (n=917)
+  metallic_no               0.1015 ± 0.0073      0.1037 ± 0.0078    +0.0022  (n=1333)
+  transmissive              0.0918 ± 0.0099      0.0928 ± 0.0102    +0.0010  (n=449)
+  opaque                    0.0995 ± 0.0063      0.1023 ± 0.0066    +0.0028  (n=1801)
+  rough_low                 0.0845 ± 0.0053      0.0877 ± 0.0058    +0.0032  (n=1343)
+  rough_mid                 0.0961 ± 0.0136      0.0992 ± 0.0143    +0.0031  (n=282)
+  rough_high                0.1277 ± 0.0143      0.1283 ± 0.0145    +0.0007  (n=625)
+
+Multitask per-parameter MAE:
+  metallic             0.0104
+  roughness            0.0566
+  specular             0.0216
+  transmission         0.0236
+  ior                  0.0569
+======================================================================
+
+============================================================
+Shiny subset (roughness < 0.2 AND metallic > 0.8): n = 455 / 2250
+============================================================
+
+==============================================================================
+Metric                                          Baseline            Multitask
+------------------------------------------------------------------------------
+  log_mse (mean ± 95% CI)                0.0828 ± 0.0086      0.0881 ± 0.0097
+  LPIPS (mean ± 95% CI)                  0.3901 ± 0.0133      0.3872 ± 0.0132
+  material_param_mae (mean)                          N/A               0.0139
+
+Paired t-test (baseline - multitask) on per-sample log_mse:
+  n              = 455
+  mean diff      = -0.0052 (95% CI ± 0.0025) — baseline better
+  std of diffs   = 0.0274
+  t-statistic    = -4.0835
+  p-value (two-sided, normal approx) = 4.436e-05
+
+Paired t-test (baseline - multitask) on per-sample LPIPS:
+  n              = 455
+  mean diff      = +0.0029 (95% CI ± 0.0035) — multitask better
+  t-statistic    = +1.6043
+  p-value (two-sided, normal approx) = 0.1086
+
+Per-material log_mse (mean ± 95% CI):
+  Material                         Baseline            Multitask      Delta
+  ---------------------------------------------------------------------------
+  diffuse                               N/A                  N/A          —
+  glossy                                N/A                  N/A          —
+  metallic                  0.0828 ± 0.0086      0.0881 ± 0.0097    +0.0052
+  rough_metallic                        N/A                  N/A          —
+  dielectric                            N/A                  N/A          —
+
+Per-parameter-bucket log_mse (mean ± 95% CI):
+  Bucket                           Baseline            Multitask      Delta
+  ---------------------------------------------------------------------------
+  metallic_yes              0.0828 ± 0.0086      0.0881 ± 0.0097    +0.0052  (n=455)
+  metallic_no                           N/A                  N/A          —  (n=0)
+  transmissive                          N/A                  N/A          —  (n=0)
+  opaque                    0.0828 ± 0.0086      0.0881 ± 0.0097    +0.0052  (n=455)
+  rough_low                 0.0828 ± 0.0086      0.0881 ± 0.0097    +0.0052  (n=455)
+  rough_mid                             N/A                  N/A          —  (n=0)
+  rough_high                            N/A                  N/A          —  (n=0)
+
+Multitask per-parameter MAE:
+  metallic             0.0014
+  roughness            0.0481
+  specular             0.0049
+  transmission         0.0007
+  ior                  0.0145
+======================================================================
+
+============================================================
+Rendered-teapot LPIPS on 120 shiny samples (transparent envmap bg)
+============================================================
+
+[teapot-lpips] Rendering 120 sample(s) at 256px × 16spp (transparent bg).
+[teapot-lpips] rendered 10/120
+[teapot-lpips] rendered 20/120
+[teapot-lpips] rendered 30/120
+[teapot-lpips] rendered 40/120
+[teapot-lpips] rendered 50/120
+[teapot-lpips] rendered 60/120
+[teapot-lpips] rendered 70/120
+[teapot-lpips] rendered 80/120
+[teapot-lpips] rendered 90/120
+[teapot-lpips] rendered 100/120
+[teapot-lpips] rendered 110/120
+[teapot-lpips] rendered 120/120
+[teapot-lpips] Rendered 120 complete triplet(s).
+
+  baseline render-LPIPS  mean = 0.1271
+  multitask render-LPIPS mean = 0.1053
+  paired t-test (baseline - multitask)
+    n            = 120
+    mean diff    = +0.0218 (95% CI ± 0.0098) — multitask better
+    t-statistic  = +4.3519
+    p-value      = 1.349e-05
+Per-material chart saved to result\seed_sweep_106\per_material_comparison.png
+Per-attribute bucket chart saved to result\seed_sweep_106\per_param_bucket_comparison.png
+Per-sample distribution saved to result\seed_sweep_106\log_mse_distribution.png
+Per-parameter MAE chart saved to result\seed_sweep_106\material_param_mae.png
+
+Results saved to ./models\seed_sweep_106_results.json
+
+[teapot insertion comparison renders skipped via --skip-teapot-insertion]
+Eval log saved to ./models\seed_sweep_106_eval_log.txt
