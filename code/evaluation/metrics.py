@@ -94,69 +94,6 @@ def mean_std_ci(values):
     return {"mean": m, "std": s, "ci95_half": _Z_95 * sem, "n": n}
 
 
-def weighted_mean_ci(values, weights):
-    """Weighted mean with a 95% CI on the weighted mean.
-
-    Uses the standard weighted-variance estimator
-        var = sum(w_i * (x_i - x_bar)^2) / sum(w_i)
-    and an effective sample size n_eff = (sum w)^2 / sum(w^2) for the SE,
-    giving SE = sqrt(var / n_eff). Robust to weights summing to anything;
-    only requires sum(w) > 0.
-    """
-    x = np.asarray(list(values), dtype=np.float64)
-    w = np.asarray(list(weights), dtype=np.float64)
-    n = int(x.size)
-    if n == 0 or w.sum() <= 0:
-        return {"mean": float("nan"), "std": 0.0, "ci95_half": 0.0, "n": 0,
-                "n_eff": 0.0}
-    sw = float(w.sum())
-    m = float((w * x).sum() / sw)
-    var = float((w * (x - m) ** 2).sum() / sw)
-    s = math.sqrt(var)
-    n_eff = float(sw * sw / (w * w).sum()) if (w * w).sum() > 0 else 0.0
-    sem = s / math.sqrt(n_eff) if n_eff > 0 else 0.0
-    return {"mean": m, "std": s, "ci95_half": _Z_95 * sem, "n": n,
-            "n_eff": n_eff}
-
-
-def weighted_paired_ttest(values_a, values_b, weights):
-    """Weighted two-sided paired t-test on per-sample arrays a and b.
-
-    Convention matches `paired_ttest`: mean_diff = weighted_mean(a) -
-    weighted_mean(b). Uses effective sample size for the SE.
-    """
-    a = np.asarray(list(values_a), dtype=np.float64)
-    b = np.asarray(list(values_b), dtype=np.float64)
-    w = np.asarray(list(weights), dtype=np.float64)
-    if a.shape != b.shape or a.shape != w.shape:
-        raise ValueError(f"weighted paired arrays must share shape, got "
-                         f"{a.shape}, {b.shape}, {w.shape}")
-    diff = a - b
-    n = int(diff.size)
-    if n < 2 or w.sum() <= 0:
-        return {"n": n, "mean_diff": 0.0, "std_diff": 0.0, "sem": 0.0,
-                "t_stat": 0.0, "p_value": 1.0, "ci95_half_diff": 0.0,
-                "n_eff": 0.0}
-    sw = float(w.sum())
-    md = float((w * diff).sum() / sw)
-    var = float((w * (diff - md) ** 2).sum() / sw)
-    sd = math.sqrt(var)
-    n_eff = float(sw * sw / (w * w).sum()) if (w * w).sum() > 0 else 0.0
-    sem = sd / math.sqrt(n_eff) if n_eff > 0 else 0.0
-    t = md / sem if sem > 0 else 0.0
-    p = float(2.0 * (1.0 - _normal_cdf(abs(t))))
-    return {
-        "n": n,
-        "n_eff": n_eff,
-        "mean_diff": md,
-        "std_diff": sd,
-        "sem": sem,
-        "t_stat": float(t),
-        "p_value": p,
-        "ci95_half_diff": _Z_95 * sem,
-    }
-
-
 def paired_ttest(values_a, values_b):
     """Two-sided paired t-test on per-sample arrays a and b.
 
@@ -195,30 +132,11 @@ def paired_ttest(values_a, values_b):
 # Envmap metrics
 # ---------------------------------------------------------------------------
 
-def linear_mse(pred_env, target_env):
-    """MSE in linear HDR space, per-sample. Inputs (3, H, W) or (H, W, 3)."""
-    p = np.asarray(pred_env, dtype=np.float64).ravel()
-    t = np.asarray(target_env, dtype=np.float64).ravel()
-    return float(np.mean((p - t) ** 2))
-
-
 def log_mse(pred_env, target_env, eps: float = 1.0):
     """MSE in log-HDR space, per-sample. Mirrors training loss."""
     p = np.log(np.asarray(pred_env, dtype=np.float64) + eps).ravel()
     t = np.log(np.asarray(target_env, dtype=np.float64) + eps).ravel()
     return float(np.mean((p - t) ** 2))
-
-
-def psnr_log(pred_env, target_env, eps: float = 1.0):
-    """PSNR computed in log-HDR space.
-
-    Treats log(env+eps) as the signal with peak 1.0. Comparable across runs
-    of the same dataset; not a calibrated photographic PSNR.
-    """
-    mse = log_mse(pred_env, target_env, eps=eps)
-    if mse <= 1e-12:
-        return float("inf")
-    return float(10.0 * np.log10(1.0 / mse))
 
 
 # ---------------------------------------------------------------------------
@@ -251,24 +169,20 @@ def material_param_mae(pred_params, target_params, param_names=None):
 # ---------------------------------------------------------------------------
 
 def _summarize_bucket(pred_env_all, target_env_all, idxs):
-    """Compute log_mse (with CI), linear_mse, psnr_log over a set of indices."""
+    """Compute log_mse (with CI) over a set of indices."""
     log_mses = [log_mse(pred_env_all[i], target_env_all[i]) for i in idxs]
-    lin_mses = [linear_mse(pred_env_all[i], target_env_all[i]) for i in idxs]
-    psnrs    = [psnr_log(pred_env_all[i], target_env_all[i])  for i in idxs]
     s = mean_std_ci(log_mses)
     return {
         "log_mse": s["mean"],
         "log_mse_std": s["std"],
         "log_mse_ci95_half": s["ci95_half"],
-        "linear_mse": float(np.mean(lin_mses)),
-        "psnr_log": float(np.mean(psnrs)),
         "count": len(idxs),
     }
 
 
 def _empty_bucket():
     return {"log_mse": None, "log_mse_std": None, "log_mse_ci95_half": None,
-            "linear_mse": None, "psnr_log": None, "count": 0}
+            "count": 0}
 
 
 def lighting_metrics_by_bucket(pred_env_all, target_env_all, buckets):

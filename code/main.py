@@ -245,12 +245,6 @@ def run_evaluation(config, test_loader, baseline_model, multitask_model):
             material_param_names=config.material_param_names,
             lpips_device=config.device,
         )
-        print("Baseline test metrics:")
-        agg = baseline_metrics["aggregate"]
-        print(f"  log_mse:    {agg['log_mse_mean']:.4f} ± {agg['log_mse_ci95_half']:.4f}")
-        print(f"  linear_mse: {agg['linear_mse_mean']:.4f} ± {agg['linear_mse_ci95_half']:.4f}")
-        print(f"  psnr_log:   {agg['psnr_log_mean']:.2f} ± {agg['psnr_log_ci95_half']:.2f} dB")
-        print()
 
     if multitask_model is not None:
         multitask_results = evaluate_model(multitask_model, test_loader, config.device,
@@ -260,17 +254,6 @@ def run_evaluation(config, test_loader, baseline_model, multitask_model):
             material_param_names=config.material_param_names,
             lpips_device=config.device,
         )
-        print("Multitask test metrics:")
-        agg = multitask_metrics["aggregate"]
-        print(f"  log_mse:    {agg['log_mse_mean']:.4f} ± {agg['log_mse_ci95_half']:.4f}")
-        print(f"  linear_mse: {agg['linear_mse_mean']:.4f} ± {agg['linear_mse_ci95_half']:.4f}")
-        print(f"  psnr_log:   {agg['psnr_log_mean']:.2f} ± {agg['psnr_log_ci95_half']:.2f} dB")
-        if "material_param_mae" in multitask_metrics:
-            mae = multitask_metrics["material_param_mae"]
-            print(f"  material_param_mae (mean): {mae['mean']:.4f}")
-            for name, v in mae["per_param"].items():
-                print(f"    {name:<14} {v:.4f}")
-        print()
 
     # Side-by-side comparison (only when both were trained)
     if baseline_metrics is not None and multitask_metrics is not None:
