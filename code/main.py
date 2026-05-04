@@ -307,7 +307,7 @@ def run_evaluation(config, test_loader, baseline_model, multitask_model):
             # ---- Rendered-teapot LPIPS on a random subset of shiny samples ----
             shiny_idxs = np.where(mask)[0]
             rng = np.random.default_rng(config.seed)
-            n_render = min(25, len(shiny_idxs))
+            n_render = min(75, len(shiny_idxs))
             picked = rng.choice(shiny_idxs, size=n_render, replace=False)
             picked = np.sort(picked).tolist()
 
@@ -320,7 +320,7 @@ def run_evaluation(config, test_loader, baseline_model, multitask_model):
             records = render_for_lpips(
                 config, baseline_results, multitask_results,
                 subset_indices=picked, out_dir=render_dir,
-                render_resolution=128, render_samples=8,
+                render_resolution=256, render_samples=16,
             )
             if records:
                 pair = lpips_on_renders(records, device=str(config.device))
