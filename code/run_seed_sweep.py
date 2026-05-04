@@ -41,6 +41,8 @@ def main():
                     help="Seed for the train/val/test split (held constant "
                          "across runs so all seeds evaluate on the same test "
                          "set). Defaults to 42 to match prior runs.")
+    ap.add_argument("--multitask-arch", choices=["tiled", "film"], default=None,
+                    help="Forwarded to main.py --multitask-arch.")
     ap.add_argument("--shiny-lpips-max-n", type=int, default=120,
                     help="Cap on shiny-subset render count per run. Lower = "
                          "more seeds fit in budget. 120 keeps each run ~1h.")
@@ -93,6 +95,8 @@ def main():
         ]
         if args.epochs is not None:
             cmd += ["--epochs", str(args.epochs)]
+        if args.multitask_arch is not None:
+            cmd += ["--multitask-arch", args.multitask_arch]
 
         run_log_path = os.path.join(args.results_dir, f"{exp}_stdout.log")
         t0 = time.time()
