@@ -88,7 +88,8 @@ def _find_hdri_on_disk(hdri_root: str, filename: str) -> Optional[str]:
 
 
 def _run_blender(blender_bin, script_path, teapot, hdri, output,
-                 rotation_deg, strength, resolution, samples) -> bool:
+                 rotation_deg, strength, resolution, samples,
+                 transparent_bg: bool = False) -> bool:
     cmd = [
         blender_bin, "--background", "--python", script_path, "--",
         "--teapot", teapot,
@@ -99,6 +100,8 @@ def _run_blender(blender_bin, script_path, teapot, hdri, output,
         "--resolution", str(int(resolution)),
         "--samples", str(int(samples)),
     ]
+    if transparent_bg:
+        cmd.append("--transparent-bg")
     proc = subprocess.run(cmd, capture_output=True, text=True)
     if proc.returncode != 0:
         tail = (proc.stderr or proc.stdout or "")[-1500:]
@@ -236,3 +239,176 @@ def run_teapot_comparisons(config,
             print(f"[teapot] sample {i} -> {compare}")
 
     print(f"[teapot] Done. See {out_dir}/sample_*_compare.png")
+
+
+# ---------------------------------------------------------------------------
+# Eval-mode rendering + LPIPS on rendered teapots
+# ---------------------------------------------------------------------------
+
+def render_for_lpips(config,
+                     baseline_results,
+                     multitask_results,
+                     subset_indices,
+                     out_dir: str,
+                     render_resolution: int = 256,
+                     render_samples: int = 16,
+                     teapot_path: str = "dataset/renders/utah_teapot.obj",
+                     hdri_root: str = "dataset/hdris",
+                     blender_script: str = "code/render_teapot.py"):
+    """Render GT + per-model teapots (transparent envmap background) for each
+    sample listed in subset_indices. Returns a dict with paths and the
+    metadata index for each rendered sample. Skips renders that already exist.
+
+    subset_indices: positional indices into the eval results arrays (NOT the
+    metadata.json indices). I.e. they index into pred_env / target_indices.
+    """
+    blender_bin = find_blender_bin()
+    if blender_bin is None:
+        print("[teapot-lpips] Blender not found; skipping.")
+        return None
+    if not os.path.exists(teapot_path) or not os.path.exists(blender_script):
+        print("[teapot-lpips] Teapot OBJ or render script missing; skipping.")
+        return None
+    if multitask_results is None or baseline_results is None:
+        print("[teapot-lpips] Need both baseline and multitask results.")
+        return None
+
+    metadata_path = os.path.join(config.metadata_root, "metadata.json")
+    with open(metadata_path) as f:
+        metadata = json.load(f)
+
+    indices = multitask_results["target_indices"]
+    os.makedirs(out_dir, exist_ok=True)
+    print(f"[teapot-lpips] Rendering {len(subset_indices)} sample(s) at "
+          f"{render_resolution}px × {render_samples}spp (transparent bg).")
+
+    records = []
+    for k, eval_i in enumerate(subset_indices):
+        eval_i = int(eval_i)
+        meta_idx = int(indices[eval_i])
+        if meta_idx >= len(metadata):
+            continue
+        meta = metadata[meta_idx]
+        hdri_disk = _find_hdri_on_disk(hdri_root, meta["hdri_file"])
+        if hdri_disk is None:
+            print(f"[teapot-lpips] eval {eval_i}: HDRI {meta['hdri_file']} "
+                  f"missing; skip")
+            continue
+
+        rot_deg = float(meta["rotation_z_deg"])
+        strength = float(meta["world_strength"])
+
+        gt_path = os.path.join(out_dir, f"eval_{eval_i:05d}_gt.png")
+        b_path  = os.path.join(out_dir, f"eval_{eval_i:05d}_baseline.png")
+        m_path  = os.path.join(out_dir, f"eval_{eval_i:05d}_multitask.png")
+
+        # GT render (cached)
+        if not os.path.exists(gt_path):
+            ok = _run_blender(blender_bin, blender_script, teapot_path,
+                              hdri_disk, gt_path, rot_deg, strength,
+                              render_resolution, render_samples,
+                              transparent_bg=True)
+            if not ok:
+                continue
+
+        # Baseline pred
+        if not os.path.exists(b_path):
+            hdr_b = os.path.join(out_dir, f"eval_{eval_i:05d}_baseline.hdr")
+            try:
+                save_envmap_as_hdr(baseline_results["pred_env"][eval_i], hdr_b)
+            except Exception as exc:
+                print(f"[teapot-lpips] save_hdr failed (baseline {eval_i}): {exc}")
+                continue
+            ok = _run_blender(blender_bin, blender_script, teapot_path,
+                              hdr_b, b_path, 0.0, 1.0,
+                              render_resolution, render_samples,
+                              transparent_bg=True)
+            if not ok:
+                continue
+
+        # Multitask pred
+        if not os.path.exists(m_path):
+            hdr_m = os.path.join(out_dir, f"eval_{eval_i:05d}_multitask.hdr")
+            try:
+                save_envmap_as_hdr(multitask_results["pred_env"][eval_i], hdr_m)
+            except Exception as exc:
+                print(f"[teapot-lpips] save_hdr failed (multitask {eval_i}): {exc}")
+                continue
+            ok = _run_blender(blender_bin, blender_script, teapot_path,
+                              hdr_m, m_path, 0.0, 1.0,
+                              render_resolution, render_samples,
+                              transparent_bg=True)
+            if not ok:
+                continue
+
+        records.append({"eval_i": eval_i, "meta_idx": meta_idx,
+                        "gt": gt_path, "baseline": b_path, "multitask": m_path})
+        if (k + 1) % 10 == 0:
+            print(f"[teapot-lpips] rendered {k + 1}/{len(subset_indices)}")
+
+    print(f"[teapot-lpips] Rendered {len(records)} complete triplet(s).")
+    return records
+
+
+def _load_rgba_over_gray(path: str, gray: float = 0.5) -> np.ndarray:
+    """Load an RGBA PNG, alpha-composite over a neutral gray, return (3,H,W)
+    in [-1, 1] for LPIPS."""
+    if cv2 is None:
+        raise RuntimeError("cv2 is required to read rendered PNGs")
+    img = cv2.imread(path, cv2.IMREAD_UNCHANGED)
+    if img is None:
+        raise RuntimeError(f"failed to read {path}")
+    img = img.astype(np.float32) / 255.0
+    if img.ndim == 3 and img.shape[2] == 4:
+        bgr = img[..., :3]
+        a = img[..., 3:4]
+    else:
+        bgr = img[..., :3] if img.ndim == 3 else np.repeat(img[..., None], 3, -1)
+        a = np.ones_like(bgr[..., :1])
+    rgb = bgr[..., ::-1]                                # BGR -> RGB
+    comp = a * rgb + (1.0 - a) * gray                   # over neutral gray
+    comp = np.clip(comp, 0.0, 1.0) * 2.0 - 1.0          # to [-1, 1]
+    return np.transpose(comp, (2, 0, 1)).astype(np.float32)
+
+
+def lpips_on_renders(records, device: str = "cpu", batch_size: int = 8):
+    """Compute paired LPIPS(GT, baseline) and LPIPS(GT, multitask) over a
+    list of render records (from render_for_lpips). Returns
+    (b_lpips, m_lpips) as lists of equal length, or None on failure.
+    """
+    if not records:
+        return None
+    try:
+        import lpips as _lpips_mod  # noqa: F401
+        import torch
+        net = _lpips_mod.LPIPS(net="alex", verbose=False).to(device).eval()
+        for p in net.parameters():
+            p.requires_grad_(False)
+    except ImportError:
+        print("[teapot-lpips] lpips package not installed; skipping.")
+        return None
+
+    n = len(records)
+    gt = np.empty((n, 3, 0, 0), dtype=np.float32)  # placeholder
+    arrs = {"gt": [], "baseline": [], "multitask": []}
+    for r in records:
+        for k in ("gt", "baseline", "multitask"):
+            arrs[k].append(_load_rgba_over_gray(r[k]))
+    g = np.stack(arrs["gt"])
+    b = np.stack(arrs["baseline"])
+    m = np.stack(arrs["multitask"])
+
+    def _batch(a, b):
+        out = np.empty(a.shape[0], dtype=np.float32)
+        with torch.no_grad():
+            for s in range(0, a.shape[0], batch_size):
+                e = min(s + batch_size, a.shape[0])
+                ta = torch.from_numpy(a[s:e]).to(device)
+                tb = torch.from_numpy(b[s:e]).to(device)
+                d = net(ta, tb).view(-1).cpu().numpy()
+                out[s:e] = d
+        return out
+
+    b_lp = _batch(g, b).tolist()
+    m_lp = _batch(g, m).tolist()
+    return [float(v) for v in b_lp], [float(v) for v in m_lp]

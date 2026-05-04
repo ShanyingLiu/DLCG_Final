@@ -36,6 +36,9 @@ _p.add_argument("--rotation_z_deg", type=float, default=0.0)
 _p.add_argument("--strength", type=float, default=1.0)
 _p.add_argument("--resolution", type=int, default=512)
 _p.add_argument("--samples", type=int, default=32)
+_p.add_argument("--transparent-bg", action="store_true",
+                help="Render with alpha=0 envmap background; keeps teapot "
+                     "and ground plane visible. Saves RGBA PNG.")
 args = _p.parse_args(_argv)
 
 
@@ -48,17 +51,17 @@ def clear_scene():
         bpy.data.images.remove(img)
 
 
-def setup_render(resolution, samples):
+def setup_render(resolution, samples, transparent_bg=False):
     sc = bpy.context.scene
     sc.render.engine = "CYCLES"
     sc.render.resolution_x = resolution
     sc.render.resolution_y = resolution
     sc.render.resolution_percentage = 100
     sc.render.image_settings.file_format = "PNG"
-    sc.render.image_settings.color_mode = "RGB"
+    sc.render.image_settings.color_mode = "RGBA" if transparent_bg else "RGB"
     sc.render.image_settings.color_depth = "8"
     sc.render.image_settings.compression = 0
-    sc.render.film_transparent = False
+    sc.render.film_transparent = bool(transparent_bg)
     sc.render.use_persistent_data = True
 
     sc.cycles.samples = samples
@@ -244,7 +247,8 @@ def main():
         sys.exit(f"[render_teapot] HDRI not found: {args.hdri}")
 
     clear_scene()
-    setup_render(args.resolution, args.samples)
+    setup_render(args.resolution, args.samples,
+                 transparent_bg=args.transparent_bg)
     add_camera()
 
     teapot = import_teapot(args.teapot)

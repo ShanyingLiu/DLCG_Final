@@ -20,7 +20,28 @@ from models.baseline_model import BaselineLightingNet
 from models.multitask_model import MaterialAwareLightingNet
 from training.losses import MultiTaskLoss
 from training.train import Trainer
+import numpy as np
 from evaluation.evaluator import evaluate_model, compute_all_metrics, compare_models
+
+
+def _filter_results(results, mask):
+    """Return a new results dict containing only samples where mask is True."""
+    mask = np.asarray(mask, dtype=bool)
+    out = {}
+    for k, v in results.items():
+        if v is None:
+            out[k] = None
+        else:
+            out[k] = v[mask]
+    return out
+
+
+def _shiny_mask(results, material_param_names,
+                rough_max=0.2, metallic_min=0.8):
+    p = np.asarray(results["target_material_params"], dtype=np.float32)
+    idx = {n: i for i, n in enumerate(material_param_names)}
+    return ((p[:, idx["roughness"]] < rough_max)
+            & (p[:, idx["metallic"]] > metallic_min))
 from utils.visualizer import (
     plot_envmap_comparison,
     plot_per_material_comparison,
@@ -29,7 +50,11 @@ from utils.visualizer import (
     plot_log_mse_distribution,
     plot_training_curves,
 )
-from utils.teapot_compare import run_teapot_comparisons, copy_sample_inputs
+from utils.teapot_compare import (
+    run_teapot_comparisons, copy_sample_inputs,
+    render_for_lpips, lpips_on_renders,
+)
+from evaluation.metrics import paired_ttest
 
 
 def make_dataloaders(config, transform):
@@ -252,6 +277,70 @@ def run_evaluation(config, test_loader, baseline_model, multitask_model):
         compare_models(baseline_metrics, multitask_metrics,
                        material_param_names=config.material_param_names)
 
+    # --- Shiny-subset evaluation: roughness < 0.2 AND metallic > 0.8 ---
+    # Tests the project hypothesis on the materials where envmap detail
+    # matters most (sharp specular reflections).
+    if (baseline_results is not None and multitask_results is not None):
+        mask = _shiny_mask(multitask_results, config.material_param_names,
+                           rough_max=0.2, metallic_min=0.8)
+        n_shiny = int(mask.sum())
+        print(f"\n{'='*60}")
+        print(f"Shiny subset (roughness < 0.2 AND metallic > 0.8): "
+              f"n = {n_shiny} / {len(mask)}")
+        print(f"{'='*60}\n")
+        if n_shiny < 2:
+            print("[shiny subset too small to compare — skipping]")
+        else:
+            b_sub = compute_all_metrics(
+                _filter_results(baseline_results, mask),
+                material_param_names=config.material_param_names,
+                lpips_device=config.device,
+            )
+            m_sub = compute_all_metrics(
+                _filter_results(multitask_results, mask),
+                material_param_names=config.material_param_names,
+                lpips_device=config.device,
+            )
+            compare_models(b_sub, m_sub,
+                           material_param_names=config.material_param_names)
+
+            # ---- Rendered-teapot LPIPS on a random subset of shiny samples ----
+            shiny_idxs = np.where(mask)[0]
+            rng = np.random.default_rng(config.seed)
+            n_render = min(25, len(shiny_idxs))
+            picked = rng.choice(shiny_idxs, size=n_render, replace=False)
+            picked = np.sort(picked).tolist()
+
+            print(f"\n{'='*60}")
+            print(f"Rendered-teapot LPIPS on {n_render} shiny samples "
+                  f"(transparent envmap bg)")
+            print(f"{'='*60}\n")
+            render_dir = os.path.join("result", config.experiment_name,
+                                      "teapot_lpips")
+            records = render_for_lpips(
+                config, baseline_results, multitask_results,
+                subset_indices=picked, out_dir=render_dir,
+                render_resolution=128, render_samples=8,
+            )
+            if records:
+                pair = lpips_on_renders(records, device=str(config.device))
+                if pair is not None:
+                    b_lp, m_lp = pair
+                    tt = paired_ttest(b_lp, m_lp)
+                    sign = ("multitask better" if tt["mean_diff"] > 0
+                            else "baseline better")
+                    print()
+                    print(f"  baseline render-LPIPS  mean = "
+                          f"{np.mean(b_lp):.4f}")
+                    print(f"  multitask render-LPIPS mean = "
+                          f"{np.mean(m_lp):.4f}")
+                    print(f"  paired t-test (baseline - multitask)")
+                    print(f"    n            = {tt['n']}")
+                    print(f"    mean diff    = {tt['mean_diff']:+.4f} "
+                          f"(95% CI ± {tt['ci95_half_diff']:.4f}) — {sign}")
+                    print(f"    t-statistic  = {tt['t_stat']:+.4f}")
+                    print(f"    p-value      = {tt['p_value']:.4g}")
+
     # --- Visualizations ---
     vis_dir = os.path.join("result", config.experiment_name)
 
@@ -324,7 +413,6 @@ def run_evaluation(config, test_loader, baseline_model, multitask_model):
 
     # Persist the paired t-test on per-sample angular errors
     if baseline_metrics is not None and multitask_metrics is not None:
-        from evaluation.metrics import paired_ttest
         b_log = baseline_metrics.get("per_sample", {}).get("log_mse")
         m_log = multitask_metrics.get("per_sample", {}).get("log_mse")
         if b_log is not None and m_log is not None and len(b_log) == len(m_log):
