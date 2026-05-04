@@ -39,6 +39,8 @@ _p.add_argument("--samples", type=int, default=32)
 _p.add_argument("--transparent-bg", action="store_true",
                 help="Render with alpha=0 envmap background; keeps teapot "
                      "and ground plane visible. Saves RGBA PNG.")
+_p.add_argument("--cycles-seed", type=int, default=0,
+                help="Fix Cycles sampling seed for reproducible renders.")
 args = _p.parse_args(_argv)
 
 
@@ -65,6 +67,7 @@ def setup_render(resolution, samples, transparent_bg=False):
     sc.render.use_persistent_data = True
 
     sc.cycles.samples = samples
+    sc.cycles.seed = int(getattr(args, "cycles_seed", 0))
     sc.cycles.use_denoising = True
     sc.cycles.use_adaptive_sampling = True
     sc.cycles.adaptive_threshold = 0.01

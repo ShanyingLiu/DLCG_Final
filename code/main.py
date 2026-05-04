@@ -288,11 +288,12 @@ def run_evaluation(config, test_loader, baseline_model, multitask_model):
                            material_param_names=config.material_param_names)
 
             # ---- Rendered-teapot LPIPS on a random subset of shiny samples ----
+            # Render the full shiny subset for the LPIPS test. The renderer
+            # caches each PNG, so this is a one-time cost — subsequent runs
+            # become deterministic and near-instant.
             shiny_idxs = np.where(mask)[0]
-            rng = np.random.default_rng(config.seed)
-            n_render = min(75, len(shiny_idxs))
-            picked = rng.choice(shiny_idxs, size=n_render, replace=False)
-            picked = np.sort(picked).tolist()
+            picked = np.sort(shiny_idxs).tolist()
+            n_render = len(picked)
 
             print(f"\n{'='*60}")
             print(f"Rendered-teapot LPIPS on {n_render} shiny samples "

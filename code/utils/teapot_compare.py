@@ -102,6 +102,7 @@ def _run_blender(blender_bin, script_path, teapot, hdri, output,
     ]
     if transparent_bg:
         cmd.append("--transparent-bg")
+    cmd += ["--cycles-seed", "0"]
     proc = subprocess.run(cmd, capture_output=True, text=True)
     if proc.returncode != 0:
         tail = (proc.stderr or proc.stdout or "")[-1500:]
@@ -350,14 +351,19 @@ def render_for_lpips(config,
     return records
 
 
-def _load_rgba_over_gray(path: str, gray: float = 0.5) -> np.ndarray:
+def _load_rgba_over_gray(path: str, gray: float = 0.5,
+                         target_hw=None) -> np.ndarray:
     """Load an RGBA PNG, alpha-composite over a neutral gray, return (3,H,W)
-    in [-1, 1] for LPIPS."""
+    in [-1, 1] for LPIPS. If target_hw=(H,W), resize before compositing so
+    mixed-resolution caches stack cleanly."""
     if cv2 is None:
         raise RuntimeError("cv2 is required to read rendered PNGs")
     img = cv2.imread(path, cv2.IMREAD_UNCHANGED)
     if img is None:
         raise RuntimeError(f"failed to read {path}")
+    if target_hw is not None and (img.shape[0], img.shape[1]) != target_hw:
+        img = cv2.resize(img, (target_hw[1], target_hw[0]),
+                         interpolation=cv2.INTER_AREA)
     img = img.astype(np.float32) / 255.0
     if img.ndim == 3 and img.shape[2] == 4:
         bgr = img[..., :3]
@@ -388,12 +394,22 @@ def lpips_on_renders(records, device: str = "cpu", batch_size: int = 8):
         print("[teapot-lpips] lpips package not installed; skipping.")
         return None
 
-    n = len(records)
-    gt = np.empty((n, 3, 0, 0), dtype=np.float32)  # placeholder
+    # Pick a common target size (smallest H/W across cached renders) so
+    # mixed-resolution caches (e.g. earlier 128px + later 256px) coexist.
+    target_hw = None
+    for r in records:
+        for k in ("gt", "baseline", "multitask"):
+            im = cv2.imread(r[k], cv2.IMREAD_UNCHANGED)
+            if im is None:
+                continue
+            hw = (im.shape[0], im.shape[1])
+            target_hw = hw if target_hw is None else (
+                min(target_hw[0], hw[0]), min(target_hw[1], hw[1]))
+
     arrs = {"gt": [], "baseline": [], "multitask": []}
     for r in records:
         for k in ("gt", "baseline", "multitask"):
-            arrs[k].append(_load_rgba_over_gray(r[k]))
+            arrs[k].append(_load_rgba_over_gray(r[k], target_hw=target_hw))
     g = np.stack(arrs["gt"])
     b = np.stack(arrs["baseline"])
     m = np.stack(arrs["multitask"])
