@@ -103,31 +103,13 @@ Multitask per-parameter MAE:
   ior                  0.0123
 ======================================================================
 
-============================================================
-Rendered-teapot LPIPS on 75 shiny samples (transparent envmap bg)
-============================================================
-
-[teapot-lpips] Rendering 75 sample(s) at 256px × 16spp (transparent bg).
-[teapot-lpips] rendered 10/75
-[teapot-lpips] rendered 20/75
-[teapot-lpips] rendered 30/75
-[teapot-lpips] rendered 40/75
-[teapot-lpips] rendered 50/75
-[teapot-lpips] rendered 60/75
-[teapot-lpips] rendered 70/75
-[teapot-lpips] Rendered 75 complete triplet(s).
-
-  baseline render-LPIPS  mean = 0.1603
-  multitask render-LPIPS mean = 0.1383
-  paired t-test (baseline - multitask)
-    n            = 75
-    mean diff    = +0.0219 (95% CI ± 0.0183) — multitask better
-    t-statistic  = +2.3513
-    p-value      = 0.01871
+[render-LPIPS skipped via --no-teapot-lpips]
 Per-material chart saved to result/material_aware_lighting/per_material_comparison.png
 Per-attribute bucket chart saved to result/material_aware_lighting/per_param_bucket_comparison.png
 Per-sample distribution saved to result/material_aware_lighting/log_mse_distribution.png
 Per-parameter MAE chart saved to result/material_aware_lighting/material_param_mae.png
+
+[showcase] selected eval positions: [410, 1192, 1312, 1669, 1932]
 
 Results saved to ./models/material_aware_lighting_results.json
 
@@ -136,6 +118,7 @@ Teapot insertion comparison renders
 ============================================================
 
 [teapot] Rendering 5 test sample(s) at 512px × 64spp via /Applications/Blender.app/Contents/MacOS/Blender
+[teapot] Eval positions: [410, 1192, 1312, 1669, 1932]  (metadata indices: [130, 5449, 1838, 1931, 13822])
 [teapot] Output dir: result/material_aware_lighting/teapot_renders
 [teapot] sample 0 -> result/material_aware_lighting/teapot_renders/sample_0_compare.png
 [teapot] sample 1 -> result/material_aware_lighting/teapot_renders/sample_1_compare.png

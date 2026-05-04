@@ -166,6 +166,12 @@ def main():
     parser.add_argument('--eval-only', action='store_true',
                         help='Skip training; load saved checkpoints and run '
                              'evaluation + visualizations only.')
+    parser.add_argument('--no-teapot-lpips', action='store_true',
+                        help='Skip the render-LPIPS pass on the shiny subset '
+                             '(the slow Blender block).')
+    parser.add_argument('--no-teapot-showcase', action='store_true',
+                        help='Skip the final teapot-render showcase strips '
+                             '(the visualization-only renders at the end).')
     args = parser.parse_args()
 
     # Apply overrides
@@ -175,6 +181,8 @@ def main():
         config.batch_size = args.batch_size
     if args.backbone is not None:
         config.backbone = args.backbone
+    config.skip_teapot_lpips = bool(args.no_teapot_lpips)
+    config.skip_teapot_showcase = bool(args.no_teapot_showcase)
 
     # Device
     config.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -287,43 +295,45 @@ def run_evaluation(config, test_loader, baseline_model, multitask_model):
             compare_models(b_sub, m_sub,
                            material_param_names=config.material_param_names)
 
-            # ---- Rendered-teapot LPIPS on a random subset of shiny samples ----
-            # Render the full shiny subset for the LPIPS test. The renderer
-            # caches each PNG, so this is a one-time cost — subsequent runs
-            # become deterministic and near-instant.
-            shiny_idxs = np.where(mask)[0]
-            picked = np.sort(shiny_idxs).tolist()
-            n_render = len(picked)
+            if getattr(config, 'skip_teapot_lpips', False):
+                print("\n[render-LPIPS skipped via --no-teapot-lpips]")
+            else:
+                # ---- Rendered-teapot LPIPS on the full shiny subset ----
+                # Renderer caches each PNG, so this is a one-time cost —
+                # subsequent runs become deterministic and near-instant.
+                shiny_idxs = np.where(mask)[0]
+                picked = np.sort(shiny_idxs).tolist()
+                n_render = len(picked)
 
-            print(f"\n{'='*60}")
-            print(f"Rendered-teapot LPIPS on {n_render} shiny samples "
-                  f"(transparent envmap bg)")
-            print(f"{'='*60}\n")
-            render_dir = os.path.join("result", config.experiment_name,
-                                      "teapot_lpips")
-            records = render_for_lpips(
-                config, baseline_results, multitask_results,
-                subset_indices=picked, out_dir=render_dir,
-                render_resolution=256, render_samples=16,
-            )
-            if records:
-                pair = lpips_on_renders(records, device=str(config.device))
-                if pair is not None:
-                    b_lp, m_lp = pair
-                    tt = paired_ttest(b_lp, m_lp)
-                    sign = ("multitask better" if tt["mean_diff"] > 0
-                            else "baseline better")
-                    print()
-                    print(f"  baseline render-LPIPS  mean = "
-                          f"{np.mean(b_lp):.4f}")
-                    print(f"  multitask render-LPIPS mean = "
-                          f"{np.mean(m_lp):.4f}")
-                    print(f"  paired t-test (baseline - multitask)")
-                    print(f"    n            = {tt['n']}")
-                    print(f"    mean diff    = {tt['mean_diff']:+.4f} "
-                          f"(95% CI ± {tt['ci95_half_diff']:.4f}) — {sign}")
-                    print(f"    t-statistic  = {tt['t_stat']:+.4f}")
-                    print(f"    p-value      = {tt['p_value']:.4g}")
+                print(f"\n{'='*60}")
+                print(f"Rendered-teapot LPIPS on {n_render} shiny samples "
+                      f"(transparent envmap bg)")
+                print(f"{'='*60}\n")
+                render_dir = os.path.join("result", config.experiment_name,
+                                          "teapot_lpips")
+                records = render_for_lpips(
+                    config, baseline_results, multitask_results,
+                    subset_indices=picked, out_dir=render_dir,
+                    render_resolution=256, render_samples=16,
+                )
+                if records:
+                    pair = lpips_on_renders(records, device=str(config.device))
+                    if pair is not None:
+                        b_lp, m_lp = pair
+                        tt = paired_ttest(b_lp, m_lp)
+                        sign = ("multitask better" if tt["mean_diff"] > 0
+                                else "baseline better")
+                        print()
+                        print(f"  baseline render-LPIPS  mean = "
+                              f"{np.mean(b_lp):.4f}")
+                        print(f"  multitask render-LPIPS mean = "
+                              f"{np.mean(m_lp):.4f}")
+                        print(f"  paired t-test (baseline - multitask)")
+                        print(f"    n            = {tt['n']}")
+                        print(f"    mean diff    = {tt['mean_diff']:+.4f} "
+                              f"(95% CI ± {tt['ci95_half_diff']:.4f}) — {sign}")
+                        print(f"    t-statistic  = {tt['t_stat']:+.4f}")
+                        print(f"    p-value      = {tt['p_value']:.4g}")
 
     # --- Visualizations ---
     vis_dir = os.path.join("result", config.experiment_name)
@@ -352,30 +362,44 @@ def run_evaluation(config, test_loader, baseline_model, multitask_model):
                            param_names=config.material_param_names)
         print(f"Per-parameter MAE chart saved to {mae_path}")
 
-    # Envmap GT vs predicted comparisons for a few test samples
+    # Pick a fresh random subset of test positions per run so the showcase
+    # figures and teapot renders cycle through different samples. Same
+    # positions are used for envmap-comparison PNGs, the input image copies,
+    # and run_teapot_comparisons below — so sample_<i>_*.png across all three
+    # paths reference the same test image.
+    sample_source = multitask_results or baseline_results
+    showcase_positions = []
+    if sample_source is not None:
+        n_vis = min(5, len(sample_source["pred_env"]))
+        showcase_positions = sorted(
+            np.random.default_rng().choice(
+                len(sample_source["pred_env"]), n_vis, replace=False
+            ).tolist()
+        )
+        print(f"\n[showcase] selected eval positions: {showcase_positions}")
+
+    # Envmap GT vs predicted comparisons
     for tag, raw_results in [("baseline", baseline_results),
                               ("multitask", multitask_results)]:
         if raw_results is None:
             continue
-        n_vis = min(5, len(raw_results["pred_env"]))
-        for i in range(n_vis):
-            pred = raw_results["pred_env"][i]
-            target = raw_results["target_env"][i]
+        for i, pos in enumerate(showcase_positions):
+            pred = raw_results["pred_env"][pos]
+            target = raw_results["target_env"][pos]
             env_path = os.path.join(vis_dir, f"{tag}_envmap_{i}.png")
             plot_envmap_comparison(pred, target, env_path,
                                    title=f"{tag.title()} Sample {i}")
 
     # Drop the source sphere image alongside the envmap comparison figures.
-    sample_source = multitask_results or baseline_results
-    if sample_source is not None and "target_indices" in sample_source:
-        n_vis = min(5, len(sample_source["pred_env"]))
+    if sample_source is not None and "target_indices" in sample_source and showcase_positions:
         metadata_path = os.path.join(config.metadata_root, "metadata.json")
         if os.path.exists(metadata_path):
             with open(metadata_path) as f:
                 _metadata = json.load(f)
+            picked = [int(sample_source["target_indices"][p])
+                      for p in showcase_positions]
             copy_sample_inputs(config.images_root, _metadata,
-                               sample_source["target_indices"],
-                               vis_dir, n_vis)
+                               picked, vis_dir, len(picked))
 
     # Save metrics to JSON. Drop per-sample arrays (they're large and only
     # needed in-memory for the paired t-test, which we persist separately).
@@ -406,6 +430,10 @@ def run_evaluation(config, test_loader, baseline_model, multitask_model):
         json.dump(saved, f, indent=2)
     print(f"\nResults saved to {results_path}")
 
+    if getattr(config, 'skip_teapot_showcase', False):
+        print("\n[teapot showcase renders skipped via --no-teapot-showcase]")
+        return
+
     # Utah teapot insertion comparison renders on Blender
     print(f"\n{'='*60}")
     print("Teapot insertion comparison renders")
@@ -418,6 +446,7 @@ def run_evaluation(config, test_loader, baseline_model, multitask_model):
         n_samples=getattr(config, "teapot_n_samples", 5),
         render_resolution=getattr(config, "teapot_resolution", 512),
         render_samples=getattr(config, "teapot_samples", 64),
+        positions=showcase_positions or None,
     )
 
 
