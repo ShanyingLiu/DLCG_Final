@@ -20,11 +20,13 @@ To measure the impact of material guidance I created two distinct models.
 - Baseline Model: A standard ResNet-based encoder-decoder architecture that performs a direct regression from the input image to the HDR environment map without any explicit material context.
 - Multitask Model: This model shares the same ResNet encoder but introduces a secondary material parameter regression head. These estimated material properties, including physical attributes like roughness and metallicity, are fed back into the lighting decoder, allowing the reconstruction process to be conditioned on the semantic identity of the object.
 
-###**Evaluation and Hypothesis**
+### **Evaluation and Hypothesis**
 
 These models were then evaluated through comparison of their ability to predict accurate environment maps against ground truth data. However, as pixel-wise metrics often fail to capture the nuances of realistic illumination, I also emphasize the evaluation of qualitative downstream rendering. Only by re-rendering complex objects using the predicted environment maps as light probes, can we visually verify the physical plausibility of the lighting.
 
 The central hypothesis of this work is that the multitask model will significantly outperform the baseline, particularly when observing glossy and metallic materials (defined by roughness < 0.2 and metallicity > 0.8). In these instances, the material awareness allows the network to treat shiny surfaces as specular anchors, effectively using the distorted reflections on the object's surface as a high-frequency roadmap to reconstruct the surrounding environment map with greater detail and accuracy.
+
+![Teaser](envcomp.png)
 
 ### Conclusion and Future Work
 
