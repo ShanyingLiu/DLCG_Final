@@ -1,17 +1,19 @@
-#Material-Guided Decoders: Joint Estimation of Material Properties and HDRI Lighting
+# Material-Guided Decoders: Joint Estimation of Material Properties and HDRI Lighting
 
 ![Teaser](teaser.png)
 
 
-Illumination estimation is a key component of achieving realism in inverse rendering, an extensively researched topic in the fields of computer graphics and computer vision. Predicting the material properties of objects with the guidance of light estimation metrics to achieve convincing relighting has also been thoroughly investigated, clearly demonstrating the intrinsic link between light and material information. However, there has been relatively few analyses of whether awareness of material semantic information may directly inform lighting prediction to increase visual realism in scenarios such as virtual object insertion. This project investigates this question by predicting HDR panoramic environment maps from single synthetic images with two models. The baseline model uses an encoder and CNN decoder to predict the HDR environment map, while the multi-task model uses the same encoder but with a material-parameter regression head with material information fed back into the decoder. The multi-task model was investigated with two architecture variants to verify the robustness and influence of the material semantic information. A hierarchical evaluation method was employed to determine the correspondence of high material prediction accuracy with realistic lighting prediction. The results show that while the baseline model generates HDR maps with high pixel-wise accuracy, the multi-task lighting estimation created far more visually convincing lighting recreations. This project thus demonstrates a clear case that semantic material knowledge acts as a powerful physical constraint in improving realism in illumination estimation, and the limits of applying typical pixel-wise evaluation metrics to use cases that highly value visual realism.  
+Illumination estimation is a key component of achieving realism in inverse rendering, an extensively researched topic in the fields of computer graphics and computer vision. Predicting the material properties of objects with the guidance of light estimation metrics to achieve convincing relighting has also been thoroughly investigated, clearly demonstrating the intrinsic link between light and material information. However, there has been relatively few analyses of whether awareness of material semantic information may directly inform lighting prediction to increase visual realism in scenarios such as virtual object insertion. 
+This project investigates this question by predicting HDR panoramic environment maps from single synthetic images with two models. The baseline model uses an encoder and CNN decoder to predict the HDR environment map, while the multi-task model uses the same encoder but with a material-parameter regression head with material information fed back into the decoder. The multi-task model was investigated with two architecture variants to verify the robustness and influence of the material semantic information. A hierarchical evaluation method was employed to determine the correspondence of high material prediction accuracy with realistic lighting prediction. 
+he results show that while the baseline model generates HDR maps with high pixel-wise accuracy, the multi-task lighting estimation created far more visually convincing lighting recreations. This project thus demonstrates a clear case that semantic material knowledge acts as a powerful physical constraint in improving realism in illumination estimation, and the limits of applying typical pixel-wise evaluation metrics to use cases that highly value visual realism.  
 
 This section offers a high-level overview of the experimental design, architectural comparisons, and hypothesis guiding this project.
 
-###**Data Preparation and Scene Isolation**
+### **Data Preparation and Scene Isolation**
 
 To directly evaluate the connection between material properties and environmental lighting, this project utilizes synthetic images of isolated objects. By controlling the experiment to focus on a single object, the network is forced to prioritize the relationship between surface appearance and the environment lighting. This simplified setup allows for more precise analysis of material-lighting entanglement, but I believe the learned priors will also be generalizable to more complex, multi-object scenes through future semantic segmentation.
 
-###**Architecture Comparison**
+### **Architecture Comparison**
 
 To measure the impact of material guidance I created two distinct models.
 
